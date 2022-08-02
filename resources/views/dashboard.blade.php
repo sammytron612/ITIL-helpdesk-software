@@ -1,5 +1,4 @@
 <x-new-layout>
-1
     <!--
     <div class="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         <div class="w-full h-auto p-3 bg-blue-300 border border-black shadow">
