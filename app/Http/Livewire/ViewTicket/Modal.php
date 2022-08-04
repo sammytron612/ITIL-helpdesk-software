@@ -3,21 +3,76 @@
 namespace App\Http\Livewire\ViewTicket;
 
 use Livewire\Component;
+use App\Models\User;
+use App\Models\agent_group;
+use App\Models\incidents;
+
+use App\Service\UpdateTicket;
 
 class Modal extends Component
 {
     protected $listeners = ['openModal'];
     public $viewModal = false;
 
+    public $searchTerm;
+    public $incident_id;
+
+    public $incident;
+    
+
+    public function mount()
+    {
+        
+        $this->incident = incidents::find($this->incident_id);
+    }
 
     public function render()
     {
-        return view('livewire.view-ticket.modal');
+
+        $userResults = [];
+        $groupResults = [];
+
+        if(strlen($this->searchTerm > 2))
+        {
+            $userResults = User::select('id','name')->where('name', 'like', '%' . $this->searchTerm . '%')->get();
+            $groupResults = agent_group::where('description', 'like', '%' . $this->searchTerm . '%')->get();
+        }
+        
+
+        return view('livewire.view-ticket.modal',(['userResults' => $userResults, 'groupResults' => $groupResults]));
+    }
+
+    public function assignToUser($user_id)
+    {
+
+        $ticket = new UpdateTicket;
+        $ticket->assign_to($this->incident, $user_id);
+    
+        $this->viewModal = false;
+        $this->reset('searchTerm');
+        
+        $this->emit('renderStatus');
+        $this->dispatchBrowserEvent('update_success');
+        
+    }
+
+    public function assignToGroup($group_id)
+    {
+        $ticket = new UpdateTicket;
+        $ticket->assign_to_group($this->incident, $group_id);
+
+        $this->viewModal = false;
+        $this->reset('searchTerm');
+
+        $this->emit('renderStatus');
+        $this->dispatchBrowserEvent('update_success');
+        
+        
     }
 
     public function openModal()
     {
-        $this->dispatchBrowserEvent('close-tiny', ['newName' => 'ok']);
         $this->viewModal = true;
     }
+
 }

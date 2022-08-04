@@ -13,10 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('statuses', function (Blueprint $table) {
+        Schema::create('agent_groups', function (Blueprint $table) {
             $table->id();
-            $table->string('status');
-            $table->boolean('stop_sla')->nullable();
+            $table->string('description');
         });
     }
 
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('statuses');
+        Schema::dropIfExists('agent_groups');
     }
 };

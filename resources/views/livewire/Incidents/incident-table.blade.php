@@ -52,13 +52,13 @@
 
                         <td id="sla" class="px-6 py-4 whitespace-nowrap">
                             <input class="hidden-input" type="hidden" id="{{ $incident->id }}" value = "{{
-                            \Carbon\Carbon::parse($incident->sla['response'])->diffInSeconds(\Carbon\Carbon::now())
+                            \Carbon\Carbon::parse($incident->created_at)->diffInSeconds(\Carbon\Carbon::now())
                             }}" />
                             <span id="sla_timer-{{ $incident->id }}"></span>
                         </td>
 
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <x-status :status="$incident->status">
+                            <x-status :status="$incident->status" assigned="">
                                 {{$incident->statuses->status}}
                             </x-status>
                         </td>

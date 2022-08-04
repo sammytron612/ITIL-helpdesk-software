@@ -23,12 +23,16 @@
         </div>
     </div>
     <div class="py-10 text-2xl font-bold">{{ $ticket->title }}</div>
-    <div class="grid grid-cols-6 gap-4 md:grid-cols-6">
-        <div class="col-span-4 col-start-1 mt-3 mb-3">
-            <span class="mr-2 font-bold text-1xl">Priority</span>
-            <span class="px-4 py-0.5 text-slate-gray-800 bg-red-100 border border-red-200 rounded-lg">{{ $ticket->priorities->priority }}</span>
+    
+    <div class="grid grid-cols-2 gap-4 md:grid-cols-6">
 
-            @livewire('view-ticket.status-button', ['chosenStatus' => $ticket->status])
+        <div class="order-1 col-span-4 col-start-1 mt-3 mb-3">
+            
+            <div>
+                <div class="mb-2 font-bold text-1xl">Priority</div>
+                <span class="px-4 py-0.5 text-slate-gray-800 bg-red-100 border border-red-200 rounded-lg">{{ $ticket->priorities->priority }}</span>
+            </div>
+            @livewire('view-ticket.status-button', ['incident_no' => $ticket->id])
 
             @if($ticket->department)
                 <div>
@@ -46,25 +50,27 @@
 
         </div>
 
-        <div class="flex flex-col items-start col-span-1 row-span-3">
+    
+        <div class="flex flex-col items-start order-3 col-span-1 row-span-3 md:order-2">
             <div class="p-2">SLA Response</div>
             <div class="text-sm">First response 15 Minutes</div>
         </div>
-        <div class="flex flex-col items-center col-span-1 row-span-3">
+        <div class="flex flex-col items-center order-4 col-span-1 row-span-3 md:order-3">
             <div class="p-2">SLA Resolution</div>
             <div class="text-sm">Resolution time 6 Hours</div>
         </div>
+    
 
-<!--
-        <div  class="col-span-4 col-start-1 p-2 -z-1">
+
+        <div  class="order-2 col-span-4 col-start-1 p-2 -z-1 md:order-4">
             <textarea id="description" class="p-6 border ">
                 @php echo $ticket->descriptions->description @endphp
             </textarea>
         </div>
-    -->
+    
     </div>
 
-
+    @livewire('view-ticket.modal', ['incident_id' => $ticket->id])
 
 
     <script src="https://cdn.tiny.cloud/1/d3utf658spf5n1oft4rjl6x85g568jj7ourhvo2uhs578jt9/tinymce/5/tinymce.min.js"

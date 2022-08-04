@@ -13,4 +13,9 @@ class status extends Model
     {
         return $this->belongsTo(incidents::class, 'status', 'id');
     }
+
+    public function action()
+    {
+        return $this->hasOne(status_history::class,'id','status_id');
+    }
 }

@@ -15,9 +15,7 @@ return new class extends Migration
     {
         Schema::create('incidents', function (Blueprint $table) {
             $table->id();
-            $table->integer('sla');
             $table->integer('status');
-            $table->json('status_history')->nullable();
             $table->string('title');
             $table->string('priority');
             $table->integer('category');

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -9,7 +8,10 @@ use Auth;
 use App\Models\department;
 use App\Models\priority;
 use App\Models\sites;
-use App\Models\status;
+use App\Models\status_history;
+use App\Service\UpdateTicket as ticket;
+
+
 
 
 class TicketController extends Controller
@@ -19,6 +21,13 @@ class TicketController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    protected $userTicket;
+
+    public function __construct(ticket $ticket)
+    {
+        $this->userTicket = $ticket;
+    }
+
     public function index()
     {
         /*
@@ -38,6 +47,7 @@ class TicketController extends Controller
     public function create()
     {
 
+        $this->userTicket->assign_self();
         $sites = sites::all();
         $priorities = priority::all();
         $departments = department::all();
@@ -62,25 +72,31 @@ class TicketController extends Controller
 
 
         $array = [
-            'sla' => ['sla' => 'critical', 'response' => now()],
-            'status_history' => ['status' => 'New', 'timestamp' => now(), 'assigned_to' => 'NULL'],
             'status' => 1,
             'title' => $request->title,
             'priority' => $request->priority,
             'requestor' => Auth::id(),
             'category' => $request->category,
-            'site' => 'NULL',
+            'site' => $request->site,
+            'department' => $request->department,
             'sub_category' => $request->sub_category,
         ];
 
         $return = incidents::create($array);
 
-        $array = [
+        $description = [
             'description' => $request->description,
             'incident_no' => $return->id
         ];
 
-        description::create($array);
+        description::create($description);
+
+        $history = ['incident_id' => $return->id,
+                    'status' => 1,
+                    'user_id' => Auth::id(),
+        ];
+
+        status_history::create($history);
 
         return redirect()->back()->with('message', 'Success!');
     }
@@ -93,6 +109,7 @@ class TicketController extends Controller
      */
     public function show($id)
     {
+        
     }
 
     /**

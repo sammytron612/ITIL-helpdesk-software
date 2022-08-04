@@ -3,55 +3,77 @@
 namespace App\Http\Livewire\ViewTicket;
 
 use Livewire\Component;
-use App\Models\status;
+use App\Models\incidents;
+use App\Models\status_action;
+use App\Service\UpdateTicket;
+
+use Auth;
 
 class StatusButton extends Component
 {
-    public $chosenStatus;
-    public $class;
-    public $statuses;
-
+    public $chosenAction = 0;
+    public $incident_no;
+    public $incident;
+    public $status_actions;
+    
+    protected $listeners = ['renderStatus'];
 
     public function mount()
     {
 
-        $miss = [1, 2];
-        $this->statuses = status::whereNotIn('id', $miss)->orderBy('status')->get();
+        $miss = [];
+        
+        $this->status_actions = status_action::orderBy('action')->get();
+
     }
 
     public function render()
     {
-
-        if ($this->chosenStatus == 1) {
-            $this->class = "w-1/3 px-4 py-1 bg-blue-100 rounded-lg";
-        }
-
-        if ($this->chosenStatus == 2) {
-            $this->class = "w-1/3 px-4 py-1 bg-orange-100 rounded-lg";
-        }
-        if ($this->chosenStatus == 3) {
-            $this->class = "w-1/3 px-4 py-1 bg-yellow-100 rounded-lg";
-        }
-        if ($this->chosenStatus == 4) {
-            $this->class = "w-1/3 px-4 py-1 bg-red-100 rounded-lg";
-        }
-        if ($this->chosenStatus == 5) {
-            $this->class = "w-1/3 px-4 py-1 bg-cyan-100 rounded-lg";
-        }
-        if ($this->chosenStatus == 6) {
-            $this->class = "w-1/3 px-4 py-1 bg-purple-100 rounded-lg";
-        }
-        if ($this->chosenStatus == 7) {
-            $this->class = "w-1/3 px-4 py-1 bg-green-100 rounded-lg";
-        }
-        if ($this->chosenStatus == 8) {
-            $this->class = "w-1/3 px-4 py-1 bg-indigo-100 rounded-lg";
-        }
-        if ($this->chosenStatus == 9) {
-            $this->class = "w-1/3 px-4 py-1 bg-indigo-300 rounded-lg";
-            $this->emit('openModal');
-        }
+        $this->incident = incidents::find($this->incident_no);
+        //$this->name = $this->incident->assigned?->name;
 
         return view('livewire.view-ticket.status-button');
+    }
+
+    public function updatedchosenAction()
+    {
+        $ticket = new UpdateTicket;
+        
+        if($this->chosenAction == 1) /* Assign to self */
+        {
+            
+            $ticket->assign_self($this->incident);
+            $this->dispatchBrowserEvent('update-success');
+            $this->chosenAction = 0;
+            
+        } elseif ($this->chosenAction == 2) {  /* assign to */ 
+            
+            $this->emit('openModal');
+        
+        }
+        elseif ($this->chosenAction == 3) {  /* resolve */
+            
+            $ticket->resolve($this->incident);
+            $this->dispatchBrowserEvent('update-success');
+            $this->chosenAction = 0;
+        }
+        else
+        {  //everything else //
+
+            $temp = status_action::find($this->chosenAction);
+
+            $ticket->updateIncident($this->incident, $temp->status->id);
+            $this->dispatchBrowserEvent('update-success');
+            $this->chosenAction = 0;
+            
+        }
+        
+    }
+
+    public function renderStatus()
+    {
+        $this->chosenAction = 0;
+        $this->render();
+        $this->dispatchBrowserEvent('update-success');
     }
 }
