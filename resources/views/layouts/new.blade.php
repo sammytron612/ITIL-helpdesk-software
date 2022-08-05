@@ -28,7 +28,7 @@
 
 <body class="font-sans antialiased">
 
-        
+        @include('layouts.header')
         <div class="">
 
             <div class="">
