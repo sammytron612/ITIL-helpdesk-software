@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>image.png
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
     
 
@@ -20,24 +20,15 @@
     <style>
         [x-cloak] {
         display: none;
-
-
         }
+        
     </style>
 </head>
 
 <body class="font-sans antialiased">
 
-        @include('layouts.header')
-        <div class="">
-
-            <div class="">
-                @include('layouts.vertical-navigation')
-            </div>
-            <main style="margin-left:16.7%" class="p-6 md:px-16 mt-14 z-1">
-                {{$slot}}
-            </main>
-        </div>
+        
+        @include('layouts.vertical-navigation')
 
     @livewireScripts
     
