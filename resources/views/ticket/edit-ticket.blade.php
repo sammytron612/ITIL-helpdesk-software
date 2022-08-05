@@ -11,14 +11,14 @@
 
     <div class="flex items-center justify-between">
         
-        <div class="flex items-center">
+        <div class="grid items-center grid-cols-1 md:grid-cols-2">
             <h4 class="mr-2 font-bold text-1xl">Incident created by: </h4> 
             <x-avatar :name="$ticket->requesting_user->name">
                 {{$ticket->requesting_user->name}}
             </x-avatar>
         </div>
 
-        <div>
+        <div class="hidden md:block">
             About {{ \Carbon\Carbon::parse($ticket->created_at)->diffForHumans()}}
         </div>
     </div>

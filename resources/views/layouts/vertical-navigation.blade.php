@@ -1,5 +1,4 @@
-<div x-data="{open: true}">
-    
+<div x-data="{ open: $persist(false) }">  
     <div class="fixed top-0 z-30 flex">
         <div :class="open ? 'w-56' : 'w-20'" class="flex items-center justify-center px-4 py-4 transition-all duration-300 ease-in-out bg-yellow-500">
             <button x-on:click="open = ! open" class="bg-blue">
