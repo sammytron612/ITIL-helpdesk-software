@@ -68,7 +68,10 @@
                         </td>
 
                         <td class="px-6 py-4">
-                            {{ $incident->priorities->priority ?? ''}}
+                            <x-priority :priority="$incident->priority">
+                                {{$incident->priorities->priority}}
+                            </x-priority>
+                            
                         </td>
 
                         <td class="px-6 py-4">

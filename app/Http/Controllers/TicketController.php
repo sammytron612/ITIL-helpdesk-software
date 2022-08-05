@@ -9,9 +9,6 @@ use App\Models\department;
 use App\Models\priority;
 use App\Models\sites;
 use App\Models\status_history;
-use App\Service\UpdateTicket as ticket;
-
-
 
 
 class TicketController extends Controller
@@ -21,12 +18,7 @@ class TicketController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    protected $userTicket;
-
-    public function __construct(ticket $ticket)
-    {
-        $this->userTicket = $ticket;
-    }
+   
 
     public function index()
     {
@@ -47,7 +39,7 @@ class TicketController extends Controller
     public function create()
     {
 
-        $this->userTicket->assign_self();
+       
         $sites = sites::all();
         $priorities = priority::all();
         $departments = department::all();

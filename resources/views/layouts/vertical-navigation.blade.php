@@ -2,7 +2,6 @@
 
     <div class="px-4 py-5 text-center text-white bg-black">KLW</div>
 
-
     <div class="h-full pt-5 rounded-bl-lg bg-slate-800">
         <ul class="flex flex-col space-y-8">
             <a href="#">

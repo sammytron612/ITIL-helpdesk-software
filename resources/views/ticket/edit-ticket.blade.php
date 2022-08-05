@@ -9,47 +9,60 @@
         </div>
     @endif
 
-    <div class="flex py-3">
-        <div class="p-3 text-white bg-green-500 rounded-full text-1xl">KW</div>
+    <div class="flex items-center justify-between">
+        
+        <div class="flex items-center">
+            <h4 class="mr-2 font-bold text-1xl">Incident created by: </h4> 
+            <x-avatar :name="$ticket->requesting_user->name">
+                {{$ticket->requesting_user->name}}
+            </x-avatar>
+        </div>
 
-        <div class="p-3 font-bold text-1xl">
-            @php
-                $names = explode(' ', $ticket->requesting_user->name);
-                $first = ucfirst($names[0]);
-                $last = ucfirst(end($names));
-                $initials = $first[0] . $last[0];
-            @endphp
-            {{ $ticket->requesting_user->name }}
+        <div>
+            About {{ \Carbon\Carbon::parse($ticket->created_at)->diffForHumans()}}
         </div>
     </div>
+    
+    
+
     <div class="py-10 text-2xl font-bold">{{ $ticket->title }}</div>
     
-    <div class="grid grid-cols-2 gap-4 md:grid-cols-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-2 gap-y-4">
 
-        <div class="order-1 col-span-4 col-start-1 mt-3 mb-3">
-            
+        <div class="order-2 md:order-1">
             <div>
                 <div class="mb-2 font-bold text-1xl">Priority</div>
-                <span class="px-4 py-0.5 text-slate-gray-800 bg-red-100 border border-red-200 rounded-lg">{{ $ticket->priorities->priority }}</span>
+                <x-priority :priority="$ticket->priorities->id">
+                    {{$ticket->priorities->priority}}
+                </x-priority>
             </div>
             @livewire('view-ticket.status-button', ['incident_no' => $ticket->id])
-
-            @if($ticket->department)
-                <div>
-                    Department
-                    <div>{{ $ticket->department }}</div>
-                </div>
-            @endif
-
-            @if($ticket->site)
-                <div>
-                    Site
-                    <div>{{ $ticket->site }}</div>
-                </div>
-            @endif
-
         </div>
 
+        <div class="order-1 md:order-2">
+            <div class="flex">
+                <div>
+                    <div class="mb-3 font-bold text-1xl">Assigned to: </div>
+                    @if($ticket->department)
+                        <div class="mb-3 font-bold text-1xl">Department: </div>
+                    @endif
+                    @if($ticket->site)
+                        <div class="mb-3 font-bold text-1xl">Site: </div>
+                    @endif
+                </div>
+
+                <div class="ml-3">
+                    <div class="mb-3">Me</div>
+                    @if($ticket->department)
+                        <div class="mb-3">{{$ticket->departments->title}} </div>
+                    @endif
+                    @if($ticket->site)
+                        <div class="mb-3">{{$ticket->chosen_site->name}}</div>
+                    @endif
+                </div>
+            </div>
+        </div>
+<!--
     
         <div class="flex flex-col items-start order-3 col-span-1 row-span-3 md:order-2">
             <div class="p-2">SLA Response</div>
@@ -60,10 +73,14 @@
             <div class="text-sm">Resolution time 6 Hours</div>
         </div>
     
-
-
-        <div  class="order-2 col-span-4 col-start-1 p-2 -z-1 md:order-4">
-            <textarea id="description" class="p-6 border ">
+-->
+        
+        <div class="order-3 mt-5 md:col-span-2">
+            <x-avatar :name="$ticket->requesting_user->name">
+                {{$ticket->requesting_user->name}}
+            </x-avatar>
+            
+            <textarea id="description" class="p-6 border">
                 @php echo $ticket->descriptions->description @endphp
             </textarea>
         </div>

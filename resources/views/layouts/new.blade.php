@@ -28,22 +28,16 @@
 
 <body class="font-sans antialiased">
 
+        
+        <div class="">
 
-
-
-        @include('layouts.header')
-
-
-            <div class="relative">
-
-                 <div class="flex align-self-center">
-        @include('layouts.vertical-navigation')
-    </div>
-                <main style="margin-left:16.7%" class="p-6 md:px-16 mt-14 z-1">
-                    <x-alert-component></x-alert-component>
-                    {{$slot}}
-                </main>
+            <div class="">
+                @include('layouts.vertical-navigation')
             </div>
+            <main style="margin-left:16.7%" class="p-6 md:px-16 mt-14 z-1">
+                {{$slot}}
+            </main>
+        </div>
 
     @livewireScripts
     
