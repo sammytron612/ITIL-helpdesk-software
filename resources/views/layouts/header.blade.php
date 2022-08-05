@@ -6,7 +6,4 @@
         </svg>
         <input class="w-3/4 h-8 p-1 ml-3 bg-gray-100 border-none rounded-lg md:w-1/4 focus:outline-none focus:ring-0" type="search" />
     </div>
-    <div>
-        
-    </div>
 </header>
