@@ -13,6 +13,8 @@
         Service Desk
         </div>
     </div>
+
+    @include('layouts.header')
     
     <aside :class="open ? 'w-56' : 'w-20'" class="fixed top-0 left-0 h-screen transition-all duration-300 ease-in-out">
         
@@ -96,7 +98,8 @@
         </div>
 
     </aside>
-    <main :class="open ? 'ml-56' : 'ml-20'" class="p-6 md:px-16 mt-14 -z-1">
+    
+    <main :class="open ? 'ml-56' : 'ml-20'" class="p-6 mt-28 md:px-16 -z-1">
             {{$slot}}
     </main>
 </div>

@@ -38,6 +38,11 @@ class incidents extends Model
         return $this->hasOne(category::class, 'id', 'category');
     }
 
+    public function sub_categories()
+    {
+        return $this->hasOne(sub_category::class, 'id', 'sub_category');
+    }
+
     public function assigned()
     {
         return $this->hasOne(User::class, 'id', 'assigned_to');

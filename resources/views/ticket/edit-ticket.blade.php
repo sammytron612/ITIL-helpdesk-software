@@ -9,7 +9,7 @@
         </div>
     @endif
 
-    <div class="flex items-center justify-between">
+    <div>
         
         <div class="grid items-center grid-cols-1 md:grid-cols-2">
             <h4 class="mr-2 font-bold text-1xl">Incident created by: </h4> 
@@ -17,18 +17,18 @@
                 {{$ticket->requesting_user->name}}
             </x-avatar>
         </div>
-
-        <div class="hidden md:block">
-            About {{ \Carbon\Carbon::parse($ticket->created_at)->diffForHumans()}}
-        </div>
     </div>
     
     
 
-    <div class="py-10 text-2xl font-bold">{{ $ticket->title }}</div>
+    <div>
+        <div class="py-4 text-2xl font-bold">{{ $ticket->title }}</div>
+        <div class="font-light">
+            Created {{ \Carbon\Carbon::parse($ticket->created_at)->format('d F Y g:i:A')}}
+        </div>
+    </div>
     
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-2 gap-y-4">
-
+    <div class="grid grid-cols-1 mt-12 md:grid-cols-2 gap-x-2 gap-y-4">
         <div class="order-2 md:order-1">
             <div>
                 <div class="mb-2 font-bold text-1xl">Priority</div>
@@ -43,22 +43,37 @@
             <div class="flex">
                 <div>
                     <div class="mb-3 font-bold text-1xl">Assigned to: </div>
-                    @if($ticket->department)
-                        <div class="mb-3 font-bold text-1xl">Department: </div>
-                    @endif
-                    @if($ticket->site)
-                        <div class="mb-3 font-bold text-1xl">Site: </div>
-                    @endif
+                    <div class="mb-3 font-bold text-1xl">Department: </div>
+                    <div class="mb-3 font-bold text-1xl">Site: </div>
+                    <div class="mb-3 font-bold text-1xl">Category: </div>
+                    <div class="mb-3 font-bold text-1xl">Sub category: </div>
+                    
                 </div>
 
                 <div class="ml-3">
-                    <div class="mb-3">Me</div>
-                    @if($ticket->department)
-                        <div class="mb-3">{{$ticket->departments->title}} </div>
-                    @endif
-                    @if($ticket->site)
-                        <div class="mb-3">{{$ticket->chosen_site->name}}</div>
-                    @endif
+                    <div class="mb-3 font-bold text-1xl">Me</div>
+                    
+                    
+                    <div class="mb-3">
+                        @livewire('view-ticket.department-dropdown',['incident' => $ticket->id])
+                    </div>
+                    
+
+                    
+                    <div class="mb-3">
+                        @livewire('view-ticket.site-dropdown', ['incident' => $ticket->id])
+                    </div>
+                
+                    
+                    <div class="mb-3">
+                        @livewire('view-ticket.category-dropdown',['incident' => $ticket->id])
+                    </div>
+                
+                    
+                    <div class="mb-3">
+                        @livewire('view-ticket.sub-category-dropdown', ['incident' => $ticket->id])
+                    </div>
+                    
                 </div>
             </div>
         </div>

@@ -11,4 +11,9 @@ class sub_category extends Model
 
     public $timestamps = false;
     protected $fillable = ['title','parent'];
+
+    public function incident()
+    {
+        return $this->belongsTo(incidents::class);
+    }
 }

@@ -30,7 +30,7 @@
         
         @include('layouts.vertical-navigation')
 
-    @livewireScripts
-    
+        @livewireScripts
+        <x-alert-component />
 </body>
 </html>
