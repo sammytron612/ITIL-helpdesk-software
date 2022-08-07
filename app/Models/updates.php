@@ -5,15 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class description extends Model
+class updates extends Model
 {
     use HasFactory;
 
-
-    protected $fillable = ['description', 'incident_no'];
+    protected $fillable = ['comment', 'incident_no'];
 
     public function incident()
     {
-        return $this->belongsTo(incidents::class, 'id');
+        return $this->belongsTo(incidents::class,'id');
     }
 }

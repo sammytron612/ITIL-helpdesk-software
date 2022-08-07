@@ -15,7 +15,7 @@ class DepartmentDropdown extends Component
 
     public function mount(incidents $incident)
     {
-        $this->showing = $incident->departments->title;
+        $this->showing = $incident->departments?->title;
         $this->incident = $incident;
         
     }

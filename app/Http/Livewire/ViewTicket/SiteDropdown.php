@@ -15,7 +15,7 @@ class SiteDropdown extends Component
 
     public function mount(incidents $incident)
     {
-        $this->showing = $incident->chosen_site->name;
+        $this->showing = $incident->chosen_site?->name;
         $this->incident = $incident;
         
     }

@@ -14,7 +14,7 @@ class ImagesController extends Controller
         $fileName = time() . $file->getClientOriginalName();
         $path = $file->storeAs('public\images', $fileName);
 
-        $path = url("/storage/images/" . $fileName);
+        $path = asset("/storage/images/" . $fileName);
 
         echo json_encode(['location' => $path]);
     }

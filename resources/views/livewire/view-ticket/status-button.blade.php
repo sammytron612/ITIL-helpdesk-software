@@ -6,12 +6,13 @@
         {{$incident->statuses->status}}
     </x-status>
     
-    
-    <label class="block mt-4 mb-2 font-bold text-1xl">Action</label>
-    <select wire:model="chosenAction" id="ticket-status" class="w-full px-4 py-1 bg-indigo-300 rounded-lg md:w-1/2">
-        <option selected disabled class="bg-white" value="0">Choose</option>
+    <div class="mt-3">
+    <label class="mt-4 mb-2 font-bold text-1xl">Action</label>
+    <select wire:model="chosenAction" id="ticket-status" class="w-2 px-4 py-1 border-0 hover:cursor-pointer focus:border-0 focus:ring-0">
+        <option selected disabled class="bg-white" value="0"></option>
         @foreach($status_actions as $action)
             <option class="bg-white" value="{{ $action->id }}">{{ $action->action }}</option>
         @endforeach
     </select>
+    </div>
 </div>

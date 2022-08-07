@@ -94,7 +94,7 @@
                         <span class="ml-1 text-xs text-red-600 animate-ping">{{ $message }}</span>
                     @enderror
                 </label>
-                <textarea id="description" name="description" class="w-full h-48" ></textarea>
+                <textarea id="description" name="comment" class="w-full h-48" ></textarea>
             </div>
 
         </div>
@@ -111,11 +111,10 @@
 
         tinymce.init({
 
-        height : "480",
-        relative_urls : true,
-        document_base_url: "{{  url('/ticket') }}",
+        
+        relative_urls : false,
         selector: '#description',
-        plugins: 'fullscreen hr image autolink lists  media table paste textpattern help',
+        plugins: 'autoresize, fullscreen hr image autolink lists  media table paste textpattern help',
         menubar: 'insert fullscreen hr image ',
         toolbar: 'fullscreen  image casechange code pageembed permanentpen table advancedlist paste pastetext spellchecker formatselect hr| bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
         images_upload_handler: function (blobInfo, success, failure) {

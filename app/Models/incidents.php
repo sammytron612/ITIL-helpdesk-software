@@ -16,11 +16,16 @@ class incidents extends Model
 
 
 
-    protected $fillable = ['sla', 'status', 'status_history', 'title', 'priority', 'category', 'assigned_to', 'requestor', 'site' . 'department', 'assigned_group','re_assignments'];
+    protected $fillable = ['sla', 'status', 'status_history', 'title', 'priority', 'category', 'department','assigned_to', 'requestor', 'site' . 'department', 'assigned_group','re_assignments'];
 
     public function priorities()
     {
         return $this->hasOne(priority::class, 'id', 'priority');
+    }
+
+    public function ticket_updates()
+    {
+        return $this->hasMany(updates::class, 'incident_no');
     }
 
     public function departments()
@@ -50,7 +55,7 @@ class incidents extends Model
 
     public function descriptions()
     {
-        return $this->hasOne(description::class, 'incident_no');
+        return $this->hasOne(Comments::class, 'incident_no');
     }
 
     public function requesting_user()

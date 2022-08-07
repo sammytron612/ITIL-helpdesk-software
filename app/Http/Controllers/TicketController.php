@@ -3,7 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\incidents;
-use App\Models\description;
+use App\Models\updates;
 use Auth;
 use App\Models\department;
 use App\Models\priority;
@@ -59,7 +59,7 @@ class TicketController extends Controller
             'title' => 'required|min:5|max:80',
             'category' => 'required',
             'priority' => 'required',
-            'description' => 'required',
+            'comment' => 'required',
         ]);
 
 
@@ -76,12 +76,13 @@ class TicketController extends Controller
 
         $return = incidents::create($array);
 
-        $description = [
-            'description' => $request->description,
+        $comment = [
+            'comment' => $request->comment,
             'incident_no' => $return->id
         ];
+        
 
-        description::create($description);
+        updates::create($comment);
 
         $history = ['incident_id' => $return->id,
                     'status' => 1,
@@ -112,7 +113,8 @@ class TicketController extends Controller
      */
     public function edit(incidents $ticket)
     {
-
+        $ticket->load('ticket_updates');
+        
         return view('ticket.edit-ticket', compact('ticket'));
     }
 
