@@ -51,4 +51,9 @@ class User extends Authenticatable
     {
         return $this->belongs_to(incidents::class);
     }
+
+    public function my_avatar()
+    {
+        return $this->hasOne(avatar::class,'user_id');
+    }
 }

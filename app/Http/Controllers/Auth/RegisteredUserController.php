@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\avatar;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -43,6 +44,37 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+        ]);
+
+        $number = rand(1,8);
+        
+        switch ($number) {
+            case '1':
+                $colour = 'red';
+                break;
+            case '2':
+                $colour = 'teal';
+                break;
+            case '3':
+                $colour = 'blue';
+                break;
+            case '4':
+                $colour = 'orange';
+                break;
+            case '5':
+                $colour = 'yellow';
+                break;
+            case '6':
+                $colour = 'amber';
+                break;
+            
+            default:
+                $colour = 'green';
+                break;
+        }
+
+        avatar::create(['user_id' => $user->id,
+                        'colour' => $colour,
         ]);
 
         event(new Registered($user));

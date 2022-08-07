@@ -12,9 +12,12 @@ class avatar extends Component
      * @return void
      */
     public $name;
-    public function __construct($name)
+    public $colour;
+
+    public function __construct($name,$colour)
     {
         $this->name = $name;
+        $this->colour = $colour;
     }
 
     /**

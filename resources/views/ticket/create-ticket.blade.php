@@ -114,6 +114,8 @@
         
         relative_urls : false,
         selector: '#description',
+        forced_root_block : 'p',
+        forced_root_block_attrs: { "class": "py-3"},
         plugins: 'autoresize, fullscreen hr image autolink lists  media table paste textpattern help',
         menubar: 'insert fullscreen hr image ',
         toolbar: 'fullscreen  image casechange code pageembed permanentpen table advancedlist paste pastetext spellchecker formatselect hr| bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',

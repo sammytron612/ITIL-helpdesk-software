@@ -13,9 +13,10 @@
         
         <div class="grid items-center grid-cols-1 md:grid-cols-2">
             <h4 class="mr-2 font-bold text-1xl">Incident created by: </h4> 
-            <x-avatar :name="$ticket->requesting_user->name">
+            <x-avatar :colour="$ticket->requesting_user->my_avatar->colour" :name="$ticket->requesting_user->name">
                 {{$ticket->requesting_user->name}}
             </x-avatar>
+            
         </div>
     </div>
     
@@ -91,99 +92,14 @@
     
 -->
         
-        <div x-data="{ updates: true, comment: false}">
-            <div class="flex justify-between mt-5">
-                <div class="flex">
-                    <h2 x-on:click="updates = true; comment = false" :class="updates ? 'border-b-4 border-cyan-400' : '' " class="py-3 text-2xl hover:cursor-pointer Font-bold">Updates ({{count($ticket->ticket_updates)}})</h2>
-                    <h2 x-on:click="updates = false; comment = true" :class="comment ? 'border-b-4 border-cyan-400' : '' " class="py-3 ml-4 text-2xl hover:cursor-pointer Font-bold">Add comment</h2>
-                </div>
-                <div x-show="updates">+ Expand all</div>
-            </div>
-
-            <div class="mt-5">
-                <div x-transition x-show="updates">
-                    @foreach($ticket->ticket_updates as $comment)
-                        <div x-data="{ open: false }" class="p-5 border-2 shadow rounded-t-xl">
-                            <div class="flex items-center justify-between hover:cursor-pointer" x-on:click="open = ! open">
-                                <div>
-                                    <x-avatar :name="$ticket->requesting_user->name">
-                                        {{$ticket->requesting_user->name}}
-                                    </x-avatar>
-                                </div>
-                                
-                                <div class="text-sm">
-                                    <div>
-                                        {{ \Carbon\Carbon::parse($comment->created_at)->diffForHumans()}}
-                                    </div>
-                                    <div>
-                                        {{ \Carbon\Carbon::parse($comment->created_at)->format('d F Y g:i:A')}}
-                                    </div>
-                                </div>
-                                
-                            </div>
-                            
-                            <div x-transition.duration.500ms x-show="open" class="p-6 border">
-                                {!! $comment->comment !!}
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-
-                <div x-transition x-show="comment">
-                    <textarea id="new-comment" class="">
-                    </textarea>
-                    <button class="px-4 py-2 mt-3 text-white bg-blue-500 rounded hover:bg-blue-400">Post</button>
-                </div>
-            </div>
-        </div>
+    @livewire('view-ticket.comment-component',['ticket' => $ticket])
     
 
     @livewire('view-ticket.modal', ['incident_id' => $ticket->id])
 
 
-    <script src="https://cdn.tiny.cloud/1/d3utf658spf5n1oft4rjl6x85g568jj7ourhvo2uhs578jt9/tinymce/5/tinymce.min.js"
-        referrerpolicy="origin">
-    </script>
+    
 
-    <script>
-
-        tinymce.init({
-
-        
-        relative_urls : false,
-        selector: '#new-comment',
-        plugins: 'autoresize, fullscreen hr image autolink lists  media table paste textpattern help',
-        menubar: 'insert fullscreen hr image ',
-        toolbar: 'fullscreen  image casechange code pageembed permanentpen table advancedlist paste pastetext spellchecker formatselect hr| bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat',
-        images_upload_handler: function (blobInfo, success, failure) {
-        var xhr, formData;
-        xhr = new XMLHttpRequest();
-        xhr.withCredentials = false;
-        xhr.open('POST', '{{ route("image.upload") }}');
-        var token = '{{ csrf_token() }}';
-        xhr.setRequestHeader("X-CSRF-Token", token);
-        xhr.onload = function() {
-        var json;
-        if (xhr.status != 200) {
-        failure('HTTP Error: ' + xhr.status);
-        return;
-        }
-        json = JSON.parse(xhr.responseText);
-
-        if (!json || typeof json.location != 'string') {
-        failure('Invalid JSON: ' + xhr.responseText);
-        return;
-        }
-        success(json.location);
-        };
-        formData = new FormData();
-        formData.append('file', blobInfo.blob(), blobInfo.filename());
-        xhr.send(formData);
-        }
-
-
-        });
-
-    </script>
+    
 
 </x-new-layout>

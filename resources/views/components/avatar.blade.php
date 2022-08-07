@@ -4,10 +4,11 @@
         $first = ucfirst($names[0]);
         $last = ucfirst(end($names));
         $initials = $first[0] . $last[0];
+        $colour = "bg-" .$colour."-500";
     @endphp
-    <div class="p-3 text-white bg-green-500 rounded-full text-1xl">{{$initials}}</div>
+    <div class="hidden md:block p-3 text-white {{$colour}} rounded-full text-1xl">{{$initials}}</div>
 
-    <div class="p-3 font-bold text-blue-500 text-1xl">
+    <div class="font-bold text-blue-500 md:p-3 text-1xl">
         {{ ucwords($slot) }}
     </div>
 </div>
