@@ -2,10 +2,10 @@
     <div x-data="{ updates: true, comment: false}">
         <div class="flex flex-wrap justify-center mt-5 md:justify-between">
             <div class="flex">
-                <h2 x-on:click="updates = true; comment = false" :class="updates ? 'border-b-4 border-cyan-400' : '' " class="py-3 text-2xl hover:cursor-pointer Font-bold">Updates ({{count($comments)}})</h2>
-                <h2 x-on:click="updates = false; comment = true" :class="comment ? 'border-b-4 border-cyan-400' : '' " class="py-3 ml-4 text-2xl hover:cursor-pointer Font-bold">Add comment</h2>
+                <h2 x-on:click="updates = true; comment = false" :class="updates ? 'border-b-4 border-cyan-400' : '' " class="py-3 font-bold text-1xl md:text-2xl hover:cursor-pointer">Updates ({{count($comments)}})</h2>
+                <h2 x-on:click="updates = false; comment = true" :class="comment ? 'border-b-4 border-cyan-400' : '' " class="py-3 ml-4 font-bold text-1xl md:text-2xl md:ml-6 hover:cursor-pointer">Add comment</h2>
             </div>
-            <div class="py-3 text-lg font-semibold hover:cursor-pointer" x-on:click="expand" x-show="updates"><span x-text="operator" class="px-2 font-extrabold border-2 border-slate-400"></span><span class="ml-2" x-text="message"></span></div>
+            <div class="py-3 ml-2 text-lg font-semibold md:text-1xl md:ml-0 hover:cursor-pointer" x-on:click="expand" x-show="updates"><span x-text="operator" class="px-2 font-bold border-2 md: border-slate-400"></span><span class="ml-2" x-text="message"></span></div>
         </div>
 
         <div class="mt-5">
