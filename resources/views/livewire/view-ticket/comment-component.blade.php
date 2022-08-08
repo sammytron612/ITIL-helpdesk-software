@@ -1,11 +1,11 @@
 <div x-data="page()">
     <div x-data="{ updates: true, comment: false}">
-        <div class="flex flex-wrap justify-center mt-5 md:justify-between">
+        <div class="flex flex-wrap justify-between mt-5">
             <div class="flex">
                 <h2 x-on:click="updates = true; comment = false" :class="updates ? 'border-b-4 border-cyan-400' : '' " class="py-3 font-bold text-1xl md:text-2xl hover:cursor-pointer">Updates ({{count($comments)}})</h2>
                 <h2 x-on:click="updates = false; comment = true" :class="comment ? 'border-b-4 border-cyan-400' : '' " class="py-3 ml-4 font-bold text-1xl md:text-2xl md:ml-6 hover:cursor-pointer">Add comment</h2>
             </div>
-            <div class="py-3 ml-2 text-lg font-semibold md:text-1xl md:ml-0 hover:cursor-pointer" x-on:click="expand" x-show="updates"><span x-text="operator" class="px-2 font-bold border-2 md: border-slate-400"></span><span class="ml-2" x-text="message"></span></div>
+            <div class="py-3 text-lg font-semibold md:text-1xl hover:cursor-pointer" x-on:click="expand" x-show="updates"><span x-text="operator" class="hidden px-2 text-lg font-bold border-2 md:inline-block md:border-slate-400"></span><span class="ml-2 text-lg" x-text="message"></span></div>
         </div>
 
         <div class="mt-5">
@@ -57,11 +57,11 @@
         return {
             expanded : false,
             operator: '+',
-            message: 'Expand All',
+            message: 'Expand',
             expand() {
                 
             this.expanded = ! this.expanded
-            this.expanded ? this.message = 'Compact All' : this.message = 'Expand All'
+            this.expanded ? this.message = 'Compact' : this.message = 'Expand'
             this.expanded ? this.operator = '-' : this.operator = '+'
             
             this.$dispatch('expand', {'expanded': this.expanded})

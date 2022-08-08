@@ -27,8 +27,7 @@
         </div>
     </div>
     
-    <aside :class="open ? 'w-16 md:w-56' : 'w-0 md:w-16'" class="fixed top-0 left-0 h-screen transition-all duration-300 ease-in-out">
-        
+    <aside :class="open ? 'w-16 md:w-56' : 'w-0 md:w-16'" class="fixed top-0 left-0 h-screen transition-all duration-300 ease-in-out">     
         <div class="h-full pt-5 rounded-bl-lg bg-slate-900">
             <ul class="flex flex-col py-20 space-y-8">
                 <a href="#">
