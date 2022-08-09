@@ -8,7 +8,7 @@
         ;
         
     @endphp
-    <div class="hidden p-3 {{$bg}} text-white border border-green-600 rounded-full md:inline-block text-1xl">{{$initials}}</div>
+    <div class="hidden p-3 {{$bg}} text-white border rounded-full md:inline-block text-1xl">{{$initials}}</div>
 
     <div class="font-bold text-blue-500 md:p-3 text-1xl">
         {{ ucwords($slot) }}
