@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 
-class ImagesController extends Controller
+class UploadController extends Controller
 {
-    public function upload(Request $request)
+    public function image(Request $request)
     {
 
         $file = $request->file('upload');

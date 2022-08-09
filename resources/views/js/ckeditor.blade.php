@@ -105,15 +105,4 @@ function MyCustomUploadAdapterPlugin( editor ) {
     };
 }
 
-// ...
-
-
-
-    ClassicEditor
-            .create( document.querySelector( '#description' ),{
-                extraPlugins: [ MyCustomUploadAdapterPlugin ]
-            })
-            .catch( error => {
-                console.error( );
-            })
-    </script>
+</script>

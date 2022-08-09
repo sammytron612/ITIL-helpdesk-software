@@ -104,6 +104,19 @@
     </form>
 
     
+@include('js.ckeditor')
+
+<script>
+    ClassicEditor
+            .create( document.querySelector( '#description' ),{
+                extraPlugins: [ MyCustomUploadAdapterPlugin ]
+            })
+            .catch( error => {
+                console.error( );
+            })
+</script>
+
+    
 <!--
     <script src="https://cdn.tiny.cloud/1/d3utf658spf5n1oft4rjl6x85g568jj7ourhvo2uhs578jt9/tinymce/5/tinymce.min.js"
         referrerpolicy="origin">

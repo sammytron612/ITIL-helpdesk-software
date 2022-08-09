@@ -1,8 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TicketController;
-use App\Http\Controllers\ImagesController;
+
 
 
 /*
@@ -31,7 +30,7 @@ Route::get('/test', function () {
 Route::resource('ticket', 'App\Http\Controllers\TicketController')->middleware(['auth']);
 
 
-Route::post('/image/upload', [ImagesController::class, 'upload'])->middleware(['auth'])->name('image.upload');
+Route::post('/image/upload', [App\Http\Controllers\UploadController::class, 'image'])->middleware(['auth'])->name('image.upload');
 
 
 
