@@ -3,19 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Storage;
+
 
 class ImagesController extends Controller
 {
     public function upload(Request $request)
     {
 
-        $file = $request->file('file');
+        $file = $request->file('upload');
         $fileName = time() . $file->getClientOriginalName();
         $path = $file->storeAs('public\images', $fileName);
 
         $path = asset("/storage/images/" . $fileName);
 
-        echo json_encode(['location' => $path]);
+        return response()->json(['default' => $path]);
     }
 }
