@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->text('comment');
             $table->bigInteger('incident_no');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }

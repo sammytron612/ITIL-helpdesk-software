@@ -39,7 +39,7 @@
         @endif
     </div>
     <div class="flex items-center w-full pt-1 border-t border-gray-300">
-        <button x-on:click="kbOpen = false; insertKBlink('{{$selected?->title}}','http://kb.com',{{$commentId}})" wire:click="clearData" class="ml-3 btn-primary">Insert</button>
+        @if($selected)<button x-on:click="kbOpen = false; insertKBlink('{{$selected?->title}}','http://kb.com',{{$commentId}})" wire:click="clearData" class="ml-3 btn-primary">Insert</button>@endif
         <button x-on:click="kbOpen = false;" wire:click="clearData" class="ml-3 btn-secondary">Cancel<button>
     </div>
 </div>

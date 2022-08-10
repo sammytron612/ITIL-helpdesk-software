@@ -78,7 +78,8 @@ class TicketController extends Controller
 
         $comment = [
             'comment' => $request->comment,
-            'incident_no' => $return->id
+            'incident_no' => $return->id,
+            'user_id' => Auth::id()
         ];
         
 

@@ -4,6 +4,7 @@ namespace App\Http\Livewire\ViewTicket;
 
 use Livewire\Component;
 use App\Models\updates;
+use Auth;
 
 class CommentComponent extends Component
 {
@@ -24,7 +25,8 @@ class CommentComponent extends Component
     public function updatedcomment()
     {
         $update = ['comment' => $this->comment,
-                   'incident_no' => $this->ticket->id
+                   'incident_no' => $this->ticket->id,
+                   'user_id' => Auth::id()
         ];
 
         updates::create($update);
