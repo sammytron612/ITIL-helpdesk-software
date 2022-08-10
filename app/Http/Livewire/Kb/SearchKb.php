@@ -8,7 +8,8 @@ use App\Models\dummyArticles;
 class SearchKb extends Component
 {
     public $searchTerm;
-    public $showing;
+    public $selected;
+    public $commentId;
 
     public function render()
     {
@@ -20,7 +21,7 @@ class SearchKb extends Component
         }
         else
         {
-            $this->showing = "";
+            $this->reset('selected');
         }
 
         
@@ -30,8 +31,11 @@ class SearchKb extends Component
 
     public function choice(dummyArticles $article)
     {
-        $this->showing = $article->body;
-        $this->render();
-        
+        $this->selected = $article;
+    }
+
+    public function clearData()
+    {
+        $this->reset();
     }
 }

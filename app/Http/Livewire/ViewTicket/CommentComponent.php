@@ -31,4 +31,10 @@ class CommentComponent extends Component
 
         $this->dispatchBrowserEvent('update-success');
     }
+
+    public function commentUpdated(updates $update, $comment)
+    {
+        $update->comment = $comment;
+        $update->save();
+    }
 }
