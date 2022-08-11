@@ -45,14 +45,16 @@
                 <div>
                     <div class="mb-3 font-bold text-1xl">Assigned to: </div>
                     <div class="mb-3 font-bold text-1xl">Department: </div>
-                    <div class="mb-3 font-bold text-1xl">Site: </div>
+                    <div class="mb-3 font-bold text-1xl">Location: </div>
                     <div class="mb-3 font-bold text-1xl">Category: </div>
                     <div class="mb-3 font-bold text-1xl">Sub category: </div>
                     
                 </div>
 
                 <div class="ml-3">
-                    <div class="mb-3 font-bold text-1xl">Me</div>
+                    <div class="mb-3 font-bold text-1xl">
+                        @livewire('view-ticket.assign', ['incident' => $ticket->id])
+                    </div>
                     
                     
                     <div class="mb-3">

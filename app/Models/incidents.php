@@ -53,6 +53,11 @@ class incidents extends Model
         return $this->hasOne(User::class, 'id', 'assigned_to');
     }
 
+    public function group()
+    {
+        return $this->hasOne(agent_group::class, 'id', 'assigned_group');
+    }
+
     public function descriptions()
     {
         return $this->hasOne(Comments::class, 'incident_no');

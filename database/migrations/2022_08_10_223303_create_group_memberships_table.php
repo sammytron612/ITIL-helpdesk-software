@@ -13,12 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('agent_groups', function (Blueprint $table) {
-            $table->id();
-            $table->boolean('auto_assign')->default(0);
-            $table->string('assign_method')->default('round_robin');
-            $table->integer('counter')->nullable();
-            $table->string('description');
+        Schema::create('group_memberships', function (Blueprint $table) {
+            $table->integer('agent_group');
+            $table->bigInteger('user_id');
         });
     }
 
@@ -29,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('agent_groups');
+        Schema::dropIfExists('group_memberships');
     }
 };

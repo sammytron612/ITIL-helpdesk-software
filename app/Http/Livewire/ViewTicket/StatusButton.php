@@ -42,13 +42,14 @@ class StatusButton extends Component
         if($this->chosenAction == 1) /* Assign to self */
         {
             
-            $ticket->assign_self($this->incident);
+            $desc = $ticket->assign_self($this->incident);
+            $this->emitTo('view-ticket.assign','updateAssigned',$desc);
             $this->dispatchBrowserEvent('update-success');
             $this->chosenAction = 0;
             
         } elseif ($this->chosenAction == 2) {  /* assign to */ 
             
-            $this->emit('openModal');
+            $this->emitTo('view-ticket.modal','openModal');
         
         }
         elseif ($this->chosenAction == 3) {  /* resolve */

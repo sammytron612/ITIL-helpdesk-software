@@ -11,6 +11,21 @@ class agent_group extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['description'];
+    protected $fillable = ['description','auto_assign','assign_method','counter'];
+
+    public function incident()
+    {
+        return $this->belongs_to(incidents::class, 'assigned_group','id');
+    }
+
+    public function isAutoAssign()
+    {
+        return $this->auto_assign == 1;
+    }
+
+    public function isRoundRobin()
+    {
+        return $this->assign_method == 'round_robin';
+    }
     
 }

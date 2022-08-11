@@ -31,7 +31,7 @@ class UpdateTicket
 
         status_history::create($history);
 
-        return;
+        return $incident->assigned->name;
       
     }
 
@@ -51,7 +51,7 @@ class UpdateTicket
 
         status_history::create($history);
 
-        return;
+        return $incident->assigned->name;
 
     }
 
@@ -71,7 +71,7 @@ class UpdateTicket
 
         status_history::create($history);
 
-        return;
+        return $incident->group->description;
     }
 
     public function resolve($incident)

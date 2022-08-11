@@ -17,6 +17,11 @@ class updates extends Model
         return $this->belongsTo(incidents::class,'id');
     }
 
+    public function user()
+    {
+        return $this->hasOne(User::class,'id','user_id');
+    }
+
     public function isMyComment()
     {
         return $this->user_id == Auth::id();

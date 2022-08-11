@@ -46,12 +46,13 @@ class Modal extends Component
     {
 
         $ticket = new UpdateTicket;
-        $ticket->assign_to($this->incident, $user_id);
+        $desc = $ticket->assign_to($this->incident, $user_id);
     
         $this->viewModal = false;
         $this->reset('searchTerm');
-        
-        $this->emit('renderStatus');
+        $this->emitTo('view-ticket.status-button','renderStatus');
+
+        $this->emitTo('view-ticket.assigned','updateAssigned', $desc);
         $this->dispatchBrowserEvent('update_success');
         
     }
@@ -59,12 +60,13 @@ class Modal extends Component
     public function assignToGroup($group_id)
     {
         $ticket = new UpdateTicket;
-        $ticket->assign_to_group($this->incident, $group_id);
+        $desc = $ticket->assign_to_group($this->incident, $group_id);
 
         $this->viewModal = false;
         $this->reset('searchTerm');
+        $this->emitTo('view-ticket.status-button','renderStatus');
 
-        $this->emit('renderStatus');
+        $this->emitTo('view-ticket.assigned','updateAssigned', $desc);
         $this->dispatchBrowserEvent('update_success');
         
         

@@ -56,4 +56,14 @@ class User extends Authenticatable
     {
         return $this->hasOne(avatar::class,'user_id');
     }
+
+    public function updates()
+    {
+        return $this->belongTo(updates::class,'id');
+    }
+
+    public function isAdmin()
+    {
+        return $this->admin == 1;
+    }
 }
