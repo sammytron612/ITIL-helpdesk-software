@@ -11,7 +11,9 @@
         <div class="mt-5">
             <div x-transition.duration.500ms x-show="updates">
                 @foreach($comments as $comment)
-                    <div wire:key="{{$comment->id}}" x-data="{ openComment: false, newEditor: false, kbOpen: false }"  class="p-5 border-2 shadow rounded-t-xl">
+                    <div wire:key="{{$comment->id}}" @if($loop->first) x-data="{ openComment: true, newEditor: false, kbOpen: false }" @else
+                        x-data="{ openComment: false, newEditor: false, kbOpen: false }" @endif
+                        class="p-5 mt-3 border-2 shadow rounded-t-xl">
                         <div class="flex flex-wrap items-center justify-between hover:cursor-pointer" x-on:click="openComment = ! openComment">
                             <div>
                                 <div class="flex items-center">
@@ -19,7 +21,7 @@
                                     <x-avatar :colour="$comment->user->my_avatar->colour" :name="$comment->user->name">
                                         {{$comment->user->name}}
                                     </x-avatar>
-                                    @if($comment->isMyComment())
+                                    @if($comment->isMyComment() && $loop->first)
                                     <div x-transition.duration.500ms class="ml-3 hover:cursor-pointer" x-show="openComment && !newEditor" x-on:click="createNewEditor({{$comment->id}}); newEditor = ! newEditor"><svg fill="#000000" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 30 30" width="20px" height="20px">    <path d="M 22.828125 3 C 22.316375 3 21.804562 3.1954375 21.414062 3.5859375 L 19 6 L 24 11 L 26.414062 8.5859375 C 27.195062 7.8049375 27.195062 6.5388125 26.414062 5.7578125 L 24.242188 3.5859375 C 23.851688 3.1954375 23.339875 3 22.828125 3 z M 17 8 L 5.2597656 19.740234 C 5.2597656 19.740234 6.1775313 19.658 6.5195312 20 C 6.8615312 20.342 6.58 22.58 7 23 C 7.42 23.42 9.6438906 23.124359 9.9628906 23.443359 C 10.281891 23.762359 10.259766 24.740234 10.259766 24.740234 L 22 13 L 17 8 z M 4 23 L 3.0566406 25.671875 A 1 1 0 0 0 3 26 A 1 1 0 0 0 4 27 A 1 1 0 0 0 4.328125 26.943359 A 1 1 0 0 0 4.3378906 26.939453 L 4.3632812 26.931641 A 1 1 0 0 0 4.3691406 26.927734 L 7 26 L 5.5 24.5 L 4 23 z"/></svg></div>
                                     @endif
                                 </div>
@@ -44,7 +46,7 @@
                                 <div x-on:click="kbOpen = ! kbOpen; document.getElementById('kb-{{$comment->id}}').scrollIntoView();" class="p-2 text-white border-r hover:text-slate-800 hover:cursor-pointer hover:bg-slate-200 border-slate-500"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-book" viewBox="0 0 16 16"> <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"/> </svg></div>
                             </div>
                             <textarea class="hidden" id="comment{{$comment->id}}">{{$comment->comment}}</textarea>
-                    
+
                             <div x-transition.duration.500ms x-on:expand.window="openComment = $event.detail.expanded" x-show="!newEditor && openComment" class="p-6 border comments">
                                 {!! $comment->comment !!}
                             </div>
@@ -68,7 +70,8 @@
             <div wire:ignore x-transition.duration.500ms x-show="comment">
                 <textarea id="comment0">
                 </textarea>
-                <button x-on:click="new_comment();updates = true; comment = false" class="px-4 py-2 mt-3 text-white bg-blue-500 rounded hover:bg-blue-400">Post</button>
+                <button x-on:click="new_comment();updates = true; comment = false" class="px-4 py-2 mt-3 btn-primary">Post</button>
+                <button x-on:click="updates = true; comment = false" class="px-4 py-2 mt-3 btn-secondary">Cancel</button>
             </div>
             
         </div>
@@ -77,61 +80,7 @@
 
     <script>
 
-    const CKeditors = {}
-
-    function updateComment(id){
-            
-                var comment = CKeditors['comment'+id].getData();
-                console.log(comment)
-                @this.commentUpdated(id,comment)
-            }
-
-    function createNewEditor(id){
-                    return ClassicEditor
-                    .create( document.querySelector( '#comment' + id ),{
-                        link: {
-                        addTargetToExternalLinks: true
-                    },
-                            extraPlugins: [ MyCustomUploadAdapterPlugin ]
-                        }).then( newEditor => {
-                            CKeditors[ 'comment' + id ] = newEditor
-                            
-                            
-                        })
-                        .catch( error => {
-                            console.error( );
-                        })
-                }
-    function new_comment(){
-
-                    var comment = CKeditors['comment0'].getData();
-                    if(comment.length == 0){
-                        alert("A comment canot be blank")
-                        return
-                    }
-                    console.log(comment)
-                    @this.set('comment',comment)
-                    clearData(0)
-                }
-
-    function clearData(id){
-
-                CKeditors['comment'+ id].setData('')
-                
-            }
     
-    function insertKBlink(title, url, id){
-                    editor = CKeditors['comment'+ id]
-                    editor.model.change( writer => {
-                        const insertPosition = editor.model.document.selection.getFirstPosition();
-                        writer.insertText( title, { linkHref: url }, insertPosition );
-                    } );
-                }
-    function destroyEditor(id){
-        editor = CKeditors['comment'+ id].destroy()
-    }
-
-
     createNewEditor(0)
 
 
