@@ -5,6 +5,13 @@
     const CKeditors = {}
     const mentionArray = []
 
+    document.addEventListener("DOMContentLoaded", function() {
+        
+            fetchAgents()
+
+            createNewEditor(0)
+    })
+
 
     function createNewEditor(id){
                     return ClassicEditor
@@ -13,6 +20,7 @@
                         addTargetToExternalLinks: true
                     },
                     mention: {
+                        dropdownLimit: 4,
                             feeds: [
                                 {
                                     marker: '@',
@@ -88,14 +96,7 @@
     } );
 }
 
-const items = [
-    { id: '@swarley', userId: '1', name: 'Barney Stinson', link: 'https://www.imdb.com/title/tt0460649/characters/nm0000439' },
-    { id: '@lilypad', userId: '2', name: 'Lily Aldrin', link: 'https://www.imdb.com/title/tt0460649/characters/nm0004989' },
-    { id: '@marry', userId: '3', name: 'Marry Ann Lewis', link: 'https://www.imdb.com/title/tt0460649/characters/nm1130627' },
-    { id: '@marshmallow', userId: '4', name: 'Marshall Eriksen', link: 'https://www.imdb.com/title/tt0460649/characters/nm0781981' },
-    { id: '@rsparkles', userId: '5', name: 'Robin Scherbatsky', link: 'https://www.imdb.com/title/tt0460649/characters/nm1130627' },
-    { id: '@tdog', userId: '6', name: 'Ted Mosby', link: 'https://www.imdb.com/title/tt0460649/characters/nm1102140' }
-];
+var items = [];
 
 function getFeedItems( queryText ) {
     // As an example of an asynchronous action, return a promise
@@ -145,26 +146,53 @@ function customItemRenderer( item ) {
                 
     function new_comment(){
 
-                    var comment = CKeditors['comment0'].getData();
-                    var parsedHTML = new DOMParser().parseFromString(comment, 'text/html');
-                    var mentions = parsedHTML.querySelectorAll('.mention');
+        var comment = CKeditors['comment0'].getData();
+        var parsedHTML = new DOMParser().parseFromString(comment, 'text/html');
+        var mentions = parsedHTML.querySelectorAll('.mention');
 
-                    mentions.forEach(mention => mentionArray.push(mention.getAttribute("data-user-id")) 
-                    );
-                    
-                    console.log(mentionArray)
-                    mentionarray = []
-                    
-                    if(comment.length == 0){
-                        alert("A comment canot be blank!")
-                        return
-                    }
-                    
-                    @this.set('comment',comment)
-                    clearData(0)
-                }
+        mentions.forEach(mention => mentionArray.push(mention.getAttribute("data-user-id")) 
+        );
+        
+        console.log(mentionArray)
+        mentionarray = []
+        
+        if(comment.length == 0){
+            alert("A comment cannot be blank!")
+            return
+        }
+        
+        @this.set('comment',comment)
+        clearData(0)
+    }
 
-                
+    const fetchAgents = async () => {
+        try {
+            const response = await axios.post("/fetch");
+            items = response.data.agents
+            console.log(items);
+        } catch (err) {
+            // Handle Error Here
+            console.error(err);
+        }
+    };
+
+    /*
+    function fetchAgent(){
+        axios.post("/fetch")
+        .then(response => {
+            items = response.data.agents
+            console.log(items);
+        })
+        .catch(error=> {
+            console.log(error);
+        });
+        
+    }
+*/
+        
+
+
+               
     function updateComment(id){
             
                 var comment = CKeditors['comment'+id].getData();
@@ -297,5 +325,7 @@ function MyCustomUploadAdapterPlugin( editor ) {
         return new MyUploadAdapter( loader );
     };
 }
+
+
 
 </script>

@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('agent_groups', function (Blueprint $table) {
             $table->id();
+            $table->string('email');
             $table->boolean('auto_assign')->default(0);
             $table->string('assign_method')->default('round_robin');
             $table->integer('counter')->nullable();

@@ -32,9 +32,8 @@ Route::resource('ticket', 'App\Http\Controllers\TicketController')->middleware([
 
 Route::post('/image/upload', [App\Http\Controllers\UploadController::class, 'image'])->middleware(['auth'])->name('image.upload');
 
-
+Route::post('/fetch', [App\Http\Controllers\AxiosController::class, 'fetchData'])->middleware(['auth'])->name('fetch.data');
 
 route::get('/test', [App\Http\Controllers\TestController::class, 'index']);
-
 
 require __DIR__ . '/auth.php';

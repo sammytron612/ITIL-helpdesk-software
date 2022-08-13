@@ -21,7 +21,7 @@
                         <div class="py-3">
                             <ul>
                                 @foreach($groupResults as $group)
-                                    <button wire:click="assignToGroup({{$group->id}})" class="w-full p-1 text-left hover:bg-slate-200"><li>{{$group->description}}</li></button>
+                                    <button wire:click="assignToGroup({{$group->id}})" class="w-full p-1 text-left hover:bg-slate-200"><li>{{$group->name}}</li></button>
                                 @endforeach
                             </ul>
                         </div>

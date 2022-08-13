@@ -47,13 +47,13 @@
                             </div>
                             <textarea class="hidden" id="comment{{$comment->id}}">{{$comment->comment}}</textarea>
 
-                            <div x-transition.duration.500ms x-on:expand.window="openComment = $event.detail.expanded" x-show="!newEditor && openComment" class="p-6 border comments">
+                            <div x-transition.duration.500ms x-on:expand.window="openComment = $event.detail.expanded" x-show="!newEditor && openComment" class="p-6 border rounded-md shadow-md border-slate-400 comments">
                                 {!! $comment->comment !!}
                             </div>
                             
                             <button x-show="newEditor" x-on:click="updateComment({{$comment->id}});updates = true; comment = false; newEditor = false; kbOpen=false; destroyEditor({{$comment->id}})" class="mt-2 btn-primary">Update</button>
                             <button x-show="newEditor" x-on:click="updates = true; comment = false; newEditor = false; kbOpen=false; destroyEditor({{$comment->id}})" class="mt-2 btn-secondary">close</button>
-                            
+                            <button x-show="newEditor" class="px-4 py-2 mt-3 btn-secondary">private padlock</button>
                         </div>
                     </div>
                 @endforeach
@@ -71,7 +71,8 @@
                 <textarea id="comment0">
                 </textarea>
                 <button x-on:click="new_comment();updates = true; comment = false" class="px-4 py-2 mt-3 btn-primary">Post</button>
-                <button x-on:click="updates = true; comment = false" class="px-4 py-2 mt-3 btn-secondary">Cancel</button>
+                <button x-on:click="updates = true; comment = false" class="px-4 py-2 mt-3 btn-secondary">Close</button>
+                <button x-on:click="" class="px-4 py-2 mt-3 btn-secondary">private padlock</button>
             </div>
             
         </div>
@@ -79,9 +80,6 @@
     @include('js.ckeditor')
 
     <script>
-
-    
-    createNewEditor(0)
 
 
     function page() {

@@ -11,7 +11,7 @@ class agent_group extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['description','auto_assign','assign_method','counter'];
+    protected $fillable = ['email','name','auto_assign','assign_method','counter'];
 
     public function incident()
     {

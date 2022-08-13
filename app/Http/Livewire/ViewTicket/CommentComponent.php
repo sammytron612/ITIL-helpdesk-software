@@ -39,4 +39,5 @@ class CommentComponent extends Component
         $update->comment = $comment;
         $update->save();
     }
+
 }
