@@ -3,8 +3,7 @@
 <script>
     
     const CKeditors = {}
-    const mentionArray = []
-
+    var mentionArray = [];
     document.addEventListener("DOMContentLoaded", function() {
         
             fetchAgents()
@@ -143,26 +142,47 @@ function customItemRenderer( item ) {
 
     return itemElement;
 }
-                
-    function new_comment(){
 
-        var comment = CKeditors['comment0'].getData();
+    function parseMentions(id)
+    {
+        var comment = CKeditors['comment'+id].getData();
         var parsedHTML = new DOMParser().parseFromString(comment, 'text/html');
         var mentions = parsedHTML.querySelectorAll('.mention');
 
-        mentions.forEach(mention => mentionArray.push(mention.getAttribute("data-user-id")) 
+        mentions.forEach(mention => mentionArray.push([{'id': mention.getAttribute("data-user-id")}, {'name': mention.getAttribute("data-mention").substring(1)}]) 
         );
-        
-        console.log(mentionArray)
-        mentionarray = []
-        
+        lastMention = mentionArray.at(-1)
+        console.log(lastMention)
+        return [comment, lastMention]
+    }
+                
+    function new_comment(){
+
+        data = parseMentions(0)
+        comment = data[0]
+        lastMention = data[1]
+
         if(comment.length == 0){
             alert("A comment cannot be blank!")
             return
         }
         
-        @this.set('comment',comment)
+        @this.newComment(comment, lastMention)
         clearData(0)
+    }
+
+    function updateComment(id){
+            
+        data = parseMentions(id)
+        comment = data[0]
+        lastMention = data[1]
+
+        if(comment.length == 0){
+                alert("A comment cannot be blank!")
+                return
+            }
+        console.log(comment)
+        @this.updateComment(id,comment, lastMention)
     }
 
     const fetchAgents = async () => {
@@ -175,6 +195,20 @@ function customItemRenderer( item ) {
             console.error(err);
         }
     };
+
+
+    const updateLock = async (id) => {
+        try {
+            const data = { id: 'id' };
+            const response = await axios.post("/update-lock/"+id);
+            console.log(response.data);
+            
+        } catch (err) {
+            // Handle Error Here
+            console.error(err);
+        }
+    };
+
 
     /*
     function fetchAgent(){
@@ -190,19 +224,6 @@ function customItemRenderer( item ) {
     }
 */
         
-
-
-               
-    function updateComment(id){
-            
-                var comment = CKeditors['comment'+id].getData();
-                if(comment.length == 0){
-                        alert("A comment canot be blank!")
-                        return
-                    }
-                console.log(comment)
-                @this.commentUpdated(id,comment)
-            }
 
     function clearData(id){
 

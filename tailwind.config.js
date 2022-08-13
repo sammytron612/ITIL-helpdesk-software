@@ -24,6 +24,15 @@ module.exports = {
             },
         },
     },
+    tooltipArrows: theme => ({
+        'arrow': {
+            borderColor: theme('colors.gray.400'),
+            borderWidth: 1,
+            backgroundColor: theme('white'),
+            size: 10,
+            offset: 10
+        },
+    }),
 
-    plugins: [require('@tailwindcss/forms')],
+    plugins: [require('@tailwindcss/forms')]
 };

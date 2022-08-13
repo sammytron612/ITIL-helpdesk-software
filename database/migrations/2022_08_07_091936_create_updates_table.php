@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('comment');
             $table->bigInteger('incident_no');
             $table->integer('user_id');
+            $table->boolean('public')->default(1);
             $table->timestamps();
         });
     }

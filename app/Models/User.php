@@ -66,4 +66,9 @@ class User extends Authenticatable
     {
         return $this->admin == 1;
     }
+
+    public function isAgent()
+    {
+        return $this->role == 'agent';
+    }
 }

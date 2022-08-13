@@ -114,8 +114,11 @@ class TicketController extends Controller
      */
     public function edit(incidents $ticket)
     {
-        $ticket->load('ticket_updates');
-        
+        /*
+        $ticket->load(['ticket_updates' => function($query) {
+            $query->orderBy('created_at');
+        }]);
+        */
         return view('ticket.edit-ticket', compact('ticket'));
     }
 

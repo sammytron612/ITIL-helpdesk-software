@@ -10,11 +10,11 @@ class updates extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['comment', 'incident_no','user_id'];
+    protected $fillable = ['comment', 'incident_no','user_id','public'];
 
     public function incident()
     {
-        return $this->belongsTo(incidents::class,'id');
+        return $this->belongsTo(incidents::class,'incident_no');
     }
 
     public function user()
@@ -25,5 +25,10 @@ class updates extends Model
     public function isMyComment()
     {
         return $this->user_id == Auth::id();
+    }
+
+    public function isPublic()
+    {
+        return $this->public;
     }
 }

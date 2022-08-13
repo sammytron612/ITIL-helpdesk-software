@@ -31,6 +31,7 @@ class Assign extends Component
 
     public function updateAssigned($desc)
     {
+       
         $this->showing = $desc;
 
         return;

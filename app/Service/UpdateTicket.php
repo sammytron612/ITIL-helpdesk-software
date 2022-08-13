@@ -1,7 +1,7 @@
 <?php
 namespace App\Service;
 
-
+use App\Models\incidents;
 use App\Models\status_history;
 use Auth;
 
@@ -50,7 +50,7 @@ class UpdateTicket
         ];
 
         status_history::create($history);
-
+        
         return $incident->assigned->name;
 
     }
@@ -70,8 +70,8 @@ class UpdateTicket
         ];
 
         status_history::create($history);
-
-        return $incident->group->description;
+        //dd($incident);
+        return $incident->group->name;
     }
 
     public function resolve($incident)

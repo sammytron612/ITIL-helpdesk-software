@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\agent_group;
-
+use App\Models\updates;
 
 class AxiosController extends Controller
 {
@@ -38,5 +38,18 @@ class AxiosController extends Controller
         
         
         return response()->json(['agents' => $array]);
+    }
+
+    public function updateLock($id)
+    {
+        $comment = updates::find($id);
+
+        $lock = $comment->public;
+        $lock = ! $lock;
+
+        $comment->public = $lock;
+        $comment->save();
+
+        return response()->json(['status' => 'success']);
     }
 }
