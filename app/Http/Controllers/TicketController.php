@@ -61,6 +61,7 @@ class TicketController extends Controller
             'category' => 'required',
             'priority' => 'required',
             'comment' => 'required',
+            'site' => 'required'
         ]);
 
 

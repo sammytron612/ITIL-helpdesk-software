@@ -52,7 +52,7 @@ class Modal extends Component
         $this->reset('searchTerm');
         $this->emitTo('view-ticket.status-button','renderStatus');
 
-        $this->emitTo('view-ticket.assigned','updateAssigned', $desc);
+        $this->emit('updateAssigned', $desc);
         $this->dispatchBrowserEvent('update_success');
         
     }
@@ -66,7 +66,7 @@ class Modal extends Component
         $this->reset('searchTerm');
         $this->emitTo('view-ticket.status-button','renderStatus');
 
-        $this->emitTo('view-ticket.assigned','updateAssigned', $desc);
+        $this->emit('updateAssigned', $desc);
         $this->dispatchBrowserEvent('update_success');
         
         

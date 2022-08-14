@@ -34,6 +34,5 @@ class Assign extends Component
        
         $this->showing = $desc;
 
-        return;
     }
 }

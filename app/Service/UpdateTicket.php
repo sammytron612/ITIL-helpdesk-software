@@ -94,15 +94,25 @@ class UpdateTicket
 
     public function updateIncident($incident, $status)
     {
+        
         $incident->status = $status;
+        $incident->assigned_to = Auth::id();
         $incident->save();
-        $history = status_history::where('incidet_id', $incident->id)->orderBy('created_at','desc')->first();
+        $history = status_history::where('incident_id', $incident->id)->orderBy('created_at','desc')->first();
 
-        $assigned_to = $history->assgined_to;
-        $assigned_group = $history->assgined_group;
+        if(!$history)
+        {
+            $assigned_to = Auth::id();
+            $assigned_group = NULL;
+        }else
+        {
+            $assigned_to = $history->assigned_to;
+            $assigned_group = $history->assigned_group;
+        }
+        
 
         $history = ['incident_id' => $incident->id,
-                'status' => 5,
+                'status' => $status,
                 'user_id' => Auth::id(),
                 'assigned_to' => $assigned_to,
                 'assigned_group' => $assigned_group

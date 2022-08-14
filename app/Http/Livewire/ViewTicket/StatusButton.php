@@ -62,8 +62,8 @@ class StatusButton extends Component
         {  //everything else //
 
             $temp = status_action::find($this->chosenAction);
-
             $ticket->updateIncident($this->incident, $temp->status->id);
+            $this->emit('updateAssigned',Auth::user()->name);
             $this->dispatchBrowserEvent('update-success');
             $this->chosenAction = 0;
             
