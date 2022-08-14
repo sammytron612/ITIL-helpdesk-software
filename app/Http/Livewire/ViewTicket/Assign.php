@@ -24,7 +24,7 @@ class Assign extends Component
     public function render()
     {
 
-         $this->incident->assigned_to ? $this->showing = $this->incident->assigned->name : $this->showing = $this->incident->group->name;
+         $this->incident->assigned_to ? $this->showing = $this->incident->assigned?->name : $this->showing = $this->incident->group?->name;
 
         return view('livewire.view-ticket.assign');
     }

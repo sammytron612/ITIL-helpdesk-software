@@ -62,6 +62,21 @@ class User extends Authenticatable
         return $this->belongTo(updates::class,'id');
     }
 
+    public function history_status()
+    {
+        return $this->hasOne(status_history::class,'status');
+    }
+
+    public function history_actioned_by()
+    {
+        return $this->belongsTo(User::class, 'user_id','id');
+    }
+
+    public function history_assigned_to()
+    {
+        return $this->belongsTo(User::class, 'assigned_to','id');
+    }
+
     public function isAdmin()
     {
         return $this->admin == 1;

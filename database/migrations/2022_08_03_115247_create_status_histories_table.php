@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('incident_id');
             $table->integer('status');
+            $table->integer('old_status');
             $table->integer('user_id');
             $table->integer('assigned_to')->nullable();
             $table->integer('assigned_group')->nullable();

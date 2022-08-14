@@ -30,7 +30,6 @@ class IncidentTable extends Component
 
     public function render()
     {
-
         return view('livewire.incidents.incident-table', ['incidents' => $this->incidents]);
     }
 

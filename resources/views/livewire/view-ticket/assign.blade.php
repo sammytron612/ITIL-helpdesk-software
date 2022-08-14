@@ -1,3 +1,3 @@
 <div>
-    {{$showing}}
+    {{$showing ? $showing : 'none'}}
 </div>

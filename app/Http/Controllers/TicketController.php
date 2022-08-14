@@ -9,6 +9,7 @@ use App\Models\department;
 use App\Models\priority;
 use App\Models\sites;
 use App\Models\status_history;
+use Illuminate\Auth\Access\AuthorizationException;
 
 
 class TicketController extends Controller
@@ -114,6 +115,11 @@ class TicketController extends Controller
      */
     public function edit(incidents $ticket)
     {
+        throw_if(
+            !Auth::user()->isAdmin() && $ticket->requestor != Auth::id(),
+            AuthorizationException::class,
+            'You are not allowed to access this.'
+        );
         /*
         $ticket->load(['ticket_updates' => function($query) {
             $query->orderBy('created_at');

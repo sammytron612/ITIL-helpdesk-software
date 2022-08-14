@@ -1,5 +1,5 @@
 <div x-data="page()">
-    <div x-data="{ updates: true, comment: false, details: false}">
+    <div x-data="{ updates: false, comment: false, details: true}">
         <div class="flex flex-wrap justify-between mt-5">
             <div class="flex">
                 <h2 x-on:click="updates = true; comment = false; details = false" :class="updates ? 'border-b-4 border-cyan-400' : '' " class="py-3 font-bold text-1xl md:text-1xl hover:cursor-pointer">UPDATES ({{count($comments) - 1}})</h2>
@@ -18,7 +18,7 @@
                     {{ \Carbon\Carbon::parse($comments->last()->created_at)->format('d F Y g:i:A')}}
                 </div>
             </div>
-            <div x-transition.duration.500ms x-show="details" class="p-4 mt-2 mb-16 border-2 rounded-lg shadow-md border-slate-300 ">
+            <div x-transition.duration.500ms x-show="details" class="p-4 mt-2 mb-24 border-2 rounded-lg shadow-md border-slate-300 ">
                 {!! $comments->last()->comment !!}
             </div>
             <div x-transition.duration.500ms x-show="updates">

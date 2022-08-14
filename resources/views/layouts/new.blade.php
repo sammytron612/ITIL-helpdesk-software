@@ -12,10 +12,41 @@
     <script defer src="https://unpkg.com/@alpinejs/persist@3.x.x/dist/cdn.min.js"></script>
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
+  
     @livewireStyles
     <!-- Styles -->
     @vite('resources/js/app.js')
+    <style>
+    .ck-content{
+        height: 130px;
+    }
+
+    [x-cloak] {
+    display: none;
+    }
+      .arrow-top {
+        position: relative;
+    }
     
+    .arrow-top:before, .arrow-top:after {
+        content: "";
+        position: absolute;
+        left: 16px;
+        top: -20px;
+        border-top: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-bottom: 10px solid gray;
+        border-left: 10px solid transparent;
+    }
+    
+    .arrow-top:after {
+      border-bottom: 10px solid white;
+      top: -19px;
+    }
+
+    
+
+    </style>
 
 </head>
 

@@ -18,6 +18,11 @@ class agent_group extends Model
         return $this->belongs_to(incidents::class, 'assigned_group','id');
     }
 
+    public function history_assigned_group()
+    {
+        return $this->belongsTo(status_history::class, 'assigned_group','id');
+    }
+
     public function isAutoAssign()
     {
         return $this->auto_assign == 1;

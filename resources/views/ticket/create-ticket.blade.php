@@ -104,17 +104,9 @@
     </form>
 
     
-@include('js.ckeditor')
+@include('js.base-editor')
 
-<script>
-    ClassicEditor
-            .create( document.querySelector( '#description' ),{
-                extraPlugins: [ MyCustomUploadAdapterPlugin ]
-            })
-            .catch( error => {
-                console.error( );
-            })
-</script>
+
 
     
 <!--

@@ -20,20 +20,8 @@
     </div>
 
     @if(Auth::user()->isAgent())
-        <div x-cloak  x-data="{drawer: false}" class="relative">
-            <div x-on:click.outside="drawer = false" class="fixed right-0 z-0 w-8 px-1 py-2 text-white bg-blue-500 border-r rounded-tr-lg rounded-br-lg shadow-md hover:cursor-pointer hover:bg-blue-700 border-y border-stone-400 top-[165px] md:top-36 vertical-text" x-on:click="drawer = ! drawer">History</div>
-            <div x-transition:enter="transition duration-500"
-                x-transition:enter-start="transform translate-x-full"
-                x-transition:enter-end="transform translate-x-0"
-                x-transition:leave="transition duration-500"
-                x-show="drawer" class="fixed right-0 z-40 w-64 h-full px-4 py-2 border rounded-tl-lg rounded-bl-lg shadow-md top-36 bg-slate-50 border-stone-400">
-                <div class="hover:cursor-pointer" x:on-click="drawer = false">X</div>
-                <div>
-                    <p>kjefkjfh fekjfe</p>
-                </div>
-            </div>
-        </div>
-    
+        
+    @livewire('view-ticket.history',['incident' => $ticket])
 
     <div x-data="{drawer: false}" class="relative">
         <div x-on:click.outside="drawer = false" class="fixed right-0 z-0 w-8 px-1 py-2 text-white bg-green-500 border-r rounded-tr-lg rounded-br-lg shadow-md hover:cursor-pointer hover:bg-green-700 border-y border-stone-400 top-[240px] md:top-56 vertical-text" x-on:click="drawer = ! drawer">SLA</div>
@@ -47,7 +35,7 @@
                 <p>jdkjfkjdfdldj dlkj fdlj</p>
                </div>
         </div>
-    </div>
+
     @endif
 
 
