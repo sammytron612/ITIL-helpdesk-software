@@ -36,3 +36,16 @@ window.axios.defaults.headers.common = {
 
 // ref: https://tobiasahlin.com/blog/move-from-jquery-to-vanilla-javascript/#document-ready
 
+import Echo from 'laravel-echo';
+
+import Pusher from 'pusher-js';
+window.Pusher = Pusher;
+
+window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: '131169',
+    wsHost: 'localhost',
+    wsPort: 6001,
+    forceTLS: false,
+});
+
