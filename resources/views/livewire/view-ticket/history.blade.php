@@ -6,7 +6,9 @@
         x-transition:leave="transition duration-500"
         x-show="historyDrawer" class="fixed right-0 z-40 w-64 h-full py-2 pl-4 pr-3 overflow-y-auto border shadow-md top-36 bg-slate-50 border-stone-300">
         <div class="text-right text-black hover:cursor-pointer left-3" x:on-click="historyDrawer = false">X</div>
+        
         <div class="mt-2">
+
         
         <div class="h-auto border-l-4 border-blue-400">
 
@@ -20,6 +22,8 @@
                 </div>
             </div>
 
+            
+
             @foreach($histories as $history)
                 <div class="relative mt-5 ml-2">
                     <div class="absolute -top-1 -left-[16px] h-3 w-3 rounded-full border-2 border-blue-400 bg-blue-200"></div>
@@ -30,7 +34,7 @@
                                 <div><span class="font-bold">{{$history['user']}}</span> set status to <span class="italic font-bold">'{{$history['status']}}'</span></div>
                             @else
                                 <div><span class="font-bold">{{$history['user']}}</span> re assigned incident to <span class="font-bold">{{$history['agent'] ? $history['agent'] : $history['group']}}</span></div>
-                                <div>Status is set to <span class="font-bold">New</span></div>
+                                <div>Status is set to <span class="italic font-bold">'New'</span></div>
                             @endif
                         </div>
                     </div>

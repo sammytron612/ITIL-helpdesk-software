@@ -23,11 +23,11 @@ class History extends Component
 
          
             $count = count($histories);
-            //dd($count);
+            //dd($histories);
             for($i = 1;$i < $count;$i++)
             {
            
-                if($histories[$i]->assigned_to == $histories[$i-1]->assigned_to || $histories[$i]->assigned_group == $histories[$i-1]->assigned_group)
+                if($histories[$i]->assigned_to === $histories[$i-1]->assigned_to || $histories[$i]->assigned_group === $histories[$i-1]->assigned_group)
                 {
                 
                     $array[] = ['type' => 'status', 
@@ -37,7 +37,7 @@ class History extends Component
                             'status' => $histories[$i]->status_name?->status,
                             'time' => $histories[$i]->created_at];
                 }
-                else 
+                if($histories[$i]->assigned_to !== $histories[$i-1]->assigned_to || $histories[$i]->assigned_group !== $histories[$i-1]->assigned_group) 
                 {
                     
                     // re assign
