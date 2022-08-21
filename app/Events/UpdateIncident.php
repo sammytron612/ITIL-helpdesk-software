@@ -7,11 +7,10 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class SendNotification implements ShouldBroadcast
+class UpdateIncident implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -20,7 +19,6 @@ class SendNotification implements ShouldBroadcast
      *
      * @return void
      */
-
     public $userId;
 
     public function __construct($userId)
@@ -35,6 +33,6 @@ class SendNotification implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('notification.'. $this->userId);
+        return new PrivateChannel('incidentupdate.'. $this->userId);
     }
 }

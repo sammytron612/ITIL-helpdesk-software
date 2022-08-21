@@ -9,8 +9,11 @@
                 </svg>
             </button>
         </div>
-        <div class="w-screen px-4 py-4 text-white bg-slate-900">
-        Service Desk
+        <div :class="open ? 'w-[calc(100vw_-_5rem)] md:w-[calc(100vw_-_15rem)]' : 'w-[calc(100vw_-_3rem)] md:w-[calc(100vw_-_5rem)]'" class="flex justify-between px-4 py-4 text-white bg-slate-900">
+            <div>Service Desk</div>
+        
+            <div>@livewire('notifications.socket-notification')</div>
+        
         </div>
     </div>
 

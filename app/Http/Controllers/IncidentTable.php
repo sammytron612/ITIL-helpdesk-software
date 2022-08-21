@@ -18,15 +18,22 @@ class IncidentTable extends Component
 
     public $numberShown = 25;
 
+    private $userId;
     
 
-    protected $listeners = ['changeSearch'];
+    public function getListeners()
+    {
+        return ["echo-private:notification.{$this->userId},SendNotification" => 'testEcho',
+        ];
+    }
+
+    //protected $listeners = ['changeSearch'];
 
 
     public function mount()
     {
         $this->incidents = incidents::paginate(25);
-
+        $this->userId = Auth::user()->id;
     }
 
     public function render()
@@ -51,5 +58,9 @@ class IncidentTable extends Component
         }
     }
 
-   
+    public function testEcho()
+    {
+
+        dd('worked');
+    }
 }
