@@ -44,7 +44,7 @@ window.Pusher = Pusher;
 window.Echo = new Echo({
     broadcaster: 'pusher',
     key: '131169',
-    wsHost: '192.168.2.11',
+    wsHost: '52.56.42.198',
     wsPort: '6001',
     forceTLS: false,
 });

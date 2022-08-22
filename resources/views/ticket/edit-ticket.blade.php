@@ -54,7 +54,9 @@
                     {{$ticket->priorities->priority}}
                 </x-priority>
             </div>
+            
             @livewire('view-ticket.status-button', ['incident_no' => $ticket->id])
+            
         </div>
 
         <div class="order-1 md:order-2">
@@ -114,10 +116,7 @@
     @livewire('view-ticket.comment-component',['ticket' => $ticket])
     
 
-    @livewire('view-ticket.modal', ['incident_id' => $ticket->id])
-
-
-    
+    @livewire('view-ticket.modal', ['incident_id' => $ticket->id]);
 
     
 
