@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\updates;
 use Auth;
 use App\Service\UpdateTicket as updateTicket;
+use App\Events\NewComment;
 
 class CommentComponent extends Component
 {

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Broadcast;
-
+use App\Broadcasting\NewCommentChannel;
 /*
 |--------------------------------------------------------------------------
 | Broadcast Channels
@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Broadcast;
 | used to check if an authenticated user can listen to the channel.
 |
 */
-
+/*
 Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
@@ -20,11 +20,13 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 Broadcast::channel('notification.{userId}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
-
-Broadcast::channel('incidentupdate.{userId}', function ($user, $id) {
-    return (int) $user->id === (int) $id;
+*/
+//Broadcast::channel('newcomment.{userId}', NewCommentChannel::class);
+Broadcast::channel('newcomment.{userId}', function ($user, $userId) {
+    
+    return (int) $user->id === (int) $userId;
+   
 });
-
 Broadcast::channel('incidentnew.{userId}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });

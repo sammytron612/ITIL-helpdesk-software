@@ -1,6 +1,6 @@
 <div x-data="{ open: $persist(false) }">  
     <div class="fixed top-0 z-30 flex">
-        <div :class="open ? 'w-16 md:w-56' : 'w-0 md:w-16'" class="flex items-center justify-center px-4 py-4 transition-all duration-300 ease-in-out bg-yellow-500">
+        <div :class="open ? 'w-16 md:w-56' : 'w-0 md:w-16'" class="flex items-center justify-center px-4 py-1 transition-all duration-300 ease-in-out bg-yellow-500">
             <button x-on:click="open = ! open" class="bg-blue">
                 <svg class="bg-yellow-500" viewBox="0 0 100 80" width="20" height="20">
                     <rect width="100" height="20" rx="10"></rect>
@@ -9,8 +9,8 @@
                 </svg>
             </button>
         </div>
-        <div :class="open ? 'w-[calc(100vw_-_5rem)] md:w-[calc(100vw_-_15rem)]' : 'w-[calc(100vw_-_3rem)] md:w-[calc(100vw_-_5rem)]'" class="flex justify-between px-4 py-4 text-white bg-slate-900">
-            <div>Service Desk</div>
+        <div :class="open ? 'w-[calc(100vw_-_5rem)] md:w-[calc(100vw_-_15rem)]' : 'w-[calc(100vw_-_3rem)] md:w-[calc(100vw_-_5rem)]'" class="flex items-center justify-between px-4 py-2 text-white bg-slate-900">
+            <div>{{ Auth::user()->name}} Service Desk</div>
         
             <div>@livewire('notifications.socket-notification')</div>
         

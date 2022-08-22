@@ -9,8 +9,11 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Auth;
+use App\Models\User;
 
-class UpdateIncident implements ShouldBroadcast
+
+class NewComment implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -19,11 +22,16 @@ class UpdateIncident implements ShouldBroadcast
      *
      * @return void
      */
-    public $userId;
+    
+    public $user;
+    public $message;
+    public $incidentId;
 
-    public function __construct($userId)
+    public function __construct(User $user, $message, $incidentId)
     {
-        $this->userId = $userId;
+        $this->user  = $user;
+        $this->message = $message;
+        $this->incidentId = $incidentId;
     }
 
     /**
@@ -31,8 +39,15 @@ class UpdateIncident implements ShouldBroadcast
      *
      * @return \Illuminate\Broadcasting\Channel|array
      */
+    
+    
+
     public function broadcastOn()
     {
-        return new PrivateChannel('incidentupdate.'. $this->userId);
+        
+        return 
+        [
+            new PrivateChannel('newcomment.'. $this->user->id),
+        ];
     }
 }
