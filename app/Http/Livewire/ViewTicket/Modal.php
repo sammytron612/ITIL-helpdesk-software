@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\User;
 use App\Models\agent_group;
 use App\Models\incidents;
+use App\Events\ChangeOwnershipAgent;
 
 use App\Service\UpdateTicket;
 
@@ -54,6 +55,8 @@ class Modal extends Component
 
         $this->emit('updateAssigned', $desc);
         $this->dispatchBrowserEvent('update_success');
+
+        
         
     }
 

@@ -4,6 +4,7 @@ namespace App\Service;
 use App\Models\incidents;
 use App\Models\status_history;
 use Auth;
+use App\Events\ChangeOwnershipAgent;
 
 class UpdateTicket
 {
@@ -31,6 +32,8 @@ class UpdateTicket
 
         status_history::create($history);
 
+        $this->changeOwnershipAgent($incident);
+
         return $incident->assigned->name;
       
     }
@@ -51,6 +54,8 @@ class UpdateTicket
 
         status_history::create($history);
         
+        $this->changeOwnershipAgent($incident);
+
         return $incident->assigned->name;
 
     }
@@ -121,6 +126,13 @@ class UpdateTicket
 
         status_history::create($history);
 
+        return;
+    }
+
+    private function changeOwnershipAgent($incident)
+    {
+       
+        event(new ChangeOwnershipAgent($incident));
         return;
     }
     

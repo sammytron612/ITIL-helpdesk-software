@@ -13,11 +13,12 @@ class TestComponent extends Component
 
     public function render()
     {
-        $r = incidents::where('id',37)->first();
-        $requestor = $r->requestor;
-        $user = User::where('id',$requestor)->first();
+        $incident = incidents::find(37);
+       
+        $pushTo = $incident->requesting_user;
+        
         $message = "hjhjh";
-        event(new NewComment($user, $message, 37)); 
+        event(new NewComment($pushTo, 37)); 
         return view('livewire.test.test-component');
     }
 

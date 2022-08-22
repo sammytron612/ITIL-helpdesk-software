@@ -27,6 +27,7 @@ Broadcast::channel('newcomment.{userId}', function ($user, $userId) {
     return (int) $user->id === (int) $userId;
    
 });
-Broadcast::channel('incidentnew.{userId}', function ($user, $id) {
-    return (int) $user->id === (int) $id;
+
+Broadcast::channel('changeownershipagent.{userId}', function ($user, $userId) {
+    return (int) $user->id === (int) $userId;
 });

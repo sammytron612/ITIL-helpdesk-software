@@ -18,7 +18,7 @@
             <div class="md:col-span-3">
                 <div class="lg:w-2/3">
                     <label for="title" class="mb-2 text-sm font-bold text-gray-900 dark:text-gray-400">
-                        Title<span class="ml-1 text-xs text-red-500 animtate-blink">*</span>
+                        Brief description of problem<span class="ml-1 text-xs text-red-500 animtate-blink">*</span>
                         @error('title')
                             <span class="ml-1 text-xs text-red-600 animate-ping">{{ $message }}</span>
                         @enderror

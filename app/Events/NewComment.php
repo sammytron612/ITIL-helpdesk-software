@@ -24,14 +24,16 @@ class NewComment implements ShouldBroadcast
      */
     
     public $user;
-    public $message;
     public $incidentId;
+    public $title;
 
-    public function __construct(User $user, $message, $incidentId)
+    public function __construct(User $user, $incidentId, $title)
     {
+        //dd('stop');
         $this->user  = $user;
-        $this->message = $message;
+        //$this->message = $message;
         $this->incidentId = $incidentId;
+        $this->title = $title;
     }
 
     /**

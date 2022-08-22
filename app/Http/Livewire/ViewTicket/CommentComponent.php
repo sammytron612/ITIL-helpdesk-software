@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\updates;
 use Auth;
 use App\Service\UpdateTicket as updateTicket;
+use App\Models\incidents;
 use App\Events\NewComment;
 
 class CommentComponent extends Component
@@ -55,8 +56,6 @@ class CommentComponent extends Component
                 $this->emitTo('view-ticket.assign', 'updateAssigned', $name);
             }
 
-        
-
         $update = ['comment' => $comment,
                    'incident_no' => $this->ticket->id,
                    'user_id' => Auth::id(),
@@ -67,6 +66,10 @@ class CommentComponent extends Component
         updates::create($update);
 
         $this->dispatchBrowserEvent('update-success');
+
+        $this->sendNotification($mention);
+
+        
     }
 
     public function updateComment(updates $update, $comment, $mention)
@@ -87,7 +90,14 @@ class CommentComponent extends Component
 
                 /////////////////// email and re-assign ticket /////////////
 
-                if($type == 'agent')
+                
+            }
+        
+        $update->comment = $comment;
+        $update->public = $this->public;
+        $update->save();
+
+        if($type == 'agent')
                 {
                     $updateTicket->assign_to($update->incident, $id);
                 }
@@ -96,15 +106,10 @@ class CommentComponent extends Component
                     
                 }
 
-                $this->emitTo('view-ticket.assign', 'updateAssigned', $name);
-            }
-        
-        $update->comment = $comment;
-        $update->public = $this->public;
-        $update->save();
-
+        $this->emitTo('view-ticket.assign', 'updateAssigned', $name);
         $this->dispatchBrowserEvent('update-success');
     }
+    
 
     public function publicToggle()
     {
@@ -119,6 +124,22 @@ class CommentComponent extends Component
         $update->save();
         
 
+    }
+
+    private function sendNotification($mention)
+    {
+        if(Auth::user()->isAgent() && !$mention)
+            {
+                event(new NewComment($this->ticket->requesting_user, $this->ticket->id, $this->ticket->title));
+                
+            }
+        elseif(!Auth::user()->isAgent() && !$mention)
+            {
+                //dd('stop');
+                event(new NewComment($this->ticket->assigned, $this->ticket->id, $this->ticket->title));
+            }
+
+        return;
     }
 
 }
