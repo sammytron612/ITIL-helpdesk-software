@@ -16,33 +16,33 @@ class UpdateTicket
      */
     public function assign_self($incident)
     {
-        
+
         $incident->status = 4;
-        $incident->assigned_to = Auth::id(); 
+        $incident->assigned_to = Auth::id();
         $incident->assigned_group = NULL;
         $incident->save();
-        
+
 
         $history = ['incident_id' => $incident->id,
                 'status' => 4,
                 'user_id' => Auth::id(),
                 'assigned_to' => Auth::id()
         ];
-        
+
 
         status_history::create($history);
 
         $this->changeOwnershipAgent($incident);
 
         return $incident->assigned->name;
-      
+
     }
 
     public function assign_to($incident, $user_id)
     {
-       
+
         $incident->status = 4;
-        $incident->assigned_to = $user_id; 
+        $incident->assigned_to = $user_id;
         $incident->assigned_group = NULL;
         $incident->save();
 
@@ -53,7 +53,7 @@ class UpdateTicket
         ];
 
         status_history::create($history);
-        
+
         $this->changeOwnershipAgent($incident);
 
         return $incident->assigned->name;
@@ -65,7 +65,7 @@ class UpdateTicket
 
         $incident->status = 1;
         $incident->assigned_to = NULL;
-        $incident->assigned_group = $group_id; 
+        $incident->assigned_group = $group_id;
         $incident->save();
 
         $history = ['incident_id' => $incident->id,
@@ -83,7 +83,7 @@ class UpdateTicket
     {
         $incident->status = 5;
         $incident->assigned_to = Auth::id();
-        $incident->assigned_group; 
+        $incident->assigned_group;
         $incident->save();
 
         $history = ['incident_id' => $incident->id,
@@ -99,7 +99,7 @@ class UpdateTicket
 
     public function updateIncident($incident, $status)
     {
-        
+
         $incident->status = $status;
         $incident->assigned_to = Auth::id();
         $incident->save();
@@ -114,14 +114,14 @@ class UpdateTicket
             $assigned_to = $history->assigned_to;
             $assigned_group = $history->assigned_group;
         }
-        
+
 
         $history = ['incident_id' => $incident->id,
                 'status' => $status,
                 'user_id' => Auth::id(),
                 'assigned_to' => $assigned_to,
                 'assigned_group' => $assigned_group
-                
+
         ];
 
         status_history::create($history);
@@ -131,9 +131,10 @@ class UpdateTicket
 
     private function changeOwnershipAgent($incident)
     {
-       
-        event(new ChangeOwnershipAgent($incident));
+
+        broadcast(new ChangeOwnershipAgent($incident))->toOthers();
+
         return;
     }
-    
+
 }

@@ -91,6 +91,7 @@ class SocketNotification extends Component
 
     public function changeOwnershipAgent($data)
     {
+
         $array = ['id' => $this->count,
                 'incidentId' => $data['incidentId'],
                 'message' => "Your Incident No:{$data['incidentId']} titled `{$data['title']}` has been assigned to {$data['name']}"

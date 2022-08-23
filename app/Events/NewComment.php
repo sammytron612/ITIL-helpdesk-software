@@ -22,7 +22,7 @@ class NewComment implements ShouldBroadcast
      *
      * @return void
      */
-    
+
     public $user;
     public $incidentId;
     public $title;
@@ -41,13 +41,13 @@ class NewComment implements ShouldBroadcast
      *
      * @return \Illuminate\Broadcasting\Channel|array
      */
-    
-    
+
+
 
     public function broadcastOn()
     {
-        
-        return 
+
+        return
         [
             new PrivateChannel('newcomment.'. $this->user->id),
         ];

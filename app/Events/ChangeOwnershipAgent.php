@@ -23,17 +23,19 @@ class ChangeOwnershipAgent implements ShouldBroadcast
     public $user;
     public $incidentId;
     public $title;
-    public $incident;
     public $name;
+    public $assigned_to;
+
 
     public function __construct($incident)
     {
-        //dd($incident->assigned->name);
-        $this->user  = $incident->requesting_user;
+
+        $this->user  = $incident->requestor;
         //$this->message = $message;
         $this->incidentId = $incident->id;
         $this->title = $incident->title;
         $this->name = $incident->assigned->name;
+        $this->assigned_to = $incident->assigned_to;
 
     }
 
@@ -44,6 +46,9 @@ class ChangeOwnershipAgent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('changeownershipagent.'. $this->user->id);
+        return [
+            new PrivateChannel('changeownershipagent.'. $this->user),
+            new PrivateChannel('changeownershipagent.'. $this->assigned_to)
+        ];
     }
 }

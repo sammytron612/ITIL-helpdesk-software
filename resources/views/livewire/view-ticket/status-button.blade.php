@@ -11,7 +11,13 @@
             <select wire:model="chosenAction" id="ticket-status" class="w-2 px-4 py-1 border-0 hover:cursor-pointer focus:border-0 focus:ring-0">
                 <option selected disabled class="bg-white" value="0"></option>
                 @foreach($status_actions as $action)
-                    <option class="bg-white" value="{{ $action->id }}">{{ $action->action }}</option>
+                    @if($action->action == "Assign to me")
+                        @if(Auth::id() != $incident->assigned_to)
+                            <option class="bg-white" value="{{ $action->id }}">{{ $action->action }}</option>
+                        @endif
+                        @else
+                        <option class="bg-white" value="{{ $action->id }}">{{ $action->action }}</option>
+                    @endif
                 @endforeach
             </select>
         </div>
