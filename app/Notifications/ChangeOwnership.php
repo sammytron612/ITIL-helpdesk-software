@@ -43,10 +43,8 @@ class ChangeOwnership extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject('Incident has been assigned')
-                    ->line('Your Incident, no '. $this->data['incidentId'])
-                    ->line('Titled `' . $this->data['title'])
-                    ->line('Has beed asssigned to ' . $this->data['name'] . '.')
+                    ->subject('Incident update')
+                    ->line($this->data['message'])
                     ->action('Check it out here ', url('/ticket/'. $this->data['incidentId'] . '/edit'))
                     ->line('Thank you for using helpdesk!');
     }

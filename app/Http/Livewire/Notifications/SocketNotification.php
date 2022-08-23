@@ -24,10 +24,7 @@ class SocketNotification extends Component
 
     public function getListeners()
     {
-        return ["echo-private:newcomment.{$this->user->id},NewComment" => 'newComment',
-                "echo-private:changeownershipagent.{$this->user->id},ChangeOwnershipAgent" => 'changeOwnershipAgent',
-
-        ];
+        return ["echo-private:incidentevent.{$this->user->id},IncidentEvent" => 'incidentEvent'];
     }
 
     public function render()
@@ -37,7 +34,7 @@ class SocketNotification extends Component
         {
 
             $this->count = count(session('notifications'));
-            $this->notifications = session('notifications');
+            $this->notifications = array_reverse(session('notifications'));
         }
 
 
@@ -50,19 +47,6 @@ class SocketNotification extends Component
 
     }
 
-    public function newComment($data)
-    {
-
-        $array = ['id' => $this->count,
-                'incidentId' => $data['incidentId'],
-                'message' => "A new comment has been added to Incident No:{$data['incidentId']} titled `" . $data['title'] ."`"];
-
-        session()->push('notifications',$array);
-
-
-        $this->user->notify(new NewComment($data));
-
-    }
 
     public function gotoIncident($incidentId,$id)
     {
@@ -89,12 +73,12 @@ class SocketNotification extends Component
 
     }
 
-    public function changeOwnershipAgent($data)
+    public function incidentEvent($data)
     {
 
         $array = ['id' => $this->count,
                 'incidentId' => $data['incidentId'],
-                'message' => "Your Incident No:{$data['incidentId']} titled `{$data['title']}` has been assigned to {$data['name']}"
+                'message' => $data['message']
             ];
 
         session()->push('notifications',$array);
@@ -103,9 +87,6 @@ class SocketNotification extends Component
 
     }
 
-    public function changeOwnershipGroup()
-    {
 
-    }
 
 }

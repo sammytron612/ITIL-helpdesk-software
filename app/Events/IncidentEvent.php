@@ -2,18 +2,15 @@
 
 namespace App\Events;
 
-use Illuminate\Broadcasting\Channel;
+
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use Auth;
-use App\Models\User;
 
 
-class NewComment implements ShouldBroadcast
+class IncidentEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -22,18 +19,17 @@ class NewComment implements ShouldBroadcast
      *
      * @return void
      */
-
-    public $user;
+    public $users;
     public $incidentId;
-    public $title;
+    public $message;
 
-    public function __construct(User $user, $incidentId, $title)
+
+    public function __construct($incidentId, $message, $users)
     {
-        //dd('stop');
-        $this->user  = $user;
-        //$this->message = $message;
+
+        $this->message = $message;
         $this->incidentId = $incidentId;
-        $this->title = $title;
+        $this->users = $users;
     }
 
     /**
@@ -41,15 +37,12 @@ class NewComment implements ShouldBroadcast
      *
      * @return \Illuminate\Broadcasting\Channel|array
      */
-
-
-
     public function broadcastOn()
     {
-
-        return
-        [
-            new PrivateChannel('newcomment.'. $this->user->id),
-        ];
+        foreach($this->users as $user)
+        {
+            $channels[] = new PrivateChannel('incidentevent.'. $user);
+        }
+        return $channels;
     }
 }

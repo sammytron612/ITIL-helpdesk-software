@@ -6,8 +6,8 @@ use Livewire\Component;
 use App\Models\updates;
 use Auth;
 use App\Service\UpdateTicket as updateTicket;
-use App\Models\incidents;
-use App\Events\NewComment;
+use App\Events\IncidentEvent;
+use App\Models\group_membership;
 
 class CommentComponent extends Component
 {
@@ -19,16 +19,16 @@ class CommentComponent extends Component
 
     public function render()
     {
-       
+
         $this->comments = updates::where('incident_no', $this->ticket->id)->orderBy('created_at','desc')->get();
-        
+
 
         return view('livewire.view-ticket.comment-component');
     }
 
     public function newComment($comment, $mention)
     {
-        
+
         if($mention)
             {
                 $updateTicket = new updateTicket;
@@ -50,7 +50,7 @@ class CommentComponent extends Component
                 }
                 else{
                     $updateTicket->assign_to_group($this->ticket, $id);
-                    
+
                 }
 
                 $this->emitTo('view-ticket.assign', 'updateAssigned', $name);
@@ -67,14 +67,14 @@ class CommentComponent extends Component
 
         $this->dispatchBrowserEvent('update-success');
 
-        $this->sendNotification($mention);
+        $this->sendNotification();
 
-        
+
     }
 
     public function updateComment(updates $update, $comment, $mention)
     {
-        
+
         if($mention)
             {
                 $updateTicket = new updateTicket;
@@ -90,9 +90,9 @@ class CommentComponent extends Component
 
                 /////////////////// email and re-assign ticket /////////////
 
-                
+
             }
-        
+
         $update->comment = $comment;
         $update->public = $this->public;
         $update->save();
@@ -103,13 +103,13 @@ class CommentComponent extends Component
                 }
                 else{
                     $updateTicket->assign_to_group($update->incident, $id);
-                    
+
                 }
 
         $this->emitTo('view-ticket.assign', 'updateAssigned', $name);
         $this->dispatchBrowserEvent('update-success');
     }
-    
+
 
     public function publicToggle()
     {
@@ -122,24 +122,36 @@ class CommentComponent extends Component
         $public = ! $public;
         $update->public = $public;
         $update->save();
-        
+
 
     }
 
-    private function sendNotification($mention)
+    private function sendNotification()
     {
-        if(Auth::user()->isAgent() && !$mention)
-            {
-                event(new NewComment($this->ticket->requesting_user, $this->ticket->id, $this->ticket->title));
-                
-            }
-        elseif(!Auth::user()->isAgent() && !$mention)
-            {
-                //dd('stop');
-                event(new NewComment($this->ticket->assigned, $this->ticket->id, $this->ticket->title));
-            }
+        if($this->ticket->assignedToAgent())
+        {
+            $users = $this->getUsers();
+        }
+        else {$users = $this->getUsersFromGroup();}
+
+        $incidentId = (int) $this->ticket->id;
+        $message = "A new comment has been added to incident no: {$this->ticket->id} titled `{$this->ticket->title}`";
+        broadcast(new IncidentEvent($incidentId,$message,$users))->toOthers();
 
         return;
+    }
+
+    private function getUsers()
+    {
+        return [$this->ticket->requestor, $this->ticket->assigned_to];
+    }
+
+    private function getUsersFromGroup()
+    {
+        $users = group_membership::where('agent_group', $this->ticket->assigned_group)->pluck('user_id')->toArray();
+        $users[] = $this->ticket->requestor;
+
+        return $users;
     }
 
 }

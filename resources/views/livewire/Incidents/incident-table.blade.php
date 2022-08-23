@@ -36,10 +36,6 @@
                     <th class="px-6 py-3 whitespace-nowrap">
                         DEPARTMENT
                     </th>
-                    <th class="px-6 py-3 whitespace-nowrap">
-                        ACTION
-                    </th>
-
                 </tr>
             </thead>
             <tbody x-data>
@@ -71,7 +67,7 @@
                             <x-priority :priority="$incident->priority">
                                 {{$incident->priorities->priority}}
                             </x-priority>
-                            
+
                         </td>
 
                         <td class="px-6 py-4">
@@ -107,7 +103,7 @@
             </tbody>
         </table>
         <div class="py-4 mt-2">
-
+        {{$incidents->links()}}
 
 
         </div>

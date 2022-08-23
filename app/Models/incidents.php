@@ -76,4 +76,9 @@ class incidents extends Model
     {
         return $this->hasMany(status_history::class,'incident_id');
     }
+
+    public function assignedToAgent()
+    {
+        return $this->assigned_to == true;
+    }
 }

@@ -47,7 +47,7 @@ class NewComment extends Notification
     {
         return (new MailMessage)
                     ->subject('New comment')
-                    ->line('A new comment has been added to you incident no: ' . $this->data['incidentId'])
+                    ->line('A new comment has been added to your incident no: ' . $this->data['incidentId'])
                     ->line('titled ' . $this->data['title'])
                     ->action('Check it out here ', url('/ticket/'. $this->data['incidentId'] . '/edit'))
                     ->line('Thank you for using helpdesk!');

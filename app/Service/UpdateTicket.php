@@ -1,10 +1,11 @@
 <?php
 namespace App\Service;
 
-use App\Models\incidents;
+
 use App\Models\status_history;
 use Auth;
-use App\Events\ChangeOwnershipAgent;
+use App\Events\IncidentEvent;
+use App\Models\group_membership;
 
 class UpdateTicket
 {
@@ -24,15 +25,16 @@ class UpdateTicket
 
 
         $history = ['incident_id' => $incident->id,
-                'status' => 4,
-                'user_id' => Auth::id(),
-                'assigned_to' => Auth::id()
+                    'status' => 4,
+                    'user_id' => Auth::id(),
+                    'assigned_to' => Auth::id()
         ];
 
 
         status_history::create($history);
 
-        $this->changeOwnershipAgent($incident);
+        $incident->refresh();
+        $this->newAssigned($incident);
 
         return $incident->assigned->name;
 
@@ -54,7 +56,8 @@ class UpdateTicket
 
         status_history::create($history);
 
-        $this->changeOwnershipAgent($incident);
+        $incident->refresh();
+        $this->newAssigned($incident);
 
         return $incident->assigned->name;
 
@@ -75,7 +78,10 @@ class UpdateTicket
         ];
 
         status_history::create($history);
-        //dd($incident);
+
+        $incident->refresh();
+        $this->newAssigned($incident);
+
         return $incident->group->name;
     }
 
@@ -93,6 +99,9 @@ class UpdateTicket
         ];
 
         status_history::create($history);
+
+        $incident->refresh();
+        $this->newStatus($incident);
 
         return;
     }
@@ -126,15 +135,63 @@ class UpdateTicket
 
         status_history::create($history);
 
+        $incident->refresh();
+        $this->newStatus($incident);
+
         return;
     }
 
-    private function changeOwnershipAgent($incident)
+    private function newAssigned($incident)
     {
+        if($incident->assignedToAgent())
+        {
+            $users = $this->getUsers($incident);
+            $name = $incident->assigned->name;
+        }
+        else {
+            $users = $this->getUsersFromGroup($incident);
+            $name = $incident->group->name;
+        }
 
-        broadcast(new ChangeOwnershipAgent($incident))->toOthers();
+        $message = "Your Incident No:{$incident->id} titled `{$incident->title}` has been assigned to {$name}";
+
+        broadcast(new IncidentEvent($incident->id,$message,$users))->toOthers();
 
         return;
+    }
+
+    public function newStatus($incident)
+    {
+        if($incident->assignedToAgent())
+        {
+            $users = $this->getUsers($incident);
+
+        }
+        else {
+            $users = $this->getUsersFromGroup($incident);
+
+        }
+
+        $message = "The status on Incident No:{$incident->id} titled `{$incident->title}` has been set to {$incident->statuses->status}";
+
+        broadcast(new IncidentEvent($incident->id,$message,$users))->toOthers();
+
+        return;
+    }
+
+    private function getUsers($incident)
+    {
+        return [$incident->requestor, $incident->assigned_to];
+    }
+
+
+
+    private function getUsersFromGroup($incident)
+    {
+        $users = group_membership::where('agent_group', $incident->assigned_group)->pluck('user_id')->toArray();
+        $users[] = $incident->requestor;
+
+        return $users;
     }
 
 }

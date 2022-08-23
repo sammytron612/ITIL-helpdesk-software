@@ -16,16 +16,14 @@ class IncidentTable extends Component
 
     private $incidents;
 
-    public $numberShown = 25;
-
-    
+    public $numberShown = 1;
 
     protected $listeners = ['changeSearch'];
 
 
     public function mount()
     {
-        $this->incidents = incidents::paginate(25);
+        $this->incidents = incidents::orderBy('created_at','desc')->paginate($this->numberShown);
 
     }
 
@@ -51,5 +49,5 @@ class IncidentTable extends Component
         }
     }
 
-   
+
 }
