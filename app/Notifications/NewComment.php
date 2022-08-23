@@ -16,9 +16,14 @@ class NewComment extends Notification
      *
      * @return void
      */
-    public function __construct($user)
+
+    public $data;
+    
+
+    public function __construct($data)
     {
-        $this->user = $user;
+      
+        $this->data = $data;
     }
 
     /**
@@ -29,7 +34,7 @@ class NewComment extends Notification
      */
     public function via($notifiable)
     {
-        return ['database','mail'];
+        return ['mail'];
     }
 
     /**
@@ -41,9 +46,10 @@ class NewComment extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->line('A new comment has been added to you incident no: ' . $this->data['incidentId'])
+                    ->line('titled ' . $this->data['title'])
+                    ->action('Check it out here ', url('/ticket/'. $this->data['incidentId'] . '/edit'))
+                    ->line('Thank you for using helpdesk!');
     }
 
     /**
@@ -54,12 +60,6 @@ class NewComment extends Notification
      */
     public function toArray($notifiable)
     {
-        
-        return [
-            'user_id' => $this->id,
-            'message' => 'test',
-            'type' => 'type'
-        ];
         
     }
 }

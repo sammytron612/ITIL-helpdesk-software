@@ -35,7 +35,7 @@ class Modal extends Component
 
         if(strlen($this->searchTerm > 2))
         {
-            $userResults = User::select('id','name')->where('name', 'like', '%' . $this->searchTerm . '%')->get();
+            $userResults = User::select('id','name')->where('role','agent')->where('name', 'like', '%' . $this->searchTerm . '%')->get();
             $groupResults = agent_group::where('name', 'like', '%' . $this->searchTerm . '%')->get();
         }
         

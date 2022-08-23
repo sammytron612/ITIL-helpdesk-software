@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class NewIncident extends Notification
+class ChangeOwnership extends Notification
 {
     use Queueable;
 
@@ -16,11 +16,11 @@ class NewIncident extends Notification
      *
      * @return void
      */
-    public $user;
+    public $data;
 
-    public function __construct($user)
+    public function __construct($data)
     {
-        $this->user = $user;
+        $this->data = $data;
     }
 
     /**
@@ -31,7 +31,7 @@ class NewIncident extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['mail'];
     }
 
     /**
@@ -43,9 +43,11 @@ class NewIncident extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+                    ->line('Your Incident, no '. $this->data['incidentId'])
+                    ->line('Titled `' . $this->data['title'])
+                    ->line('Has beed asssigned to ' . $this->data['name'] . '.')
+                    ->action('Check it out here ', url('/ticket/'. $this->data['incidentId'] . '/edit'))
+                    ->line('Thank you for using helpdesk!');
     }
 
     /**
@@ -57,9 +59,7 @@ class NewIncident extends Notification
     public function toArray($notifiable)
     {
         return [
-            'user_id' => $this->user->id,
-            'message' => 'test',
-            'type' => 'type'
+            //
         ];
     }
 }

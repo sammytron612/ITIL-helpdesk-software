@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Notifications;
 
 use Livewire\Component;
-use App\Notifications\NewIncident;
+use App\Notifications\ChangeOwnership;
 use App\Notifications\NewComment;
 use Auth;
 use Session;
@@ -44,10 +44,10 @@ class SocketNotification extends Component
         return view('livewire.notifications.socket-notification', ['notifications' => $this->notifications]);
     }
 
-    public function newIncident()
+    public function newIncident($data)
     {
         
-        $this->user->notify(new NewIncident($this->user));
+      
     }
 
     public function newComment($data)
@@ -60,7 +60,7 @@ class SocketNotification extends Component
         session()->push('notifications',$array);
         
         
-        $this->user->notify(new NewComment($array));
+        $this->user->notify(new NewComment($data));
 
     }
 
@@ -93,11 +93,18 @@ class SocketNotification extends Component
     {
         $array = ['id' => $this->count,
                 'incidentId' => $data['incidentId'],
-                'message' => "Your Incident No:{$data['incidentId']} titled `" . $data['title'] ."`" . " has been assigned to {$data['name']}"
+                'message' => "Your Incident No:{$data['incidentId']} titled `{$data['title']}` has been assigned to {$data['name']}"
             ];
 
         session()->push('notifications',$array);
+
+        $this->user->notify(new ChangeOwnership($data));
         
+    }
+
+    public function changeOwnershipGroup()
+    {
+
     }
     
 }
