@@ -43,6 +43,7 @@ class ChangeOwnership extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
+                    ->subject('Incident has been assigned')
                     ->line('Your Incident, no '. $this->data['incidentId'])
                     ->line('Titled `' . $this->data['title'])
                     ->line('Has beed asssigned to ' . $this->data['name'] . '.')

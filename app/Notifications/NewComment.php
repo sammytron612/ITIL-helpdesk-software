@@ -18,11 +18,11 @@ class NewComment extends Notification
      */
 
     public $data;
-    
+
 
     public function __construct($data)
     {
-      
+
         $this->data = $data;
     }
 
@@ -46,6 +46,7 @@ class NewComment extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
+                    ->subject('New comment')
                     ->line('A new comment has been added to you incident no: ' . $this->data['incidentId'])
                     ->line('titled ' . $this->data['title'])
                     ->action('Check it out here ', url('/ticket/'. $this->data['incidentId'] . '/edit'))
@@ -60,6 +61,6 @@ class NewComment extends Notification
      */
     public function toArray($notifiable)
     {
-        
+
     }
 }
