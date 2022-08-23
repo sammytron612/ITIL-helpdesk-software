@@ -14,7 +14,7 @@ class SocketNotification extends Component
     public $count = 0;
     public $notifications = [];
 
-    
+
 
     public function mount()
     {
@@ -26,47 +26,47 @@ class SocketNotification extends Component
     {
         return ["echo-private:newcomment.{$this->user->id},NewComment" => 'newComment',
                 "echo-private:changeownershipagent.{$this->user->id},ChangeOwnershipAgent" => 'changeOwnershipAgent',
-                
+
         ];
     }
 
     public function render()
     {
-        
+
         if(session::has('notifications'))
         {
-            
+
             $this->count = count(session('notifications'));
             $this->notifications = session('notifications');
         }
-    
+
 
         return view('livewire.notifications.socket-notification', ['notifications' => $this->notifications]);
     }
 
     public function newIncident($data)
     {
-        
-      
+
+
     }
 
     public function newComment($data)
     {
-        
+
         $array = ['id' => $this->count,
                 'incidentId' => $data['incidentId'],
                 'message' => "A new comment has been added to Incident No:{$data['incidentId']} titled `" . $data['title'] ."`"];
 
         session()->push('notifications',$array);
-        
-        
+
+
         $this->user->notify(new NewComment($data));
 
     }
 
     public function gotoIncident($incidentId,$id)
     {
-        
+
         $this->removeNotification($id);
 
         return redirect()->to('/ticket/' . $incidentId . '/edit');
@@ -74,7 +74,7 @@ class SocketNotification extends Component
 
     public function removeNotification($id)
     {
-        
+
         foreach($this->notifications as $key => $value)
         {
             if($value['id'] == $id)
@@ -86,7 +86,7 @@ class SocketNotification extends Component
         session()->put('notifications', $this->notifications);
 
         return;
-       
+
     }
 
     public function changeOwnershipAgent($data)
@@ -99,12 +99,12 @@ class SocketNotification extends Component
         session()->push('notifications',$array);
 
         $this->user->notify(new ChangeOwnership($data));
-        
+
     }
 
     public function changeOwnershipGroup()
     {
 
     }
-    
+
 }
