@@ -18,7 +18,7 @@ class SocketNotification extends Component
 
     public function mount()
     {
-        $count = 0;
+
         $this->user = Auth::user();
     }
 
