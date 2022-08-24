@@ -10,6 +10,7 @@ use App\Models\priority;
 use App\Models\sites;
 use App\Models\status_history;
 use Illuminate\Auth\Access\AuthorizationException;
+use App\Events\NewIncident;
 
 
 class TicketController extends Controller
@@ -19,7 +20,7 @@ class TicketController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-   
+
 
     public function index()
     {
@@ -40,7 +41,7 @@ class TicketController extends Controller
     public function create()
     {
 
-       
+
         $sites = sites::all();
         $priorities = priority::all();
         $departments = department::all();
@@ -83,7 +84,7 @@ class TicketController extends Controller
             'incident_no' => $return->id,
             'user_id' => Auth::id()
         ];
-        
+
 
         updates::create($comment);
 
@@ -93,6 +94,8 @@ class TicketController extends Controller
         ];
 
         status_history::create($history);
+
+        broadcast(new NewIncident(incidents::find($return->id)))->toOthers();
 
         return redirect()->back()->with('message', 'Success!');
     }
@@ -105,7 +108,7 @@ class TicketController extends Controller
      */
     public function show($id)
     {
-        
+
     }
 
     /**

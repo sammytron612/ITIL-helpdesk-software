@@ -6,7 +6,7 @@ use Livewire\Component;
 use App\Models\incidents;
 use Livewire\WithPagination;
 use Auth;
-use Carbon\Carbon;
+
 
 class IncidentTable extends Component
 {
@@ -16,37 +16,61 @@ class IncidentTable extends Component
 
     private $incidents;
 
-    public $numberShown = 1;
+    public $numberShown = 25;
+
+    public $user;
 
     protected $listeners = ['changeSearch'];
-
 
     public function mount()
     {
         $this->incidents = incidents::orderBy('created_at','desc')->paginate($this->numberShown);
 
+        $this->user = Auth::user();
     }
+
+
+    public function getListeners()
+    {
+        return ["echo-private:newincident.{$this->user->id},NewIncident" => 'newIncident',
+                'changeSearch'
+    ];
+    }
+
 
     public function render()
     {
+
         return view('livewire.incidents.incident-table', ['incidents' => $this->incidents]);
     }
 
-
-    public function changeSearch($number)
+    public function nextPage()
     {
 
-        if ($number == 1) {
+        //$this->emitSelf('postAdded',2);
+    }
+
+    public function changeSearch($choice)
+    {
+        $this->incidents = incidents::where('status', 1)->paginate($this->numberShown);
+
+        if ($choice == 'all') {
             $this->incidents = incidents::paginate($this->numberShown);
-        } elseif ($number == 2) {
+        } elseif ($choice == 'resolved') {
             $this->incidents = incidents::where('status', 4)->paginate($this->numberShown);
-        } elseif ($number == 3) {
+        } elseif ($choice == 'new') {
             $this->incidents = incidents::where('status', 1)->paginate($this->numberShown);
-        } elseif ($number == 4) {
+        } elseif ($choice == 'me') {
             $this->incidents = incidents::where('assigned_to', Auth::id())->paginate($this->numberShown);
-        } elseif ($number == 5) {
+        } elseif ($choice == 'breach') {
             $this->incidents = incidents::paginate($this->numberShown);
         }
+
+    }
+
+    public function newIncident($incident)
+    {
+        dd($incident);
     }
 
 

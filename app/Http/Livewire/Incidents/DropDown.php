@@ -18,31 +18,31 @@ class DropDown extends Component
     {
         $this->showing = "All Incidents";
 
-        $this->emit('changeSearch', '1');
+        $this->emit('changeSearch', 'all');
     }
 
     public function completed()
     {
         $this->showing = "Resloved Incidents";
 
-        $this->emit('changeSearch', '2');
+        $this->emit('changeSearch', 'resolved');
     }
 
     public function new()
     {
         $this->showing = "New Incidents";
-        $this->emit('changeSearch', '3');
+        $this->emit('changeSearch', 'new');
     }
 
     public function me()
     {
         $this->showing = "Incidents assigned to me";
-        $this->emit('changeSearch', '4');
+        $this->emit('changeSearch', 'me');
     }
 
     public function sla()
     {
         $this->showing = "Incidents close to beach";
-        $this->emit('changeSearch', '5');
+        $this->emit('changeSearch', '5breach');
     }
 }

@@ -27,3 +27,7 @@ Broadcast::channel('notification.{userId}', function ($user, $id) {
 Broadcast::channel('incidentevent.{userId}', function ($user, $userId) {
     return (int) $user->id === (int) $userId;
 });
+
+Broadcast::channel('newincident.{userId}', function ($user, $userId) {
+    return (int) $user->id === (int) $userId;
+});

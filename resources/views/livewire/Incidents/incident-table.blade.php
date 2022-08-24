@@ -104,11 +104,13 @@
         </table>
         <div class="py-4 mt-2">
         {{$incidents->links()}}
-
-
         </div>
     </div>
-    <script>
+
+<script>
+
+
+    function sla(){
 
         var elements = document.querySelectorAll('.hidden-input')
 
@@ -137,7 +139,15 @@
                 }
 
                 var timerVar = setInterval(countTimer, 1000);
-            });
+            });}
+
+/*
+            window.addEventListener('name-updated', event => {
+                alert('dd')
+                console.log(window.location.search)
+                sla();
+            })
+*/
 
     </script>
 </div>
