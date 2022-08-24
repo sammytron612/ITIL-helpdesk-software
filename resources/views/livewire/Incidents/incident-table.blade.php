@@ -100,10 +100,6 @@
                         <td class="px-6 py-4">
                             {{ $incident->departments->title ?? '' }}
                         </td>
-
-                        <td class="px-6 py-4">
-
-                        </td>
                     </tr>
                 @endforeach
 
