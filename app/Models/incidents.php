@@ -9,14 +9,9 @@ class incidents extends Model
 {
     use HasFactory;
 
-    protected $casts = [
-        'status_history' => 'array',
-        'sla' => 'array'
-    ];
 
 
-
-    protected $fillable = ['sla', 'status', 'status_history', 'title', 'priority', 'category', 'department','assigned_to', 'requestor', 'site' , 'department', 'assigned_group','re_assignments'];
+    protected $fillable = ['status', 'status_history', 'title', 'priority', 'category', 'department','assigned_to', 'requestor', 'site' , 'department', 'assigned_group','re_assignments'];
 
     public function priorities()
     {
@@ -48,9 +43,14 @@ class incidents extends Model
         return $this->hasOne(sub_category::class, 'id', 'sub_category');
     }
 
-    public function assigned()
+    public function assigned_agent()
     {
         return $this->hasOne(User::class, 'id', 'assigned_to');
+    }
+
+    public function created_by()
+    {
+        return $this->hasOne(User::class, 'id', 'requestor');
     }
 
     public function group()
@@ -61,11 +61,6 @@ class incidents extends Model
     public function descriptions()
     {
         return $this->hasOne(Comments::class, 'incident_no');
-    }
-
-    public function requesting_user()
-    {
-        return $this->hasOne(User::class, 'id', 'requestor');
     }
 
     public function chosen_site()
