@@ -25,6 +25,9 @@
                         SUBCATEGORY
                     </th>
                     <th class="px-6 py-3 whitespace-nowrap">
+                        ASSIGNED GROUP
+                    </th>
+                    <th class="px-6 py-3 whitespace-nowrap">
                         ASSIGNED TO
                     </th>
                     <th class="px-6 py-3 whitespace-nowrap">
@@ -79,11 +82,15 @@
                         </td>
 
                         <td class="px-6 py-4">
-                            {{ $incident->assigned->name ?? '' }}
+                            {{ $incident->group->name ?? '' }}
                         </td>
 
                         <td class="px-6 py-4">
-                            {{ $incident->requesting_user->name ?? ''}}
+                            {{ $incident->assigned_agent->name ?? '' }}
+                        </td>
+
+                        <td class="px-6 py-4">
+                            {{ $incident->created_by->name ?? ''}}
                         </td>
 
                         <td class="px-6 py-4">

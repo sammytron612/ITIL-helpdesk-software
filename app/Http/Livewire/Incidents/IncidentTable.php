@@ -24,7 +24,7 @@ class IncidentTable extends Component
 
     public function mount()
     {
-        $this->incidents = incidents::orderBy('created_at','desc')->paginate($this->numberShown);
+        $this->incidents = incidents::with(['created_by','assigned_agent'])->orderBy('created_at','desc')->paginate($this->numberShown);
 
         $this->user = Auth::user();
     }
