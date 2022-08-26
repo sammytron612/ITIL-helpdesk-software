@@ -8,11 +8,11 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    
+
     <script defer src="https://unpkg.com/@alpinejs/persist@3.x.x/dist/cdn.min.js"></script>
     <!-- Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
-  
+
     @livewireStyles
     <!-- Styles -->
     @vite('resources/js/app.js')
@@ -27,7 +27,7 @@
       .arrow-top {
         position: relative;
     }
-    
+
     .arrow-top:before, .arrow-top:after {
         content: "";
         position: absolute;
@@ -38,13 +38,13 @@
         border-bottom: 10px solid gray;
         border-left: 10px solid transparent;
     }
-    
+
     .arrow-top:after {
       border-bottom: 10px solid white;
       top: -19px;
     }
 
-    
+
 
     </style>
 
@@ -52,7 +52,7 @@
 
 <body class="font-sans antialiased">
 
-        
+
         @include('layouts.vertical-navigation')
 
         @livewireScripts

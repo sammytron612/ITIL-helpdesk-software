@@ -50,15 +50,11 @@
     <button class="btn-primary">hfdjhdjfh</button>
 -->
 <div>
-    <div class="">
-        @livewire('incidents.drop-down')
-    </div>
-
-    <div class="">
+    <div class="mt-5 md:mt-0">
        @livewire('incidents.incident-table')
     </div>
 
-
 </div>
+
 
 </x-new-layout>

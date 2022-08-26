@@ -10,22 +10,22 @@
             <div class="absolute right-0 w-full origin-top-right bg-white rounded-md shadow-lg top-14 ring-1 ring-black ring-opacity-5 focus:outline-none"
                 x-show="open" x-cloak>
                 <div class="py-1">
-                    <button wire:click='all' class="block px-4 py-2 text-sm text-left text-gray-700 hover:text-blue-900">All
+                    <button wire:click='all' class="block px-4 py-1 text-left text-gray-700 text-md hover:text-blue-900">All
                         incidents</button>
                 </div>
                 <div class="py-1">
-                    <button wire:click='completed' class="block px-4 py-2 text-sm text-left text-gray-700 hover:text-blue-900">Resolved incidents</button>
+                    <button wire:click='completed' class="block px-4 py-1 text-sm text-left text-gray-700 text-md hover:text-blue-900">Resolved incidents</button>
                 </div>
                 <div class="py-1">
-                    <Button wire:click='new'class="block px-4 py-2 text-sm text-gray-700 hover:text-blue-900">All new
+                    <Button wire:click='new'class="block px-4 py-1 text-sm text-gray-700 text-md hover:text-blue-900">All new
                         Incidents</button>
                 </div>
                 <div class="py-1">
-                    <button wire:click='sla' class="block px-4 py-2 text-sm text-left text-gray-700 hover:text-blue-900">Incidents close to
+                    <button wire:click='sla' class="block px-4 py-1 text-sm text-left text-gray-700 text-md hover:text-blue-900">Incidents close to
                         SLA breach</button>
                 </div>
                 <div class="py-1">
-                    <button wire:click='me'class="block px-4 py-2 text-sm text-left text-gray-700 hover:text-blue-900">Incidents assigned
+                    <button wire:click='me'class="block px-4 py-1 text-sm text-left text-gray-700 text-md hover:text-blue-900">Incidents assigned
                         to me</button>
                 </div>
             </div>
