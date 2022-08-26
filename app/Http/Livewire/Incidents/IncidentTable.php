@@ -16,7 +16,7 @@ class IncidentTable extends Component
     use WithSorting;
     use WithPagination;
 
-    public $allColumns = [];
+    public $allColumns = ['id','status','title','priority','category', 'sub_category', 'assigned_group', 'assigned_to','requestor','site','department','reassignments','created_at','updatedy_at'];
     public $storedColumns = [];
 
     private $incidents = [];
