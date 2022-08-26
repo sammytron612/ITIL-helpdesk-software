@@ -22,7 +22,7 @@
 
                             @foreach($allColumns as $key => $col)
                                 @if($loop->first) @continue @endif
-                                <div class="block px-2 py-2 text-sm text-left text-gray-700 hover:text-blue-900"><input wire:model="selectedCheckBoxes.{{$key}}" type="checkbox" value="true"><span class="ml-2">{{ucwords($col)}}</span></div>
+                                <div class="block px-2 py-2 text-sm text-left text-gray-700 hover:text-blue-900"><input wire:model="selectedCheckBoxes.{{$key}}" class="border border-blue-700 rounded appearance-none checked:bg-blue-500" type="checkbox"  value="true"><span class="ml-2">{{ucwords($col)}}</span></div>
                             @endforeach
 
                         </div>
@@ -280,7 +280,7 @@ window.addEventListener('updateColumns', event => {
     function page() {
         return {
 
-            //stored: @entangle('storedColumns'),
+            //stored: openButton,
 
             initStorage()
             {
