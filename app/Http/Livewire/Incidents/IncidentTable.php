@@ -16,8 +16,13 @@ class IncidentTable extends Component
     use WithSorting;
     use WithPagination;
 
-    public $allColumns = ['id','status','title','priority','category', 'sub_category', 'assigned_group', 'assigned_to','requestor','site','department','reassignments','created_at','updatedy_at'];
+    public $sortBy = '';
+    public $field = false;
+    public $value = false;
+
+    public $allColumns = ['id','status','title','priority','category', 'sub_category', 'agent_group', 'assigned_to','created_by','site','department','reassignments','created_at','updated_at'];
     public $storedColumns = [];
+
 
     private $incidents = [];
     public $selectedCheckBoxes = ["true","true","true","true","true","true","true","true","true","true","true","true","true","true"];
@@ -28,15 +33,6 @@ class IncidentTable extends Component
 
     public function mount()
     {
-
-        $columns = DB::select(DB::raw("SHOW COLUMNS FROM incidents"));
-
-        foreach($columns as $column)
-        {
-            $array = (get_object_vars($column));
-
-            array_push($this->allColumns, $array['Field']);
-        }
 
         $this->user = Auth::user();
     }
@@ -55,15 +51,15 @@ class IncidentTable extends Component
         return view('livewire.incidents.incident-table', ['incidents' => $this->incidents]);
     }
 
-    public function sortByColumn($column)
+    public function sortByColumn()
     {
 
-        $this->incidents = $this->IncidentQuery($column);
+        $this->incidents = $this->IncidentQuery();
         //$this->incidents = incidents::with(['created_by','assigned_agent','group','priorities','statuses','chosen_site','departments'])->orderBy($column,$this->sortDirection)->paginate(25);
-        $this->resetPage();
+        //$this->resetPage();
     }
 
-    public function updatedstoredcolumns()
+    public function updatedstoredColumns()
     {
 
         foreach($this->allColumns as $key => $column)
@@ -72,7 +68,7 @@ class IncidentTable extends Component
                 $this->selectedCheckBoxes[$key] = false;
             }
         }
-        $this->incidents = $this->IncidentQuery('created_at');
+        $this->incidents = $this->IncidentQuery();
 
     }
 
@@ -98,68 +94,61 @@ class IncidentTable extends Component
         $this->dispatchBrowserEvent('updateColumns', ['cols' => $this->storedColumns]);
 
 
-        $this->incidents = $this->IncidentQuery('created_at');
+        $this->incidents = $this->IncidentQuery();
 
-    }
 
-    public function nextPage()
-    {
-
-        //$this->emitSelf('postAdded',2);
     }
 
     public function changeSearch($choice)
     {
-        $this->incidents = incidents::where('status', 1)->paginate($this->numberShown);
+
+     //$this->incidents = $this->IncidentQuery('created_at',$choice);
+        //$this->incidents = incidents::where('status', 1)->paginate($this->numberShown);
 
         if ($choice == 'all') {
-            $this->incidents = incidents::paginate($this->numberShown);
+            $this->field = null;
+            $this->incidents = $this->IncidentQuery();
         } elseif ($choice == 'resolved') {
-            $this->incidents = incidents::where('status', 4)->paginate($this->numberShown);
+            $this->incidents = $this->IncidentQuery('status.name', 'resolved');
         } elseif ($choice == 'new') {
-            $this->incidents = incidents::where('status', 1)->paginate($this->numberShown);
+            $this->incidents = $this->IncidentQuery('status.name','new');
         } elseif ($choice == 'me') {
-            $this->incidents = incidents::where('assigned_to', Auth::id())->paginate($this->numberShown);
+            $this->incidents = $this->IncidentQuery('assigned_to.name', "kevin wilson");
         } elseif ($choice == 'breach') {
             $this->incidents = incidents::paginate($this->numberShown);
+        } else{
+            $this->incidents = $this->IncidentQuery();
         }
 
     }
 
-    public function newIncident($incident)
+    private function IncidentQuery($field = null, $value = null)
     {
-        dd($incident);
-    }
 
-    private function IncidentQuery($column)
-    {
-        return $this->incidents = DB::table("incidents")
-                    ->leftJoin("statuses", function($join){
-                        $join->on("incidents.status", "=", "statuses.id");
-                    })
-                    ->leftJoin("priorities", function($join){
-                        $join->on("incidents.priority", "=", "priorities.id");
-                    })
-                    ->leftJoin("categories", function($join){
-                        $join->on("incidents.category", "=", "categories.id");
-                    })
-                    ->leftJoin("sub_categories", function($join){
-                        $join->on("incidents.sub_category", "=", "sub_categories.id");
-                    })
-                    ->leftJoin("agent_groups", function($join){
-                        $join->on("incidents.assigned_group", "=", "agent_groups.id");
-                    })
-                    ->leftJoin("sites", function($join){
-                        $join->on("incidents.site", "=", "sites.id");
-                    })
-                    ->leftJoin("users AS users1", "incidents.assigned_to", "=", "users1.id")
-                    ->leftJoin("users AS users2", "incidents.requestor", "=", "users2.id")
-                    ->leftJoin("departments", function($join){
-                        $join->on("incidents.department", "=", "departments.id");
-                    })
-                    ->select("incidents.id", "statuses.status", "incidents.title", "priorities.priority", "categories.title as category", "sub_categories.title as sub_category", "agent_groups.name as assigned_group","users1.name as assigned_to", "users2.name as requestor", "sites.name as site","departments.title as department", "incidents.reassignments", "incidents.created_at", "incidents.updated_at")
-                    ->orderBy($column,$this->sortDirection)
-                    ->paginate(25);
+
+        if($field) {$this->field = $field;}
+        if($value) {$this->value = $value;}
+
+
+        return $this->incidents = incidents::select('incidents.id as id','status.name as status', 'incidents.title as title','category.name as category',
+            'priority.name as priority','sub_category.name as sub_category',
+                'agent_group.name as agent_group', 'assigned_to.name as assigned_to', 'created_by.name as created_by',
+                    'site.name as site','department.name as department', 'incidents.reassignments as reassignments',
+                    'incidents.created_at as created_at','incidents.updated_at as updated_at')
+            ->leftJoin('statuses as status', 'incidents.status', '=', 'status.id')
+            ->leftJoin('categories as category', 'incidents.category', '=', 'category.id')
+            ->leftJoin('priorities as priority', 'incidents.priority', '=', 'priority.id')
+            ->leftJoin('sub_categories as sub_category', 'incidents.sub_category', '=', 'sub_category.id')
+            ->leftJoin('agent_groups as agent_group', 'incidents.agent_group', '=', 'agent_group.id')
+            ->leftJoin('sites as site', 'incidents.site', '=', 'site.id')
+            ->leftJoin('departments as department', 'incidents.department', '=', 'department.id')
+            ->leftJoin('users as assigned_to', 'incidents.assigned_to', '=', 'assigned_to.id')
+            ->leftJoin('users as created_by', 'incidents.created_by', '=', 'created_by.id')
+            ->when($this->field)->where($this->field,'=', $this->value)
+                ->when($this->sortBy)->orderBy($this->sortBy,$this->sortDirection)
+                    ->when(!$this->sortBy)->orderBy('incidents.created_at',$this->sortDirection)
+                        ->paginate(25);
+
     }
 
 }

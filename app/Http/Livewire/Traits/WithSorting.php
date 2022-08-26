@@ -4,8 +4,8 @@ namespace App\Http\Livewire\Traits;
 
 trait WithSorting
 {
-    public $sortBy = '';
-    public $sortDirection = 'desc';
+    public $sortDirection = 'asc';
+
 
     public function sortBy($field)
     {
@@ -14,7 +14,7 @@ trait WithSorting
 
         $this->sortBy = $field;
 
-        $this->sortByColumn($field);
+        $this->incidentQuery();
 
     }
 
@@ -23,4 +23,3 @@ trait WithSorting
         return $this->sortDirection === 'asc' ? 'desc' : 'asc';
     }
 }
-

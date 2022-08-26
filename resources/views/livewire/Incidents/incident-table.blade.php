@@ -2,11 +2,7 @@
     <div wire:loading.flex class="justify-center text-2xl">
         <div class="border-b-2 border-blue-900 rounded-full w-28 h-28 animate-spin"></div>
     </div>
-    <div wire:loading.remove class="flex justify-between">
-        <div class="">
-            @livewire('incidents.drop-down')
-        </div>
-
+    <div wire:loading.remove class="">
         <div x-data="{openButton: $persist(false)}" class="text-right">
             <div class="flex justify-end">
                 <div class="py-2" x-on:click="openButton = ! openButton">
@@ -36,7 +32,7 @@
         <table class="text-sm text-left text-gray-500 border rounded shadow-lg table-auto dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase hover:cursor-pointer bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
-                    <th wire:click="sortBy('id')" class="px-6 py-3 whitespace-nowrap">
+                    <th wire:click="sortBy('incidents.id')" class="px-6 py-3 whitespace-nowrap">
                         <div class="flex items-center justify-between flex-grow">
                             NO
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1 fill-blue-600" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512"><path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/></svg>
@@ -44,7 +40,7 @@
                     </th>
 
                     @if(in_array('status',$storedColumns))
-                    <th wire:click="sortBy('status')" scope="col" class="px-6 py-3">
+                    <th wire:click="sortBy('status.name')" scope="col" class="px-6 py-3">
                         <div class="flex items-center justify-between">
                            STATUS
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1 fill-blue-600" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512"><path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/></svg>
@@ -53,7 +49,7 @@
                     @endif
 
                     @if(in_array('title',$storedColumns))
-                    <th wire:click="sortBy('title')" scope="col" class="px-3 py-3">
+                    <th wire:click="sortBy('incidents.title')" scope="col" class="px-3 py-3">
                         <div class="flex items-center justify-between w-64">
                            INCIDENT TITLE
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1 fill-blue-600" aria-hidden="true" fill="bg-blue-500" viewBox="0 0 320 512"><path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/></svg>
@@ -62,7 +58,7 @@
                     @endif
 
                     @if(in_array('priority',$storedColumns))
-                    <th wire:click="sortBy('priority')" class="px-6 py-3 whitespace-nowrap">
+                    <th wire:click="sortBy('priority.name')" class="px-6 py-3 whitespace-nowrap">
                         <div class="flex items-center justify-between">
                             PRIORITY
                              <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1 fill-blue-600" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512"><path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/></svg>
@@ -71,7 +67,7 @@
                     @endif
 
                     @if(in_array('category',$storedColumns))
-                    <th wire:click="sortBy('category')" class="px-6 py-3 whitespace-nowrap">
+                    <th wire:click="sortBy('category.name')" class="px-6 py-3 whitespace-nowrap">
                         <div class="flex items-center justify-between">
                             CATEGORY
                              <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1 fill-blue-600" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512"><path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/></svg>
@@ -80,7 +76,7 @@
                     @endif
 
                     @if(in_array('sub_category',$storedColumns))
-                    <th wire:click="sortBy('sub_category')" class="px-6 py-3 whitespace-nowrap">
+                    <th wire:click="sortBy('sub_category.name')" class="px-6 py-3 whitespace-nowrap">
                         <div class="flex items-center justify-between">
                             SUB CATEGORY
                              <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1 fill-blue-600" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512"><path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/></svg>
@@ -88,17 +84,17 @@
                     </th>
                     @endif
 
-                    @if(in_array('assigned_group',$storedColumns))
-                    <th wire:click="sortBy('assigned_group')" class="px-6 py-3 fill-blue-600 whitespace-nowrap">
+                    @if(in_array('agent_group',$storedColumns))
+                    <th wire:click="sortBy('agent_group.name')" class="px-6 py-3 fill-blue-600 whitespace-nowrap">
                         <div class="flex items-center">
-                            ASSIGNED GROUP
+                            AGENT GROUP
                              <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1 fill-blue-600" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512"><path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/></svg>
                          </div>
                     </th>
                     @endif
 
                     @if(in_array('assigned_to',$storedColumns))
-                    <th wire:click="sortBy('assigned_to')" class="px-6 py-3 whitespace-nowrap">
+                    <th wire:click="sortBy('assigned_to.name')" class="px-6 py-3 whitespace-nowrap">
                         <div class="flex items-center">
                             ASSIGNED TO
                              <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1 fill-blue-600" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512"><path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/></svg>
@@ -106,17 +102,17 @@
                     </th>
                     @endif
 
-                    @if(in_array('requestor',$storedColumns))
-                    <th wire:click="sortBy('requestor')" class="px-6 py-3 whitespace-nowrap">
+                    @if(in_array('created_by',$storedColumns))
+                    <th wire:click="sortBy('created_by.name')" class="px-6 py-3 whitespace-nowrap">
                         <div class="flex items-center">
-                            REQUESTOR
+                            CREATED BY
                              <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1 fill-blue-600" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512"><path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/></svg>
                          </div>
                     </th>
                     @endif
 
                     @if(in_array('site',$storedColumns))
-                    <th wire:click="sortBy('site')" class="px-6 py-3 whitespace-nowrap">
+                    <th wire:click="sortBy('site.name')" class="px-6 py-3 whitespace-nowrap">
                         <div class="flex items-center">
                             SITE
                              <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1 fill-blue-600" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512"><path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/></svg>
@@ -125,7 +121,7 @@
                     @endif
 
                     @if(in_array('department',$storedColumns))
-                    <th wire:click="sortBy('department')" class="px-6 py-3 whitespace-nowrap">
+                    <th wire:click="sortBy('department.name')" class="px-6 py-3 whitespace-nowrap">
                         <div class="flex items-center">
                             DEPARTMENT
                              <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1 fill-blue-600" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512"><path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/></svg>
@@ -134,7 +130,7 @@
                     @endif
 
                     @if(in_array('reassignments',$storedColumns))
-                    <th wire:click="sortBy('reassignments')" class="px-6 py-3">
+                    <th wire:click="sortBy('reassignments.name')" class="px-6 py-3">
                         <div class="flex items-center">
                             REASSIGNMENTS
                              <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1 fill-blue-600" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512"><path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/></svg>
@@ -143,7 +139,7 @@
                     @endif
 
                     @if(in_array('created_at',$storedColumns))
-                    <th wire:click="sortBy('created_at')" class="px-6 py-3">
+                    <th wire:click="sortBy('incidents.created_at')" class="px-6 py-3">
                         <div class="flex items-center">
                             CREATED
                              <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1 fill-blue-600" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512"><path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/></svg>
@@ -152,7 +148,7 @@
                     @endif
 
                     @if(in_array('updated_at',$storedColumns))
-                    <th wire:click="sortBy('updated_at')" class="px-6 py-3">
+                    <th wire:click="sortBy('incidents.updated_at')" class="px-6 py-3">
                         <div class="flex items-center">
                             UPDATED
                              <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1 fill-blue-600" aria-hidden="true" fill="currentColor" viewBox="0 0 320 512"><path d="M27.66 224h264.7c24.6 0 36.89-29.78 19.54-47.12l-132.3-136.8c-5.406-5.406-12.47-8.107-19.53-8.107c-7.055 0-14.09 2.701-19.45 8.107L8.119 176.9C-9.229 194.2 3.055 224 27.66 224zM292.3 288H27.66c-24.6 0-36.89 29.77-19.54 47.12l132.5 136.8C145.9 477.3 152.1 480 160 480c7.053 0 14.12-2.703 19.53-8.109l132.3-136.8C329.2 317.8 316.9 288 292.3 288z"/></svg>
@@ -162,6 +158,7 @@
                 </tr>
             </thead>
             <tbody x-data>
+
                 @forelse($incidents as $incident)
                     <tr x-on:click="window.location.href = '{{ route('ticket.edit', $incident->id) }}'" class="bg-white border-b hover:cursor-pointer hover:bg-blue-50 dark:bg-gray-800 dark:border-gray-700">
 
@@ -207,13 +204,13 @@
 
                         @if(in_array('sub_category',$storedColumns))
                         <td class="px-6 py-4">
-                            {{ $incident->sub_categories ?? '' }}
+                            {{ $incident->sub_category ?? '' }}
                         </td>
                         @endif
 
-                        @if(in_array('assigned_group',$storedColumns))
+                        @if(in_array('agent_group',$storedColumns))
                         <td class="px-6 py-4">
-                            {{ $incident->assigned_group ?? '' }}
+                            {{ $incident->agent_group ?? '' }}
                         </td>
                         @endif
 
@@ -223,9 +220,9 @@
                         </td>
                         @endif
 
-                        @if(in_array('requestor',$storedColumns))
+                        @if(in_array('created_by',$storedColumns))
                         <td class="px-6 py-4">
-                            {{ $incident->requestor ?? ''}}
+                            {{ $incident->created_by ?? ''}}
                         </td>
                         @endif
 

@@ -43,6 +43,6 @@ class DropDown extends Component
     public function sla()
     {
         $this->showing = "Incidents close to beach";
-        $this->emit('changeSearch', '5breach');
+        $this->emit('changeSearch', 'breach');
     }
 }
