@@ -7,8 +7,6 @@ use App\Models\incidents;
 use Livewire\WithPagination;
 use Auth;
 use App\Http\Livewire\Traits\WithSorting;
-use Illuminate\Support\Facades\DB;
-
 
 
 class IncidentTable extends Component
@@ -17,6 +15,7 @@ class IncidentTable extends Component
     use WithPagination;
 
     public $sortBy = '';
+    public $choice = 'all';
     public $field = false;
     public $value = false;
 
@@ -37,14 +36,14 @@ class IncidentTable extends Component
         $this->user = Auth::user();
     }
 
-
+/*
     public function getListeners()
     {
-        return ["echo-private:newincident.{$this->user->id},NewIncident" => 'newIncident',
+        //return ["echo-private:newincident.{$this->user->id},NewIncident" => 'newIncidentRow',
                 'changeSearch'
     ];
     }
-
+*/
 
    public function render()
     {
@@ -99,9 +98,21 @@ class IncidentTable extends Component
 
     }
 
+    /*
+    public function newIncidentRow()
+    {
+        if($this->choice == 'all')
+        {
+            $this->field = null;
+            $this->incidentQuery();
+        }
+    }
+    */
+
     public function changeSearch($choice)
     {
 
+        $this->currentChoice = $choice;
      //$this->incidents = $this->IncidentQuery('created_at',$choice);
         //$this->incidents = incidents::where('status', 1)->paginate($this->numberShown);
 
@@ -130,7 +141,7 @@ class IncidentTable extends Component
         if($value) {$this->value = $value;}
 
 
-        return $this->incidents = incidents::select('incidents.id as id','status.name as status', 'incidents.title as title','category.name as category',
+        return incidents::select('incidents.id as id','status.name as status', 'incidents.title as title','category.name as category',
             'priority.name as priority','sub_category.name as sub_category',
                 'agent_group.name as agent_group', 'assigned_to.name as assigned_to', 'created_by.name as created_by',
                     'site.name as site','department.name as department', 'incidents.reassignments as reassignments',
@@ -146,7 +157,7 @@ class IncidentTable extends Component
             ->leftJoin('users as created_by', 'incidents.created_by', '=', 'created_by.id')
             ->when($this->field)->where($this->field,'=', $this->value)
                 ->when($this->sortBy)->orderBy($this->sortBy,$this->sortDirection)
-                    ->when(!$this->sortBy)->orderBy('incidents.created_at',$this->sortDirection)
+                    ->when(!$this->sortBy)->orderBy('incidents.created_at','desc')
                         ->paginate(25);
 
     }

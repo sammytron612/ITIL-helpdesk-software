@@ -40,7 +40,7 @@
                     class="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     <option selected value="">Choose </option>
                     @foreach($priorities as $priority)
-                        <option value="{{ $priority->id }}">{{ $priority->priority }}</option>
+                        <option value="{{ $priority->id }}">{{ $priority->name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -65,7 +65,7 @@
                     class="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     <option selected value="">Choose </option>
                     @foreach($departments as $department)
-                        <option value="{{ $department->id }}">{{ $department->title }}</option>
+                        <option value="{{ $department->id }}">{{ $department->name }}</option>
                         @endforeach
                 </select>
             </div>
@@ -103,12 +103,12 @@
         </div>
     </form>
 
-    
+
 @include('js.base-editor')
 
 
 
-    
+
 <!--
     <script src="https://cdn.tiny.cloud/1/d3utf658spf5n1oft4rjl6x85g568jj7ourhvo2uhs578jt9/tinymce/5/tinymce.min.js"
         referrerpolicy="origin">
@@ -118,7 +118,7 @@
 
         tinymce.init({
 
-        
+
         relative_urls : false,
         selector: '#description',
         forced_root_block : 'p',

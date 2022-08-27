@@ -11,6 +11,7 @@ use App\Models\sites;
 use App\Models\status_history;
 use Illuminate\Auth\Access\AuthorizationException;
 use App\Events\NewIncident;
+use App\Service\TicketWorkflow;
 
 
 class TicketController extends Controller
@@ -55,7 +56,7 @@ class TicketController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, TicketWorkflow $ticketWorkflow)
     {
         $validated = $request->validate([
             'title' => 'required|min:5|max:80',
@@ -70,7 +71,7 @@ class TicketController extends Controller
             'status' => 1,
             'title' => $request->title,
             'priority' => $request->priority,
-            'requestor' => Auth::id(),
+            'created_by' => Auth::id(),
             'category' => $request->category,
             'site' => $request->site,
             'department' => $request->department,
@@ -95,8 +96,9 @@ class TicketController extends Controller
 
         status_history::create($history);
 
-        broadcast(new NewIncident(incidents::find($return->id)))->toOthers();
-
+        $return = $ticketWorkflow->newTicket(incidents::find($return->id));
+        //broadcast(new NewIncident(incidents::find($return->id)))->toOthers();
+//dd('stop');
         return redirect()->back()->with('message', 'Success!');
     }
 
