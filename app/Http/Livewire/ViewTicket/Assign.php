@@ -16,22 +16,22 @@ class Assign extends Component
 
     public function mount(incidents $incident)
     {
-      
+
         $this->incident = $incident;
-        
+
     }
 
     public function render()
     {
 
-         $this->incident->assigned_to ? $this->showing = $this->incident->assigned?->name : $this->showing = $this->incident->group?->name;
+         $this->incident->assigned_agent ? $this->showing = $this->incident->assigned_agent?->name : $this->showing = $this->incident->group?->name;
 
         return view('livewire.view-ticket.assign');
     }
 
     public function updateAssigned($desc)
     {
-       
+
         $this->showing = $desc;
 
     }

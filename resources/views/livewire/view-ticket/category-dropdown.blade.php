@@ -13,7 +13,7 @@
                 <div class="py-1">
                     @foreach($categories as $category)
                         <div class="hover:bg-slate-200">
-                            <button wire:click="updateCategory('{{$category->id}}')" class="block px-8 py-2 text-sm text-gray-700 hover:text-blue-900">{{$category->title}}
+                            <button wire:click="updateCategory('{{$category->id}}')" class="block px-8 py-2 text-sm text-gray-700 hover:text-blue-900">{{$category->name}}
                             </button>
                         </div>
                     @endforeach

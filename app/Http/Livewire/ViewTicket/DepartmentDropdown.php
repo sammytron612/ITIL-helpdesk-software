@@ -11,19 +11,19 @@ class DepartmentDropdown extends Component
 {
     public $incident;
     public $showing;
-    
+
 
     public function mount(incidents $incident)
     {
-        $this->showing = $incident->departments?->title;
+        $this->showing = $incident->departments?->name;
         $this->incident = $incident;
-        
+
     }
 
     public function render()
     {
         $departments = department::all();
-        
+
         return view('livewire.view-ticket.department-dropdown',['departments'=> $departments]);
     }
 
@@ -32,7 +32,7 @@ class DepartmentDropdown extends Component
         $this->incident->site = $department->id;
         $this->incident->save();
 
-        $this->showing = $department->title;
+        $this->showing = $department->name;
         $this->dispatchBrowserEvent('update-success');
     }
 }

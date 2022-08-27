@@ -48,9 +48,9 @@ class incidents extends Model
         return $this->hasOne(User::class, 'id', 'assigned_to');
     }
 
-    public function created_by()
+    public function requested_by()
     {
-        return $this->hasOne(User::class, 'id', 'requestor');
+        return $this->hasOne(User::class, 'id', 'created_by');
     }
 
     public function group()

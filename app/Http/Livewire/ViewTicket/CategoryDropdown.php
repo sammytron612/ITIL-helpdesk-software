@@ -10,13 +10,13 @@ class CategoryDropdown extends Component
 {
     public $incident;
     public $showing;
-    
+
 
     public function mount(incidents $incident)
     {
-        $this->showing = $incident->categories?->title;
+        $this->showing = $incident->categories?->name;
         $this->incident = $incident;
-        
+
     }
 
 
@@ -31,8 +31,8 @@ class CategoryDropdown extends Component
         $this->incident->category = $category->id;
         $this->incident->sub_category = NULL;
         $this->incident->save();
-        
-        $this->showing = $category->title;
+
+        $this->showing = $category->name;
         $this->dispatchBrowserEvent('update-success');
         $this->emit('updateSub');
     }

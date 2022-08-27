@@ -14,14 +14,14 @@ class SubCategoryDropdown extends Component
     public $incident;
     public $showing;
 
-    protected $listeners = ['updateSub' => 'reRender']; 
-    
+    protected $listeners = ['updateSub' => 'reRender'];
+
 
     public function mount(incidents $incident)
     {
-        $this->showing = $incident->sub_categories?->title;
+        $this->showing = $incident->sub_categories?->name;
         $this->incident = $incident;
-        
+
     }
 
 
@@ -37,7 +37,7 @@ class SubCategoryDropdown extends Component
     {
         $this->incident->sub_category = $sub_category->id;
         $this->incident->save();
-        
+
         $this->showing = $sub_category->title;
         $this->dispatchBrowserEvent('update-success');
     }
