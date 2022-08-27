@@ -46,8 +46,8 @@
         </div>
     </div>
 
-    <div class="grid grid-cols-1 mt-12 md:grid-cols-2 gap-x-2 gap-y-4">
-        <div class="order-2 md:order-1">
+    <div class="grid grid-cols-1 mt-12 md:grid-cols-3 gap-x-2 gap-y-4">
+        <div class="order-2 md:order-1 md:col-span-2">
             <div>
                 <div class="mb-2 font-bold text-1xl">Priority</div>
                 <x-priority :priority="$ticket->priorities->id">
@@ -99,21 +99,15 @@
                 </div>
             </div>
         </div>
-    </div>
-<!--
 
-        <div class="flex flex-col items-start order-3 col-span-1 row-span-3 md:order-2">
-            <div class="p-2">SLA Response</div>
-            <div class="text-sm">First response 15 Minutes</div>
-        </div>
-        <div class="flex flex-col items-center order-4 col-span-1 row-span-3 md:order-3">
-            <div class="p-2">SLA Resolution</div>
-            <div class="text-sm">Resolution time 6 Hours</div>
+
+        <div class="order-3 md:col-span-2">
+            @livewire('view-ticket.comment-component',['ticket' => $ticket])
         </div>
 
--->
-    <div class="w-full md:w-2/3">
-        @livewire('view-ticket.comment-component',['ticket' => $ticket])
+        <div class="order-4">
+            Something else to go here
+        </div>
     </div>
 
     @livewire('view-ticket.modal', ['incident' => $ticket]);
