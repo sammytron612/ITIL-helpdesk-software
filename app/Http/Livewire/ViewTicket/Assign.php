@@ -14,12 +14,6 @@ class Assign extends Component
 
     protected $listeners = ['updateAssigned'];
 
-    public function mount(incidents $incident)
-    {
-
-        $this->incident = $incident;
-
-    }
 
     public function render()
     {

@@ -13,10 +13,9 @@ class DepartmentDropdown extends Component
     public $showing;
 
 
-    public function mount(incidents $incident)
+    public function mount()
     {
-        $this->showing = $incident->departments?->name;
-        $this->incident = $incident;
+        $this->showing = $this->incident->departments?->name;
 
     }
 
@@ -29,7 +28,7 @@ class DepartmentDropdown extends Component
 
     public function updateDepartment(department $department)
     {
-        $this->incident->site = $department->id;
+        $this->incident->department = $department->id;
         $this->incident->save();
 
         $this->showing = $department->name;

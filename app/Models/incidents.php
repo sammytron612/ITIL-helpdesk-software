@@ -55,7 +55,7 @@ class incidents extends Model
 
     public function group()
     {
-        return $this->hasOne(agent_group::class, 'id', 'assigned_group');
+        return $this->hasOne(agent_group::class, 'id', 'agent_group');
     }
 
     public function descriptions()

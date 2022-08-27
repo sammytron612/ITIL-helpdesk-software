@@ -12,10 +12,9 @@ class CategoryDropdown extends Component
     public $showing;
 
 
-    public function mount(incidents $incident)
+    public function mount()
     {
-        $this->showing = $incident->categories?->name;
-        $this->incident = $incident;
+        $this->showing = $this->incident->categories?->name;
 
     }
 

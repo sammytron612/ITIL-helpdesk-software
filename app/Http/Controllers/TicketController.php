@@ -119,11 +119,15 @@ class TicketController extends Controller
      */
     public function edit(incidents $ticket)
     {
+
         throw_if(
-            !Auth::user()->isAdmin() && $ticket->requestor != Auth::id(),
+            !Auth::user()->isAdmin() && $ticket->created_by != Auth::id(),
             AuthorizationException::class,
-            'You are not allowed to access this.'
+            'You are not allowed to access this!'
         );
+
+
+        $ticket->load(['requested_by','assigned_agent']);
         /*
         $ticket->load(['ticket_updates' => function($query) {
             $query->orderBy('created_at');

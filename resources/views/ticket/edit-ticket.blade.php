@@ -55,7 +55,7 @@
                 </x-priority>
             </div>
 
-            @livewire('view-ticket.status-button', ['incident_no' => $ticket->id])
+            @livewire('view-ticket.status-button', ['incident' => $ticket])
 
         </div>
 
@@ -72,12 +72,12 @@
 
                 <div class="ml-3">
                     <div class="mb-3 font-bold text-1xl">
-                        @livewire('view-ticket.assign', ['incident' => $ticket->id])
+                        @livewire('view-ticket.assign', ['incident' => $ticket])
                     </div>
 
 
                     <div class="mb-3">
-                        @livewire('view-ticket.department-dropdown',['incident' => $ticket->id])
+                        @livewire('view-ticket.department-dropdown',['incident' => $ticket])
                     </div>
 
 
@@ -88,12 +88,12 @@
 
 
                     <div class="mb-3">
-                        @livewire('view-ticket.category-dropdown',['incident' => $ticket->id])
+                        @livewire('view-ticket.category-dropdown',['incident' => $ticket])
                     </div>
 
 
                     <div class="mb-3">
-                        @livewire('view-ticket.sub-category-dropdown', ['incident' => $ticket->id])
+                        @livewire('view-ticket.sub-category-dropdown', ['incident' => $ticket])
                     </div>
 
                 </div>
@@ -112,11 +112,11 @@
         </div>
 
 -->
+    <div class="w-full md:w-2/3">
+        @livewire('view-ticket.comment-component',['ticket' => $ticket])
+    </div>
 
-    @livewire('view-ticket.comment-component',['ticket' => $ticket])
-
-
-    @livewire('view-ticket.modal', ['incident_id' => $ticket->id]);
+    @livewire('view-ticket.modal', ['incident' => $ticket]);
 
 
 

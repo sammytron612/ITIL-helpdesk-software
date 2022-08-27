@@ -17,10 +17,10 @@ class SubCategoryDropdown extends Component
     protected $listeners = ['updateSub' => 'reRender'];
 
 
-    public function mount(incidents $incident)
+    public function mount()
     {
-        $this->showing = $incident->sub_categories?->name;
-        $this->incident = $incident;
+        $this->showing = $this->incident->sub_categories?->name;
+
 
     }
 

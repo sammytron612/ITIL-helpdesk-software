@@ -20,7 +20,7 @@ class CommentComponent extends Component
     public function render()
     {
 
-        $this->comments = updates::where('incident_no', $this->ticket->id)->orderBy('created_at','desc')->get();
+        $this->comments = updates::with('user','user.my_avatar')->where('incident_no', $this->ticket->id)->orderBy('created_at','desc')->get();
 
 
         return view('livewire.view-ticket.comment-component');
@@ -143,7 +143,7 @@ class CommentComponent extends Component
 
     private function getUsers()
     {
-        return [$this->ticket->requestor, $this->ticket->assigned_to];
+        return [$this->ticket->rcreated_by, $this->ticket->assigned_to];
     }
 
     private function getUsersFromGroup()

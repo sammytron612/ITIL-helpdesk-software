@@ -16,16 +16,8 @@ class Modal extends Component
     public $viewModal = false;
 
     public $searchTerm;
-    public $incident_id;
-
     public $incident;
-    
 
-    public function mount()
-    {
-        
-        $this->incident = incidents::find($this->incident_id);
-    }
 
     public function render()
     {
@@ -38,7 +30,7 @@ class Modal extends Component
             $userResults = User::select('id','name')->where('role','agent')->where('name', 'like', '%' . $this->searchTerm . '%')->get();
             $groupResults = agent_group::where('name', 'like', '%' . $this->searchTerm . '%')->get();
         }
-        
+
 
         return view('livewire.view-ticket.modal',(['userResults' => $userResults, 'groupResults' => $groupResults]));
     }
@@ -48,7 +40,7 @@ class Modal extends Component
 
         $ticket = new UpdateTicket;
         $desc = $ticket->assign_to($this->incident, $user_id);
-    
+
         $this->viewModal = false;
         $this->reset('searchTerm');
         $this->emitTo('view-ticket.status-button','renderStatus');
@@ -56,8 +48,8 @@ class Modal extends Component
         $this->emit('updateAssigned', $desc);
         $this->dispatchBrowserEvent('update_success');
 
-        
-        
+
+
     }
 
     public function assignToGroup($group_id)
@@ -71,8 +63,8 @@ class Modal extends Component
 
         $this->emit('updateAssigned', $desc);
         $this->dispatchBrowserEvent('update_success');
-        
-        
+
+
     }
 
     public function openModal()

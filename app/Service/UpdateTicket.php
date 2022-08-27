@@ -20,7 +20,7 @@ class UpdateTicket
 
         $incident->status = 4;
         $incident->assigned_to = Auth::id();
-        $incident->assigned_group = NULL;
+        $incident->agent_group = NULL;
         $incident->save();
 
 
@@ -36,7 +36,7 @@ class UpdateTicket
         $incident->refresh();
         $this->newAssigned($incident);
 
-        return $incident->assigned->name;
+        return $incident->assigned_agent->name;
 
     }
 
@@ -45,7 +45,7 @@ class UpdateTicket
 
         $incident->status = 4;
         $incident->assigned_to = $user_id;
-        $incident->assigned_group = NULL;
+        $incident->agent_group = NULL;
         $incident->save();
 
         $history = ['incident_id' => $incident->id,
@@ -59,7 +59,7 @@ class UpdateTicket
         $incident->refresh();
         $this->newAssigned($incident);
 
-        return $incident->assigned->name;
+        return $incident->assigned_agent->name;
 
     }
 
@@ -68,7 +68,7 @@ class UpdateTicket
 
         $incident->status = 1;
         $incident->assigned_to = NULL;
-        $incident->assigned_group = $group_id;
+        $incident->agent_group = $group_id;
         $incident->save();
 
         $history = ['incident_id' => $incident->id,
@@ -89,7 +89,6 @@ class UpdateTicket
     {
         $incident->status = 5;
         $incident->assigned_to = Auth::id();
-        $incident->assigned_group;
         $incident->save();
 
         $history = ['incident_id' => $incident->id,
@@ -146,7 +145,7 @@ class UpdateTicket
         if($incident->assignedToAgent())
         {
             $users = $this->getUsers($incident);
-            $name = $incident->assigned->name;
+            $name = $incident->assigned_agent->name;
         }
         else {
             $users = $this->getUsersFromGroup($incident);

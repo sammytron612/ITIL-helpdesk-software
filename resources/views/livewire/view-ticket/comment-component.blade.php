@@ -1,12 +1,12 @@
 <div x-data="page()">
     <div x-data="{ updates: false, comment: false, details: true}">
-        <div class="flex flex-wrap justify-between mt-5">
-            <div class="flex">
-                <h2 x-on:click="updates = true; comment = false; details = false" :class="updates ? 'border-b-4 border-cyan-400' : '' " class="py-3 text-sm font-bold hover:cursor-pointer">UPDATES ({{count($comments) - 1}})</h2>
-                <h2 x-on:click="details = true; comment = false; updates = false" :class="details ? 'border-b-4 border-cyan-400' : '' " class="py-3 ml-4 text-sm font-bold hover:cursor-pointer">DETAILS</h2>
-                <h2 x-on:click="updates = false; comment = true; details = false" :class="comment ? 'border-b-4 border-cyan-400' : '' " class="py-3 ml-4 text-sm font-bold md:ml-6 hover:cursor-pointer">ADD COMMENT</h2>
+        <div class="flex flex-wrap items-center justify-between mt-5">
+            <div>
+                <h2 x-on:click="updates = true; comment = false; details = false" :class="updates ? 'border-b-4 border-cyan-400' : '' " class="inline py-3 text-sm font-bold first-letter:py-3 hover:cursor-pointer">UPDATES ({{count($comments) - 1}})</h2>
+                <h2 x-on:click="details = true; comment = false; updates = false" :class="details ? 'border-b-4 border-cyan-400' : '' " class="inline py-3 ml-4 text-sm font-bold hover:cursor-pointer">DETAILS</h2>
+                <h2 x-on:click="updates = false; comment = true; details = false" :class="comment ? 'border-b-4 border-cyan-400' : '' " class="inline py-3 ml-4 text-sm font-bold md:ml-6 hover:cursor-pointer">ADD COMMENT</h2>
             </div>
-            <div class="py-3 text-lg font-semibold md:text-1xl hover:cursor-pointer" x-on:click="expand" x-show="updates"><span x-text="operator" class="hidden px-2 text-sm font-bold border-2 md:text-1xl md:inline-block md:border-slate-400"></span><span class="ml-2 text-lg" x-text="message"></span></div>
+            <div class="text-lg font-semibold md:text-1xl hover:cursor-pointer" x-on:click="expand" x-show="updates"><span x-text="operator" class="hidden px-2 text-sm font-bold border-2 md:text-1xl md:inline-block md:border-slate-400"></span><span class="ml-2 text-lg" x-text="message"></span></div>
         </div>
         <div class="mt-4">
             <div x-transition.duration.500ms x-show="details" class="flex justify-start text-sm md:justify-end">

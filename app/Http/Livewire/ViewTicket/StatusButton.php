@@ -15,21 +15,21 @@ class StatusButton extends Component
     public $incident_no;
     public $incident;
     public $status_actions;
-    
+
     protected $listeners = ['renderStatus'];
 
     public function mount()
     {
 
         $miss = [];
-        
+
         $this->status_actions = status_action::orderBy('action')->get();
 
     }
 
     public function render()
     {
-        $this->incident = incidents::find($this->incident_no);
+        //$this->incident = incidents::find($this->incident_no);
         //$this->name = $this->incident->assigned?->name;
 
         return view('livewire.view-ticket.status-button');
@@ -38,22 +38,22 @@ class StatusButton extends Component
     public function updatedchosenAction()
     {
         $ticket = new UpdateTicket;
-        
+
         if($this->chosenAction == 1) /* Assign to self */
         {
-            
+
             $desc = $ticket->assign_self($this->incident);
             $this->emitTo('view-ticket.assign','updateAssigned',$desc);
             $this->dispatchBrowserEvent('update-success');
             $this->chosenAction = 0;
-            
-        } elseif ($this->chosenAction == 2) {  /* assign to */ 
-            
+
+        } elseif ($this->chosenAction == 2) {  /* assign to */
+
             $this->emitTo('view-ticket.modal','openModal');
-        
+
         }
         elseif ($this->chosenAction == 3) {  /* resolve */
-            
+
             $ticket->resolve($this->incident);
             $this->dispatchBrowserEvent('update-success');
             $this->chosenAction = 0;
@@ -66,9 +66,9 @@ class StatusButton extends Component
             $this->emit('updateAssigned',Auth::user()->name);
             $this->dispatchBrowserEvent('update-success');
             $this->chosenAction = 0;
-            
+
         }
-        
+
     }
 
     public function renderStatus()
