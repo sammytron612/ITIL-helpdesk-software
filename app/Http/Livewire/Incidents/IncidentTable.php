@@ -34,6 +34,7 @@ class IncidentTable extends Component
 
    public function render()
     {
+
         $this->incidents =  incidents::select('incidents.id as id','status.name as status', 'incidents.title as title','category.name as category',
             'priority.name as priority','sub_category.name as sub_category',
                 'agent_group.name as agent_group', 'assigned_to.name as assigned_to', 'created_by.name as created_by',
@@ -48,14 +49,30 @@ class IncidentTable extends Component
             ->leftJoin('departments as department', 'incidents.department', '=', 'department.id')
             ->leftJoin('users as assigned_to', 'incidents.assigned_to', '=', 'assigned_to.id')
             ->leftJoin('users as created_by', 'incidents.created_by', '=', 'created_by.id')
-            ->when($this->field)->where($this->field,'=', $this->value)
-            ->when($this->searchTerm, function($query){
-                $query->where('assigned_to.name', 'LIKE', $this->searchTerm . "%")
-                     ->orWhere('created_by.name', 'LIKE', $this->searchTerm . "%")
-                     ->orWhere('incidents.id', $this->searchTerm)
-                     ->orWhere('category.name', 'LIKE', $this->searchTerm . "%")
-                     ->orWhere('agent_group.name', 'LIKE', $this->searchTerm . "%");
-             })
+            ->when($this->field)->where(function ($query) {
+                    $query->where($this->field,'=', $this->value)
+                    ->where(function($query){
+                        $query->where('assigned_to.name', 'LIKE', $this->searchTerm . "%")
+                             ->orWhere('created_by.name', 'LIKE', $this->searchTerm . "%")
+                             ->orWhere('incidents.id', $this->searchTerm)
+                             ->orWhere('status.name', 'LIKE', $this->searchTerm . '%')
+                             ->orWhere('priority.name', 'LIKE', $this->searchTerm . '%')
+                             ->orWhere('category.name', 'LIKE', $this->searchTerm . "%")
+                             ->orWhere('agent_group.name', 'LIKE', $this->searchTerm . "%");
+                        })
+
+                    ;})
+            ->when(!$this->field)->where(function($query){
+                        $query->where('assigned_to.name', 'LIKE', $this->searchTerm . "%")
+                             ->orWhere('created_by.name', 'LIKE', $this->searchTerm . "%")
+                             ->orWhere('incidents.id', $this->searchTerm)
+                             ->orWhere('status.name', 'LIKE', $this->searchTerm . '%')
+                             ->orWhere('priority.name', 'LIKE', $this->searchTerm . '%')
+                             ->orWhere('category.name', 'LIKE', $this->searchTerm . "%")
+                             ->orWhere('agent_group.name', 'LIKE', $this->searchTerm . "%");
+                        })
+
+
                 ->when($this->sortBy)->orderBy($this->sortBy,$this->sortDirection)
                     ->when(!$this->sortBy)->orderBy('incidents.created_at','desc')
                     ->paginate($this->numberShown);
@@ -137,7 +154,7 @@ class IncidentTable extends Component
         } elseif ($choice == 'new') {
            $this->IncidentQuery('status.name','new');
         } elseif ($choice == 'me') {
-            $this->IncidentQuery('assigned_to.name', "kevin wilson");
+            $this->IncidentQuery('assigned_to.name', Auth::user()->name);
         } elseif ($choice == 'breach') {
             //$this->incidents = incidents::paginate($this->numberShown);
         } else{

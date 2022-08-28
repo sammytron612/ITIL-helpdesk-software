@@ -13,7 +13,7 @@
                         </path>
                     </svg>
                 </span>
-                <input x-on:keydown.debounce="search" x-model="searchTerm"
+                <input x-on:keydown.debounce.500ms="search" x-model="searchTerm"
                     class="w-full py-2 pl-10 pr-4 bg-white border rounded-lg placeholder:font-italitc border-slate-300 focus:outline-none"
                     placeholder="Search" type="text" />
         </div>
@@ -23,7 +23,7 @@
                 <div class="flex justify-end">
                     <div class="py-2" x-on:click="openButton = ! openButton">
                         <div class="relative flex items-center space-x-1 text-sm font-medium cursor-pointer">
-                            <div x-transition.500ms class="p-5 pl-0 text-2xl">Columns
+                            <div x-transition.500ms class="p-5 pl-0 text-lg">Columns
                                 <svg class="inline-block w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor"
                                     viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
