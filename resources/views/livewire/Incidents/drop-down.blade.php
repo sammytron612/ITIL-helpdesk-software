@@ -1,7 +1,7 @@
 <div class="flex">
     <div class="py-2" x-data="{open: false}" @click="open = ! open" @mouseleave="open = false">
         <div class="relative flex items-center space-x-1 text-sm font-medium cursor-pointer">
-            <div class="p-5 text-2xl">{{$showing}}..
+            <div class="p-5 pl-0 text-2xl">{{$showing}}..
                 <svg class="inline-block w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor"
                     viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
