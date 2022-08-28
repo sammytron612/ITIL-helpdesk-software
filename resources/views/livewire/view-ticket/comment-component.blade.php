@@ -25,7 +25,7 @@
                 @foreach($comments as $comment)
                     @if($loop->last) @continue @endif
                     @if(Auth::user()->isAgent() || (!Auth::user()->isAgent() && $comment->isPublic()))
-                        <div wire:key="{{$comment->id}}" @if($loop->first) x-data="{ openComment: true, newEditor: false, kbOpen: false }" @else
+                        <div x-cloak @if($loop->first) x-data="{ openComment: true, newEditor: false, kbOpen: false }" @else
                             x-data="{ openComment: false, newEditor: false, kbOpen: false }" @endif
                             class="p-5 mt-3 border-2 shadow rounded-t-xl">
                             <div class="flex flex-wrap items-center justify-between hover:cursor-pointer" x-on:click="openComment = ! openComment">
@@ -89,7 +89,7 @@
 
                 @endforeach
             </div>
-            <div x-data="{ kbOpen: false}" x-on:click.outside="kbOpen = false" class="relative">
+            <div x-cloak x-data="{ kbOpen: false}" x-on:click.outside="kbOpen = false" class="relative">
                 <x-kb-popup key="0"/>
                 <div x-show="comment" class="flex justify-start border rounded-t-lg border-slate-900 bg-slate-800">
                     <div class="p-2 text-white border-r hover:text-slate-800 hover:cursor-pointer hover:bg-slate-200 border-slate-500"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16"> <path d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z"/> </svg>
@@ -98,7 +98,7 @@
                 </div>
             </div>
 
-            <div x-data="{ public: true }" wire:ignore x-transition.duration.500ms x-show="comment">
+            <div x-cloak x-data="{ public: true }" wire:ignore x-transition.duration.500ms x-show="comment">
                 <textarea id="comment0">
                 </textarea>
                 <x-new-comment-buttons />

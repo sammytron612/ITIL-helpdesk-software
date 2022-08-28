@@ -40,6 +40,12 @@ class DropDown extends Component
         $this->emit('changeSearch', 'me');
     }
 
+    public function allOpen()
+    {
+        $this->showing = "All open";
+        $this->emit('changeSearch', 'open');
+    }
+
     public function sla()
     {
         $this->showing = "Incidents close to beach";

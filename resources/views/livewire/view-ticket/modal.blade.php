@@ -1,4 +1,4 @@
-<div x-data="{showModal: @entangle('viewModal')}" class="flex justify-self-center z-99">
+<div x-cloak x-data="{showModal: @entangle('viewModal')}" class="flex justify-self-center z-99">
     <div x-show="showModal">
         <div class="fixed inset-0 flex flex-col items-center w-full h-full overflow-y-auto bg-opacity-50 bg-slate-800">
             <div style="margin-top:10%" @click.outside="showModal = false" class="px-8 py-8 text-center bg-white rounded-md w-96">

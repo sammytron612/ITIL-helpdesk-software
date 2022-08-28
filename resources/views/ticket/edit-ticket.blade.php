@@ -23,7 +23,7 @@
 
     @livewire('view-ticket.history',['incident' => $ticket])
 
-    <div x-data="{drawer: false}" class="relative">
+    <div x-cloak x-data="{drawer: false}" class="relative">
         <div x-on:click.outside="drawer = false" class="fixed right-0 z-0 w-8 px-1 py-2 text-white bg-green-500 border-r rounded-tr-lg rounded-br-lg shadow-md hover:cursor-pointer hover:bg-green-700 border-y border-stone-400 top-[240px] md:top-56 vertical-text" x-on:click="drawer = ! drawer">SLA</div>
         <div x-transition:enter="transition duration-500"
               x-transition:enter-start="transform translate-x-full"

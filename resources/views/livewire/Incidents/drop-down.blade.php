@@ -7,7 +7,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                 </svg>
             </div>
-            <div class="absolute right-0 w-full origin-top-right bg-white rounded-md shadow-lg top-14 ring-1 ring-black ring-opacity-5 focus:outline-none"
+            <div class="absolute right-0 w-64 w-full origin-top-right bg-white rounded-md shadow-lg top-14 ring-1 ring-black ring-opacity-5 focus:outline-none"
                 x-show="open" x-cloak>
                 <div class="py-1">
                     <button wire:click='all' class="block px-4 py-1 text-left text-gray-700 text-md hover:text-blue-900">All
@@ -18,6 +18,10 @@
                 </div>
                 <div class="py-1">
                     <Button wire:click='new'class="block px-4 py-1 text-sm text-gray-700 text-md hover:text-blue-900">All new
+                        Incidents</button>
+                </div>
+                <div class="py-1">
+                    <Button wire:click='allOpen'class="block px-4 py-1 text-sm text-gray-700 text-md hover:text-blue-900">All Open
                         Incidents</button>
                 </div>
                 <div class="py-1">

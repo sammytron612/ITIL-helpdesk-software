@@ -10,7 +10,7 @@
     .btn-secondary {
         @apply px-4 py-2 font-semibold text-white rounded-lg shadow-md bg-stone-500 hover:bg-stone-700 focus:outline-none focus:ring-2 focus:ring-stone-400 focus:ring-opacity-75;
     }
-    
+
   .comments a {
         @apply hover:underline text-blue-600 hover:text-blue-800 visited:text-purple-600
      }
@@ -20,8 +20,10 @@
         writing-mode: vertical-rl;
         text-orientation: mixed;
         transform: scale(-1);
-        
+
   }
+
+  [x-cloak] { display: none !important; }
 }
 
 

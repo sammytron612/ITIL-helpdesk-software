@@ -1,4 +1,4 @@
-<div x-data="{ open: $persist(false) }">
+<div x-cloak x-data="{ open: $persist(false) }">
     <div class="fixed top-0 z-30 flex">
         <div :class="open ? 'w-16 md:w-56' : 'w-0 md:w-16'" class="flex items-center justify-center px-4 py-1 transition-all duration-300 ease-in-out bg-yellow-500">
             <button x-on:click="open = ! open" class="bg-blue">
@@ -6,16 +6,18 @@
             </button>
         </div>
         <div :class="open ? 'w-[calc(100vw_-_5rem)] md:w-[calc(100vw_-_15rem)]' : 'w-[calc(100vw_-_3rem)] md:w-[calc(100vw_-_5rem)]'" class="flex items-center justify-between px-4 py-2 text-white bg-slate-900">
-            <div>{{ Auth::user()->name}} Service Desk</div>
-
+            <div class="ml-5">Service Desk</div>
+            <div>{{ Auth::user()->name}}</div>
             <div>@livewire('notifications.socket-notification')</div>
 
         </div>
     </div>
 
-    @include('layouts.header')
+    @if(collect(request()->segments())->last() =='edit')
+        @include('layouts.header')
+    @endif
 
-    <aside :class="open ? 'w-16 md:w-56' : 'w-0 md:w-16'" class="fixed top-0 left-0 h-screen transition-all duration-300 ease-in-out">
+    <aside x-cloak :class="open ? 'w-16 md:w-56' : 'w-0 md:w-16'" class="fixed top-0 left-0 h-screen transition-all duration-300 ease-in-out">
         <div class="h-full pt-5 rounded-bl-lg bg-slate-900">
             <ul class="flex flex-col py-20 space-y-8">
                 <a href="{{route('dashboard')}}">
