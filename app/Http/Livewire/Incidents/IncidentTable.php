@@ -105,6 +105,7 @@ class IncidentTable extends Component
     {
 
         $i = 0;
+
         foreach($this->selectedCheckBoxes as $check)
         {
             if(!$check)
