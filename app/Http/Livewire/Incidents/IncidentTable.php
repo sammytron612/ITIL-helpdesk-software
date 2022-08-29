@@ -34,6 +34,12 @@ class IncidentTable extends Component
 
    public function render()
     {
+
+        $incidents = incidents::with('assigned_agent', 'requested_by', 'group','statuses','departments','priorities','categories','sub_categories','chosen_site')
+                        //->whereRelation('assigned_agent', 'name','=', 'kevin wilson')
+                        //->orWhereRelation('requested_by', 'name','=', 'kevin wilson')
+                        ->get();
+        //dd($incidents);
 //dd($this->value);
         $this->incidents =  incidents::select('incidents.id as id','status.name as status', 'incidents.title as title','category.name as category',
             'priority.name as priority','sub_category.name as sub_category',

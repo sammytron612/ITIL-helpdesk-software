@@ -58,10 +58,10 @@ class incidents extends Model
         return $this->hasOne(agent_group::class, 'id', 'agent_group');
     }
 
-    public function descriptions()
+    /*public function descriptions()
     {
         return $this->hasOne(Comments::class, 'incident_no');
-    }
+    }*/
 
     public function chosen_site()
     {
@@ -76,4 +76,8 @@ class incidents extends Model
     {
         return $this->assigned_to === true;
     }
+
+    public static function withAllRelations() {
+        return static::with('assigned_agent', 'requested_by', 'group','statuses','departments','priorities','categories','sub_categories','chosen_site');
+     }
 }

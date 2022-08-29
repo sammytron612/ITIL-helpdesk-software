@@ -1,12 +1,12 @@
 <div x-data="page()" x-init="initStorage()">
     <div class="grid items-center grid-cols-2 md:grid-cols-3">
-        <div class="w-full">
-            <div>@livewire('incidents.drop-down')</div>
+        <div class="order-2 w-full md:order-first">
+            @livewire('incidents.drop-down')
         </div>
-        <div class="order-last w-full col-span-2 md:col-span-1 md:order-2">
+        <div class="relative order-first w-full col-span-2 -z-33 md:col-span-1 md:order-2">
             <div class="w-full" x-data="{ searchTerm: ''}">
                 <label class="relative block">
-                    <span class="absolute inset-y-0 left-0 flex items-center pl-3">
+                    <span x-show="!searchTerm" class="absolute inset-y-0 left-0 flex items-center pl-3 opacity-75">
                         <svg class="w-5 h-5 fill-black" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30"
                             height="30" viewBox="0 0 30 30">
                             <path
@@ -15,38 +15,33 @@
                         </svg>
                     </span>
                     <input x-on:keydown.debounce.500ms="search" x-model="searchTerm"
-                        class="w-full py-2 pl-10 pr-4 bg-white border rounded-lg placeholder:font-italitc border-slate-300 focus:outline-none"
-                        placeholder="Search" type="text" />
+                        class="w-full p-2 border-0 border-b-2 border-gray-300 outline-none text-md focus:ring-0 focus:border-blue-400"
+                         type="text" />
             </div>
         </div>
-        <div class="w-full">
-            <div>
-                <div x-data="{openButton: $persist(false)}">
-                    <div x-on:click.outside="$wire.updateSelectedCheckBoxes()" class="">
-                        <div class="py-2" x-on:click="openButton = ! openButton">
-                            <div class="relative flex items-center space-x-1 text-sm font-medium cursor-pointer">
-                                <div x-transition.500ms class="p-5 pl-0 text-lg">Columns
-                                    <svg class="inline-block w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                                    </svg>
-                                </div>
-                                <div x-on:click.outside="openButton = ! openButton; $wire.updateSelectedCheckBoxes()" class="absolute right-0 w-48 p-2 origin-top-right bg-white rounded-md shadow-lg top-14 ring-1 ring-black ring-opacity-5 focus:outline-none"
-                                    x-show="openButton" x-cloak>
-
-                                    @foreach($allColumns as $key => $col)
-                                        @if($loop->first) @continue @endif
-                                        <div class="block px-2 py-2 text-sm text-left text-gray-700 hover:text-blue-900"><input x-on:click="openButton = open" wire:model.defer="selectedCheckBoxes.{{$key}}" class="border border-blue-700 rounded appearance-none checked:bg-blue-500" type="checkbox"  value="true"><span class="ml-2">{{ucwords($col)}}</span></div>
-                                    @endforeach
-
-                                </div>
+        <div class="order-last w-full">
+            <div x-data="{openButton: $persist(false)}">
+                <div x-on:click.outside="openButton = false" class="">
+                    <div class="py-2" x-on:click="openButton = ! openButton">
+                        <div class="relative text-sm font-medium cursor-pointer">
+                            <div x-transition.500ms class="p-5 pl-0 text-lg text-right">Columns
+                                <svg class="inline-block w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </div>
+                            <div x-on:click.outside="openButton = ! openButton; $wire.updateSelectedCheckBoxes()" class="absolute right-0 w-48 p-2 origin-top-right bg-white rounded-md shadow-lg top-14 ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                x-show="openButton" x-cloak>
+                                @foreach($allColumns as $key => $col)
+                                    @if($loop->first) @continue @endif
+                                    <div class="block px-2 py-2 text-sm text-left text-gray-700 hover:text-blue-900"><input x-on:click="openButton = open" wire:model="selectedCheckBoxes.{{$key}}" class="border border-blue-700 rounded appearance-none checked:bg-blue-500" type="checkbox"  value="true"><span class="ml-2">{{ucwords($col)}}</span></div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 
     <div wire:loading.flex class="justify-center text-2xl">
