@@ -15,7 +15,13 @@ class TestController extends Controller
 {
     public function index()
     {
-        broadcast(new NewIncident(incidents::find(43)))->toOthers();
+        $incidents = incidents::with('assigned_agent', 'requested_by', 'group','statuses','departments','priorities','categories','sub_categories','chosen_site')
+                        ->whereRelation('assigned_agent', 'name','=', 'kevin wilson')
+                        ->orWhereRelation('requested_by', 'name','like', 'kevin%')
+                        ->whereRe
+
+                        ->get();
+        //broadcast(new NewIncident(incidents::find(43)))->toOthers();
 
         //$data = ['id' => 1];
         //Auth::user()->notify(new mailUser($data));
