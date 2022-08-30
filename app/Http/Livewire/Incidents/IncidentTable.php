@@ -9,22 +9,27 @@ use Auth;
 use App\Http\Livewire\Traits\WithSorting;
 
 
+
 class IncidentTable extends Component
 {
     use WithSorting;
     use WithPagination;
 
+
+
+    private $choice = 'all';
+    private $incidents = [];
+
+    public $sortBy;
     public $searchTerm = '';
-    public $sortBy = '';
-    public $choice = 'all';
-    public $field = false;
-    public $value = false;
+    public $field;
+    public $filter = 'id';
+    public $value = 0;
+    public $operator = '>';
 
     public $allColumns = ['id','status','title','priority','category', 'sub_category', 'agent_group', 'assigned_to','created_by','site','department','reassignments','created_at','updated_at'];
     public $storedColumns = [];
 
-
-    private $incidents = [];
     public $selectedCheckBoxes = ["true","true","true","true","true","true","true","true","true","true","true","true","true","true"];
     public $numberShown = 25;
 
@@ -32,16 +37,40 @@ class IncidentTable extends Component
     protected $listeners = ['changeSearch'];
 
 
+
    public function render()
     {
+//dd($this->sortBy);
+        $model = "\App\models\\" . $this->sortBy;
 
-        $incidents = incidents::with('assigned_agent', 'requested_by', 'group','statuses','departments','priorities','categories','sub_categories','chosen_site')
-                        //->whereRelation('assigned_agent', 'name','=', 'kevin wilson')
-                        //->orWhereRelation('requested_by', 'name','=', 'kevin wilson')
-                        ->get();
+        $this->incidents = incidents::withAllRelations()
+        ->when($this->filter)->where(function ($query) {
+                    $query->where($this->filter,$this->operator, $this->value)
+                    ->when($this->searchTerm)->Where(function($query){
+                        $query->whereRelation('assigned_agent', 'name','LIKE', $this->searchTerm . "%")
+                             ->orWhereRelation('requested_by','name', 'LIKE', $this->searchTerm . "%")
+                             ->orWhere('incidents.id', $this->searchTerm)
+                             ->orWhereRelation('statuses','name', 'LIKE', $this->searchTerm . '%')
+                             ->orWhereRelation('priorities','name', 'LIKE', $this->searchTerm . '%')
+                             ->orWhereRelation('categories','name', 'LIKE', $this->searchTerm . "%")
+                             ->orWhereRelation('group','name', 'LIKE', $this->searchTerm . "%");
+                        });
+
+                    })
+        ->when(in_array($this->sortBy,['status','priority','User','category','sub_category','department','site']), function ($query) use($model){
+            $query->orderBy($model::select('name')->whereColumn('id', 'incidents.'. $this->field), $this->sortDirection);
+            })
+        ->when(in_array($this->sortBy,['id','updated_at','created_at']))
+            ->orderBy($this->sortBy, $this->sortDirection)
+        ->when(!$this->sortBy)
+            ->orderBy('id','desc')
+        ->paginate($this->numberShown);
+
+
+
         //dd($incidents);
 //dd($this->value);
-        $this->incidents =  incidents::select('incidents.id as id','status.name as status', 'incidents.title as title','category.name as category',
+      /*  $this->incidents =  incidents::select('incidents.id as id','status.name as status', 'incidents.title as title','category.name as category',
             'priority.name as priority','sub_category.name as sub_category',
                 'agent_group.name as agent_group', 'assigned_to.name as assigned_to', 'created_by.name as created_by',
                     'site.name as site','department.name as department', 'incidents.reassignments as reassignments',
@@ -97,7 +126,7 @@ class IncidentTable extends Component
                 ->when($this->sortBy)->orderBy($this->sortBy,$this->sortDirection)
                     ->when(!$this->sortBy)->orderBy('incidents.created_at','desc')
                     ->paginate($this->numberShown);
-
+*/
         return view('livewire.incidents.incident-table', ['incidents' => $this->incidents]);
     }
 
@@ -164,19 +193,22 @@ class IncidentTable extends Component
     public function changeSearch($choice)
     {
 
+        $this->reset('searchTerm');
+        $this->sortBy = '';
+        $this->field = '';
+
         $this->currentChoice = $choice;
      //$this->incidents = $this->IncidentQuery('created_at',$choice);
         //$this->incidents = incidents::where('status', 1)->paginate($this->numberShown);
 
         if ($choice == 'all') {
-            $this->field = null;
-            $this->IncidentQuery();
+            $this->IncidentQuery('id','>','0');
         } elseif ($choice == 'resolved') {
-            $this->IncidentQuery('status.name', 'resolved');
+            $this->IncidentQuery('status', '=', 5);
         } elseif ($choice == 'new') {
-           $this->IncidentQuery('status.name','new');
+           $this->IncidentQuery('status','=',1);
         } elseif ($choice == 'me') {
-            $this->IncidentQuery('assigned_to.name', Auth::user()->name);
+            $this->IncidentQuery('assigned_to', '=', Auth::id());
         }  elseif ($choice == 'open') {
             $this->IncidentQuery('status.id',[5,10,11]);
         } elseif ($choice == 'breach') {
@@ -188,14 +220,22 @@ class IncidentTable extends Component
         return;
     }
 
-    private function IncidentQuery($field = null, $value = null)
+    private function IncidentQuery($filter = null, $operator = null, $value = null)
     {
 
-        if($field) {$this->field = $field;}
+        if($filter) {$this->filter = $filter;}
+        if($operator) {$this->operator = $operator;}
         if($value) {$this->value = $value;}
 
         return;
 
+    }
+
+    public function queryTest()
+    {
+
+
+        return $query;
     }
 
 }

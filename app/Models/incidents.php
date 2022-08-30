@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Auth;
 
 class incidents extends Model
 {
@@ -75,6 +76,11 @@ class incidents extends Model
     public function assignedToAgent()
     {
         return $this->assigned_to === true;
+    }
+
+    public function isMine()
+    {
+        return $this->created_by == Auth::id();
     }
 
     public static function withAllRelations() {

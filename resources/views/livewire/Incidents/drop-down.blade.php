@@ -1,4 +1,4 @@
-<div  x-data="{open: false}" x-on:click="open = ! open" x-on:mouseleave="open = false" wire:ignore>
+<div  x-data="{open: false}" x-on:click="open = ! open" x-on:mouseleave="open = false">
     <div class="py-2">
         <div class="relative flex items-center space-x-1 text-sm font-medium cursor-pointer">
             <div class="p-5 pl-0 text-lg">{{$showing}}
@@ -24,14 +24,18 @@
                     <Button wire:click.defer='allOpen'class="block px-4 py-1 text-sm text-gray-700 text-md hover:text-blue-900">All Open
                         Incidents</button>
                 </div>
-                <div class="py-1">
-                    <button wire:click.defer='sla' class="block px-4 py-1 text-sm text-left text-gray-700 text-md hover:text-blue-900">Incidents close to
-                        SLA breach</button>
-                </div>
-                <div class="py-1">
-                    <button wire:click.defer='me'class="block px-4 py-1 text-sm text-left text-gray-700 text-md hover:text-blue-900">Incidents assigned
-                        to me</button>
-                </div>
+                @if(Auth::user()->isAgent())
+                    <div class="py-1">
+                        <button wire:click.defer='sla' class="block px-4 py-1 text-sm text-left text-gray-700 text-md hover:text-blue-900">Incidents close to
+                            SLA breach</button>
+                    </div>
+                @endif
+                @if(Auth::user()->isAgent())
+                    <div class="py-1">
+                        <button wire:click.defer='me'class="block px-4 py-1 text-sm text-left text-gray-700 text-md hover:text-blue-900">Incidents assigned
+                            to me</button>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

@@ -7,12 +7,13 @@ trait WithSorting
     public $sortDirection = 'asc';
 
 
-    public function sortBy($field)
+    public function sortBy($model, $field = null)
     {
 
-        $this->sortDirection = $this->sortBy === $field ? $this->reverseSort() : 'asc';
+        $this->sortDirection = $this->sortBy === $model ? $this->reverseSort() : 'asc';
 
-        $this->sortBy = $field;
+        $this->sortBy = $model;
+        $this->field = $field;
 
         $this->incidentQuery();
 
