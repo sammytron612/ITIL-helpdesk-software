@@ -1,5 +1,5 @@
 <div x-cloak x-data="{historyDrawer: @entangle('historyDrawer')}" class="relative">
-    <div x-on:click.outside="historyDrawer = false" class="fixed right-0 z-0 w-8 px-1 py-2 text-white bg-blue-500 border-r rounded-tr-lg rounded-br-lg shadow-md hover:cursor-pointer hover:bg-blue-700 border-y border-stone-400 top-[165px] md:top-36 vertical-text" x-on:click="historyDrawer = true">History</div>
+    <div x-on:click.outside="historyDrawer = false" class="fixed right-0 z-0 w-8 px-1 py-2 text-white bg-blue-500 border-r rounded-tr-lg rounded-br-lg shadow-md hover:cursor-pointer hover:bg-blue-700 border-y border-stone-400 top-[185px] md:top-40 vertical-text" x-on:click="historyDrawer = true">History</div>
     <div x-transition:enter="transition duration-500"
         x-transition:enter-start="transform translate-x-full"
         x-transition:enter-end="transform translate-x-0"

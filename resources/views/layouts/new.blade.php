@@ -52,7 +52,6 @@
 
 <body class="font-sans antialiased">
 
-
         @include('layouts.vertical-navigation')
 
         @livewireScripts

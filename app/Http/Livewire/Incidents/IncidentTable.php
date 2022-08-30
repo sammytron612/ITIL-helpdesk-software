@@ -40,23 +40,29 @@ class IncidentTable extends Component
 
    public function render()
     {
-//dd($this->sortBy);
+
         $model = "\App\models\\" . $this->sortBy;
 
         $this->incidents = incidents::withAllRelations()
-        ->when($this->filter)->where(function ($query) {
-                    $query->where($this->filter,$this->operator, $this->value)
-                    ->when($this->searchTerm)->Where(function($query){
-                        $query->whereRelation('assigned_agent', 'name','LIKE', $this->searchTerm . "%")
-                             ->orWhereRelation('requested_by','name', 'LIKE', $this->searchTerm . "%")
-                             ->orWhere('incidents.id', $this->searchTerm)
-                             ->orWhereRelation('statuses','name', 'LIKE', $this->searchTerm . '%')
-                             ->orWhereRelation('priorities','name', 'LIKE', $this->searchTerm . '%')
-                             ->orWhereRelation('categories','name', 'LIKE', $this->searchTerm . "%")
-                             ->orWhereRelation('group','name', 'LIKE', $this->searchTerm . "%");
-                        });
+            ->when(!Auth::user()->isAgent())->Where(function($query){
+                $query->where('created_by', Auth::id());
+            })
+            ->when($this->operator != "not", function ($query){
+                $query->where($this->filter,$this->operator, $this->value);
+            })
+            ->when($this->operator == "not", function ($query){
+                $query->whereNotIn($this->filter, $this->value);
+            })
+            ->when($this->searchTerm)->Where(function($query){
+                $query->whereRelation('assigned_agent', 'name','LIKE', $this->searchTerm . "%")
+                    ->orWhereRelation('requested_by','name', 'LIKE', $this->searchTerm . "%")
+                    ->orWhere('incidents.id', $this->searchTerm)
+                    ->orWhereRelation('statuses','name', 'LIKE', $this->searchTerm . '%')
+                    ->orWhereRelation('priorities','name', 'LIKE', $this->searchTerm . '%')
+                    ->orWhereRelation('categories','name', 'LIKE', $this->searchTerm . "%")
+                    ->orWhereRelation('group','name', 'LIKE', $this->searchTerm . "%");
+                })
 
-                    })
         ->when(in_array($this->sortBy,['status','priority','User','category','sub_category','department','site']), function ($query) use($model){
             $query->orderBy($model::select('name')->whereColumn('id', 'incidents.'. $this->field), $this->sortDirection);
             })
@@ -65,6 +71,7 @@ class IncidentTable extends Component
         ->when(!$this->sortBy)
             ->orderBy('id','desc')
         ->paginate($this->numberShown);
+
 
 
 
@@ -205,12 +212,14 @@ class IncidentTable extends Component
             $this->IncidentQuery('id','>','0');
         } elseif ($choice == 'resolved') {
             $this->IncidentQuery('status', '=', 5);
+        } elseif ($choice == 'unassigned') {
+            $this->IncidentQuery('assigned_to', '=', NULL);
         } elseif ($choice == 'new') {
            $this->IncidentQuery('status','=',1);
         } elseif ($choice == 'me') {
             $this->IncidentQuery('assigned_to', '=', Auth::id());
         }  elseif ($choice == 'open') {
-            $this->IncidentQuery('status.id',[5,10,11]);
+            $this->IncidentQuery('status','not',[5,10,11]);
         } elseif ($choice == 'breach') {
             //$this->incidents = incidents::paginate($this->numberShown);
         } else{
@@ -231,11 +240,6 @@ class IncidentTable extends Component
 
     }
 
-    public function queryTest()
-    {
 
-
-        return $query;
-    }
 
 }

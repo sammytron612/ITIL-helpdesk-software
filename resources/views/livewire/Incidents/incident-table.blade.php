@@ -3,20 +3,14 @@
         <div class="order-2 w-full md:order-first">
             @livewire('incidents.drop-down')
         </div>
-        <div class="relative order-first w-full col-span-2 -z-33 md:col-span-1 md:order-2">
-            <div class="w-full">
-                <label class="relative block">
-                    <!--<span class="absolute inset-y-0 left-0 flex items-center pl-3 opacity-75">
-                        <svg class="w-5 h-5 fill-black" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30"
-                            height="30" viewBox="0 0 30 30">
-                            <path
-                                d="M 13 3 C 7.4889971 3 3 7.4889971 3 13 C 3 18.511003 7.4889971 23 13 23 C 15.396508 23 17.597385 22.148986 19.322266 20.736328 L 25.292969 26.707031 A 1.0001 1.0001 0 1 0 26.707031 25.292969 L 20.736328 19.322266 C 22.148986 17.597385 23 15.396508 23 13 C 23 7.4889971 18.511003 3 13 3 z M 13 5 C 17.430123 5 21 8.5698774 21 13 C 21 17.430123 17.430123 21 13 21 C 8.5698774 21 5 17.430123 5 13 C 5 8.5698774 8.5698774 5 13 5 z">
-                            </path>
-                        </svg>
-                    </span> -->
-                    <input wire:model.debounce.500ms="searchTerm"
-                        class="w-full p-2 border-0 border-b-2 border-gray-300 outline-none text-md focus:ring-0 focus:border-blue-400"
-                        placeholder="Search..." type="search" />
+        <div class="order-first w-full col-span-2 -z-33 md:col-span-1 md:order-2">
+            <div class="flex items-center">
+
+                    <label><x-svg.magnify /></label>
+                        <input wire:model.debounce.500ms="searchTerm"
+                            class="w-full p-2 border-0 border-b-2 border-gray-300 outline-none text-md focus:ring-0 focus:border-blue-400"
+                            placeholder="Search" type="search" />
+
             </div>
         </div>
         <div class="order-last w-full">
@@ -24,7 +18,9 @@
                 <div x-on:click.outside="openButton = false" class="">
                     <div class="py-2" x-on:click="openButton = ! openButton">
                         <div class="relative text-sm font-medium cursor-pointer">
-                            <div x-transition.500ms class="p-5 pl-0 text-lg text-right">Columns
+                            <div x-transition.500ms class="flex items-center justify-end p-5 pl-0 text-lg">
+                                <x-svg.columns />
+                                <div class="ml-2">Columns</div>
                                 <svg class="inline-block w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor"
                                     viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
