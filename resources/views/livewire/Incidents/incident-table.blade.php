@@ -16,7 +16,7 @@
             </div>
             <div class="order-last w-full">
                 <div x-data="{openButton: $persist(false)}">
-                    <div x-on:click.outside="openButton = false" class="">
+                    <div x-on:click.outside="openButton = false">
                         <div class="py-2">
                             <div class="relative text-sm font-medium">
                                 <div x-transition.500ms class="p-5 pl-0 text-lg">
