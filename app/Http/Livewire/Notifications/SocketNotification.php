@@ -4,7 +4,7 @@ namespace App\Http\Livewire\Notifications;
 
 use Livewire\Component;
 use App\Notifications\ChangeOwnership;
-use App\Notifications\NewComment;
+use App\Notifications\NewIncident;
 use Auth;
 use Session;
 
@@ -24,7 +24,8 @@ class SocketNotification extends Component
 
     public function getListeners()
     {
-        return ["echo-private:incidentevent.{$this->user->id},IncidentEvent" => 'incidentEvent'];
+        return ["echo-private:incidentevent.{$this->user->id},IncidentEvent" => 'incidentEvent',
+        "echo-private:newincident.{$this->user->id},NewIncident" => 'newIncident'];
     }
 
     public function render()
@@ -44,7 +45,16 @@ class SocketNotification extends Component
     public function newIncident($data)
     {
 
+        $array = ['id' => $this->count,
+                'incidentId' => $data['incidentId'],
+                'message' => $data['message']
+            ];
 
+        session()->push('notifications',$array);
+
+        $this->user->notify(new NewIncident($array));
+
+//dd('stop');
     }
 
 
@@ -84,7 +94,7 @@ class SocketNotification extends Component
         session()->push('notifications',$array);
 
         $this->user->notify(new ChangeOwnership($data));
-
+dd('stopkjlkl');
     }
 
 

@@ -1,25 +1,25 @@
 @php
 //dd($status);
     switch ($status) {
-        case '1':
+        case 'New':
             $class = "px-2 py-1 bg-blue-200 border border-blue-300 rounded-lg";
             break;
-        case '2':
+        case 'Assigned':
             $class = "px-2 py-1 bg-yellow-200 border border-yellow-300 rounded-lg";
             break;
-        case '3':
+        case 'Resolved':
             $class = "px-2 py-1 bg-purple-200 border border-purple-300 rounded-lg";
             break;
-        case '4':
+        case 'Awaiting user information':
             $class = "px-2 py-1 bg-purple-200 border border-purple-300 rounded-lg";
             break;
-        case '5':
+        case 'Awaiting vendor information':
             $class = "px-2 py-1 bg-green-200 border border-green-300 rounded-lg";
             break;
-        case '6':
+        case 'Pending':
             $class = "px-2 py-1 border rounded-lg bg-cyan-200 border-cyan-300";
             break;
-        case '7':
+        case 'On hold':
             $class = "px-2 py-1 bg-teal-200 border border-teal-300 rounded-lg";
             break;
         case '8':

@@ -4,19 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Auth;
 
 class incidents extends Model
 {
     use HasFactory;
 
-    protected $casts = [
-        'status_history' => 'array',
-        'sla' => 'array'
-    ];
 
 
-
-    protected $fillable = ['sla', 'status', 'status_history', 'title', 'priority', 'category', 'department','assigned_to', 'requestor', 'site' , 'department', 'assigned_group','re_assignments'];
+    protected $fillable = ['status', 'status_history', 'title', 'priority', 'category', 'department','assigned_to', 'created_by', 'site' , 'department', 'assigned_group','reassignments'];
 
     public function priorities()
     {
@@ -48,25 +44,25 @@ class incidents extends Model
         return $this->hasOne(sub_category::class, 'id', 'sub_category');
     }
 
-    public function assigned()
+    public function assigned_agent()
     {
         return $this->hasOne(User::class, 'id', 'assigned_to');
     }
 
+    public function requested_by()
+    {
+        return $this->hasOne(User::class, 'id', 'created_by');
+    }
+
     public function group()
     {
-        return $this->hasOne(agent_group::class, 'id', 'assigned_group');
+        return $this->hasOne(agent_group::class, 'id', 'agent_group');
     }
 
-    public function descriptions()
+    /*public function descriptions()
     {
         return $this->hasOne(Comments::class, 'incident_no');
-    }
-
-    public function requesting_user()
-    {
-        return $this->hasOne(User::class, 'id', 'requestor');
-    }
+    }*/
 
     public function chosen_site()
     {
@@ -79,6 +75,15 @@ class incidents extends Model
 
     public function assignedToAgent()
     {
-        return $this->assigned_to == true;
+        return $this->assigned_to === true;
     }
+
+    public function isMine()
+    {
+        return $this->created_by == Auth::id();
+    }
+
+    public static function withAllRelations() {
+        return static::with('assigned_agent', 'requested_by', 'group','statuses','departments','priorities','categories','sub_categories','chosen_site');
+     }
 }

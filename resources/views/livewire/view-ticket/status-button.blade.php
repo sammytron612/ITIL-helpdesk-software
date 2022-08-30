@@ -3,7 +3,7 @@
         Status
     </div>
     <x-status :status="$incident->status">
-        {{$incident->statuses->status}}
+        {{$incident->statuses->name}}
     </x-status>
     @if(Auth::user()->isAgent())
         <div class="mt-8">

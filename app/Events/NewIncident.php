@@ -21,12 +21,16 @@ class NewIncident implements ShouldBroadcast
      *
      * @return void
      */
-    public $incident;
+    public $incidentId;
+    public $message;
+    public $users;
 
-    public function __construct(incidents $incident)
+    public function __construct($incidentId, $message, $users)
     {
 
-        $this->incident = $incident;
+        $this->incidentId = $incidentId;
+        $this->message = $message;
+        $this->users = $users;
     }
 
     /**
@@ -36,9 +40,8 @@ class NewIncident implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        $users = User::all()->pluck('id');
 
-        foreach($users as $user)
+        foreach($this->users as $user)
         {
             $channels[] = new PrivateChannel('newincident.'. $user);
         }

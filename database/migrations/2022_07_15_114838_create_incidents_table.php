@@ -24,7 +24,7 @@ return new class extends Migration
             $table->integer('requestor');
             $table->integer('site')->nullable();
             $table->integer('department')->nullable();
-            $table->integer('re_assignments')->nullable();
+            $table->integer('reassignments')->nullable();
             $table->timestamps();
         });
     }
