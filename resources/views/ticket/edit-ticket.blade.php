@@ -44,7 +44,7 @@
             </div>
         </div>
 
-        <div class="grid grid-cols-1 mt-12 md:grid-cols-3 gap-x-2 gap-y-4">
+        <div class="grid grid-cols-1 mt-12 md:grid-cols-3 md:gap-x-4 gap-y-4">
             <div class="order-2 md:order-1 md:col-span-2">
                 <div>
                     <div class="mb-2 font-bold text-1xl">Priority</div>
