@@ -32,7 +32,7 @@ Route::resource('ticket', 'App\Http\Controllers\TicketController')->middleware([
 
 Route::post('/image/upload', [App\Http\Controllers\UploadController::class, 'image'])->middleware(['auth'])->name('image.upload');
 
-route::get('/test', [App\Http\Controllers\TestController::class, 'index']);
+route::get('/test', [App\Http\Controllers\TestController::class, 'index'])->middleware('auth');
 
 /// AXIOS ROUTES ///
 

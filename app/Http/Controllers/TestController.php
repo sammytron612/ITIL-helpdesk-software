@@ -7,15 +7,17 @@ use Illuminate\Support\Facades\Http;
 use App\Events\SendNotification;
 use App\Events\NewIncident;
 use Auth;
-use App\Events\UpdateIncident;
-use App\Notifications\UpdateIncident as mailUser;
-use App\Models\incidents;
+
 
 class TestController extends Controller
 {
     public function index()
     {
-        $incidents = incidents::with('assigned_agent', 'requested_by', 'group','statuses','departments','priorities','categories','sub_categories','chosen_site')
+
+        //$response = Http::withToken(env('API_TOKEN'))->get('http://localhost:9000/api/search/test');
+
+//return $response->body();
+       /* $incidents = incidents::with('assigned_agent', 'requested_by', 'group','statuses','departments','priorities','categories','sub_categories','chosen_site')
                         ->whereRelation('assigned_agent', 'name','=', 'kevin wilson')
                         ->orWhereRelation('requested_by', 'name','like', 'kevin%')
                         ->whereRe
@@ -30,5 +32,8 @@ class TestController extends Controller
 
        /*Auth::user()->notify(new mailKev(Auth::user()));
         event(new updateIncident(1));*/
+
+        return view('test.test');
     }
+
 }

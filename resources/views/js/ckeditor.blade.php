@@ -1,11 +1,11 @@
 <!--<script src="https://cdn.ckeditor.com/ckeditor5/35.0.1/classic/ckeditor.js"></script>-->
 <script src="{{asset('js/ckeditor.js')}}"></script>
 <script>
-    
+
     const CKeditors = {}
     var mentionArray = [];
     document.addEventListener("DOMContentLoaded", function() {
-        
+
             fetchAgents()
 
             createNewEditor(0)
@@ -26,14 +26,14 @@
                                     feed: getFeedItems,
                                     itemRenderer: customItemRenderer
                                 }
-                        ] 
-                        
+                        ]
+
                     },
                         extraPlugins: [ MyCustomUploadAdapterPlugin, MentionCustomization ]
                         }).then( newEditor => {
                             CKeditors[ 'comment' + id ] = newEditor
-                            
-                            
+
+
                         })
                         .catch( error => {
                             console.error( );
@@ -83,7 +83,7 @@
                 class: 'mention',
                 'data-mention': modelAttributeValue.id,
                 'data-user-id': modelAttributeValue.userId,
-                
+
             }, {
                 // Make mention attribute to be wrapped by other attribute elements.
                 priority: 20,
@@ -149,13 +149,13 @@ function customItemRenderer( item ) {
         var parsedHTML = new DOMParser().parseFromString(comment, 'text/html');
         var mentions = parsedHTML.querySelectorAll('.mention');
 
-        mentions.forEach(mention => mentionArray.push([{'id': mention.getAttribute("data-user-id")}, {'name': mention.getAttribute("data-mention").substring(1)}]) 
+        mentions.forEach(mention => mentionArray.push([{'id': mention.getAttribute("data-user-id")}, {'name': mention.getAttribute("data-mention").substring(1)}])
         );
         lastMention = mentionArray.at(-1)
         console.log(lastMention)
         return [comment, lastMention]
     }
-                
+
     function new_comment(){
 
         data = parseMentions(0)
@@ -166,13 +166,13 @@ function customItemRenderer( item ) {
             alert("A comment cannot be blank!")
             return
         }
-        
+
         @this.newComment(comment, lastMention)
         clearData(0)
     }
 
     function updateComment(id){
-            
+
         data = parseMentions(id)
         comment = data[0]
         lastMention = data[1]
@@ -202,35 +202,21 @@ function customItemRenderer( item ) {
             const data = { id: 'id' };
             const response = await axios.post("/update-lock/"+id);
             console.log(response.data);
-            
+
         } catch (err) {
             // Handle Error Here
             console.error(err);
         }
+
+
     };
-
-
-    /*
-    function fetchAgent(){
-        axios.post("/fetch")
-        .then(response => {
-            items = response.data.agents
-            console.log(items);
-        })
-        .catch(error=> {
-            console.log(error);
-        });
-        
-    }
-*/
-        
 
     function clearData(id){
 
                 CKeditors['comment'+ id].setData('')
-                
+
             }
-    
+
     function insertKBlink(title, url, id){
                     editor = CKeditors['comment'+ id]
                     editor.model.change( writer => {
@@ -346,7 +332,6 @@ function MyCustomUploadAdapterPlugin( editor ) {
         return new MyUploadAdapter( loader );
     };
 }
-
 
 
 </script>
