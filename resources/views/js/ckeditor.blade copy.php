@@ -169,7 +169,6 @@ function customItemRenderer( item ) {
 
         @this.newComment(comment, lastMention)
         clearData(0)
-        return
     }
 
     function updateComment(id){
@@ -184,7 +183,6 @@ function customItemRenderer( item ) {
             }
         console.log(comment)
         @this.updateComment(id,comment, lastMention)
-        return
     }
 
     const fetchAgents = async () => {
@@ -216,27 +214,21 @@ function customItemRenderer( item ) {
     function clearData(id){
 
                 CKeditors['comment'+ id].setData('')
-                return
 
             }
 
-    function insertKBlink(articleId, title, id){
-                    url = "{{url('/')}}" + "/article/show/"+articleId
+    function insertKBlink(title, url, id){
                     editor = CKeditors['comment'+ id]
-                    editor.model.change( writer => {
 
+                    editor.model.change( writer => {
                         const insertPosition = editor.model.document.selection.getFirstPosition();
-                        console.log(insertPosition)
                         writer.insertText( title, { linkHref: url }, insertPosition );
                     } );
-                    return
                 }
 
 
     function destroyEditor(id){
-
         editor = CKeditors['comment'+ id].destroy()
-        return
     }
 
     class MyUploadAdapter {

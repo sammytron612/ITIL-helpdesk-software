@@ -108,7 +108,7 @@
             </div>
         </div>
 
-        @livewire('view-ticket.modal', ['incident' => $ticket]);
+        @livewire('view-ticket.modal', ['incident' => $ticket])
 
 
     </div>

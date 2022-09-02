@@ -75,6 +75,9 @@ class CommentComponent extends Component
     public function updateComment(updates $update, $comment, $mention)
     {
 
+        $type = null;
+
+
         if($mention)
             {
                 $updateTicket = new updateTicket;
@@ -93,21 +96,30 @@ class CommentComponent extends Component
 
             }
 
+
         $update->comment = $comment;
         $update->public = $this->public;
         $update->save();
 
-        if($type == 'agent')
+        if($type)
+        {
+
+            if($type === 'agent')
                 {
                     $updateTicket->assign_to($update->incident, $id);
                 }
-                else{
+                else
+                {
                     $updateTicket->assign_to_group($update->incident, $id);
 
                 }
 
-        $this->emitTo('view-ticket.assign', 'updateAssigned', $name);
+            $this->emitTo('view-ticket.assign', 'updateAssigned', $name);
+
+        }
+
         $this->dispatchBrowserEvent('update-success');
+
     }
 
 

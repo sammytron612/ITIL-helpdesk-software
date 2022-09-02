@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\knowledge\KBController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -38,5 +39,14 @@ route::get('/test', [App\Http\Controllers\TestController::class, 'index'])->midd
 
 Route::post('/fetch', [App\Http\Controllers\AxiosController::class, 'fetchData'])->middleware(['auth'])->name('fetch.data');
 Route::post('/update-lock/{id}', [App\Http\Controllers\AxiosController::class, 'updateLock'])->middleware(['auth']);
+
+////////////////KNOWLEDGE BASE ROUTES /////////////////////
+
+
+//Route::get('/article/show/{id}', [App\Http\Controllers\Knowledge\KBController::class, 'show'])->middleware(['auth'])->name('article.show');
+
+Route::resource('kb', KBController::class);
+
+
 
 require __DIR__ . '/auth.php';
