@@ -7,12 +7,19 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Http;
 use App\Traits\FileUpload;
+use App\Service\ApiService;
 
 
 class KBController extends Controller
 {
     use FileUpload;
 
+    public $apiService;
+
+    public function __construct(ApiService $apiService)
+    {
+        $this->apiService = $apiService;
+    }
 
     public function index()
     {
@@ -44,16 +51,31 @@ class KBController extends Controller
             'status' => 'required',
             'scope' => 'required',
             'solution' => 'required',
-            'upload.*' => 'mimetypes:csv,pdf,jpg,jpeg,png,txt,xlx,xls,xlsx,pdf,docx,ppt|max:4096',
+            'upload.*' => 'mimes:csv,pdf,jpg,jpeg,png,txt,xlx,xls,xlsx,pdf,docx,doc,ppt|max:4096',
             'upload' => 'max:3'
 
         ]);
+
+        $uploadedFiles = null;
 
         if($request->has('upload'))
             {
                 $uploadedFiles = $this->upload($request);
             }
 
+
+
+        $response = $this->apiService->createArticle($validated, $uploadedFiles);
+
+        if($response->successful())
+        {
+            return redirect()->to('/kb/create')->with('message','Success');
+
+        }
+        else
+        {
+            return redirect()->to('/kb/create')->with('message','There was a problem!');
+        }
 
     }
 
@@ -65,7 +87,7 @@ class KBController extends Controller
      */
     public function show($id)
     {
-        $article = $response = Http::withToken('token')->get("http://localhost:9000/api/show/" . $id);
+        $article = Http::withToken('token')->get("http://localhost:9000/api/show/" . $id);
 
 
         if($article->successful())

@@ -18,7 +18,7 @@
     @vite('resources/js/app.js')
     <style>
     .ck-content{
-        height: 130px;
+        height: 330px;
     }
 
     [x-cloak] {

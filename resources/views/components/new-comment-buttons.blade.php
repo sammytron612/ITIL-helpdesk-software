@@ -1,5 +1,5 @@
 <div class="flex items-center">
-    <button x-on:click="new_comment();updates = true; comment = false; kbOpen = false" class="px-4 py-2 mt-3 mr-2 btn-primary">Post</button>
+    <button x-on:click="new_comment(); updates = true; comment = false; kbOpen = false" class="px-4 py-2 mt-3 mr-2 btn-primary">Post</button>
     <button x-on:click="updates = true; comment = false" class="px-4 py-2 mt-3 mr-2 btn-secondary">Close</button>
     @if(Auth::user()->isAgent())
         <button x-on:click="public = ! public" wire:click="publicToggle" class="px-4 py-2 mt-3">

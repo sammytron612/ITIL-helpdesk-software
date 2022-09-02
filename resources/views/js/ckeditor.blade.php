@@ -180,10 +180,12 @@ function customItemRenderer( item ) {
 
         if(comment.length == 0){
                 alert("A comment cannot be blank!")
+                Livewire.emit('reRender')
                 return
             }
         console.log(comment)
         @this.updateComment(id,comment, lastMention)
+
         return
     }
 
@@ -213,9 +215,10 @@ function customItemRenderer( item ) {
 
     };
 
-    function clearData(id){
+    function clearEditor(id){
 
                 CKeditors['comment'+ id].setData('')
+
                 return
 
             }
