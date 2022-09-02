@@ -39,6 +39,7 @@ class KBController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|max:255',
+            'tags' => 'max:255',
             'section' => 'required',
             'status' => 'required',
             'scope' => 'required',

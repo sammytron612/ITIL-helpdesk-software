@@ -37,7 +37,7 @@
                                 <span class="ml-1 text-xs text-red-600 animate-ping">{{ $message }}</span>
                             @enderror
                         </label>
-                        <input required type="text" name="tags" value="{{ old('tags') }}"
+                        <input type="text" name="tags" value="{{ old('tags') }}"
                             class="block w-full p-2 mt-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
                     </div>
                 </div>
@@ -97,10 +97,10 @@
                     <label for="description" class="block mb-2 text-sm font-bold text-gray-900 dark:text-gray-400">Solution
                         <span class="ml-1 text-sm text-red-500">*</span>
                         @error('solution')
-                            <span class="ml-1 text-xs text-red-600">{{ $message }}</span>
+                            <span class="ml-1 text-xs text-red-600 animate-ping">{{ $message }}</span>
                         @enderror
                     </label>
-                    <textarea id="description" name="solution" class="w-full h-48" >
+                    <textarea required id="description" name="solution" class="w-full h-48" >
                         {{ old('solution')}}
                     </textarea>
                 </div>
