@@ -39,6 +39,7 @@ route::get('/test', [App\Http\Controllers\TestController::class, 'index'])->midd
 
 Route::post('/fetch', [App\Http\Controllers\AxiosController::class, 'fetchData'])->middleware(['auth'])->name('fetch.data');
 Route::post('/update-lock/{id}', [App\Http\Controllers\AxiosController::class, 'updateLock'])->middleware(['auth']);
+Route::post('/delete-attachment/{id}/{name}', [App\Http\Controllers\AxiosController::class, 'deleteKBAttachment'])->middleware(['auth']);
 
 ////////////////KNOWLEDGE BASE ROUTES /////////////////////
 

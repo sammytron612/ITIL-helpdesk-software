@@ -19,7 +19,7 @@ trait FileUpload
 
             $extension = $file->getClientOriginalExtension();
 
-            $fileName = time() . $file->getClientOriginalName();
+            $fileName = time() . rand(0,9999) . '.' . $extension;
             $path = $file->storeAs('public\images', $fileName);
             $url = asset("/storage/images/" . $fileName);
             array_push($uploadedFiles,

@@ -6,6 +6,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\agent_group;
 use App\Models\updates;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 class AxiosController extends Controller
 {
@@ -21,22 +23,22 @@ class AxiosController extends Controller
                         'userId' => $agent->id . '-' . 'agent',
                         'name' => $agent->name,
                         'email' => $agent->email,
-            
+
                 ];
         }
 
         foreach($agentGroups as $group)
         {
-            
+
             $array[] = ['id' => '@' . $group->name,
                         'userId' => $group->id . '-' . 'group',
                         'name' => $group->name,
                         'email' => $group->email
                     ];
-                        
+
         }
-        
-        
+
+
         return response()->json(['agents' => $array]);
     }
 
@@ -51,5 +53,18 @@ class AxiosController extends Controller
         $comment->save();
 
         return response()->json(['status' => 'success']);
+    }
+
+    function deleteKBAttachment($id, $name)
+    {
+
+
+        storage::delete('public/images/' . $name);
+
+
+        //// need to upload via api
+
+
+        return response()->json(['ee' => $name]);
     }
 }

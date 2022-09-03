@@ -87,7 +87,7 @@ class KBController extends Controller
      */
     public function show($id)
     {
-        $article = Http::withToken('token')->get("http://localhost:9000/api/show/" . $id);
+        $article = Http::withToken('testtoken')->get("http://localhost:9000/api/show/" . $id);
 
 
         if($article->successful())
@@ -112,16 +112,26 @@ class KBController extends Controller
      */
     public function edit($id)
     {
-        //
+        $article = Http::withToken('testtoken')->get("http://localhost:9000/api/show/" . $id);
+
+
+
+        if($article->successful())
+        {
+            $article = json_decode($article->body(),true);
+            $uploads = $article['uploads'];
+
+
+            $creator = User::find($article['author']);
+
+            return view('knowledge.edit-article',compact('article','creator','uploads'));
+        } else
+        {
+            return view('knowledge.edit-article')->with('error', 'The error message here!');
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
         //

@@ -7,12 +7,16 @@ use Illuminate\Support\Facades\Http;
 use App\Events\SendNotification;
 use App\Events\NewIncident;
 use Auth;
+use Storage;
 
 
 class TestController extends Controller
 {
     public function index()
     {
+
+        dd(base64_decode('MTY2MjIwNjMyMTEwNDgyNTk2XzkwOTUxODA5OTEwODI2MV81MDk2NjIxMTUyMzA3MTY5NTE0X24uanBn'));
+        storage::delete('public/images/kev.jpg');
 
         //$response = Http::withToken(env('API_TOKEN'))->get('http://localhost:9000/api/search/test');
 
@@ -32,7 +36,7 @@ class TestController extends Controller
 
        /*Auth::user()->notify(new mailKev(Auth::user()));
         event(new updateIncident(1));*/
-
+die();
         return view('test.test');
     }
 
