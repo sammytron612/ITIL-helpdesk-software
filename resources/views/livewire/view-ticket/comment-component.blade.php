@@ -72,7 +72,7 @@
 
                                 <div class="flex items-center" x-data="{ public: {{$comment->public}} }" x-show="newEditor">
                                     <button x-on:click="updateComment({{$comment->id}});updates = true; comment = false; newEditor = false; kbOpen=false; destroyEditor({{$comment->id}})" class="mt-2 mr-2 btn-primary">Update</button>
-                                    <button x-on:click="updates = true; comment = false; newEditor = false; kbOpen=false; destroyEditor({{$comment->id}}); reRender()" class="mt-2 mr-2 btn-secondary">close</button>
+                                    <button x-on:click="updates = true; comment = false; newEditor = false; kbOpen=false; closeEditor({{$comment->id}}); destroyEditor({{$comment->id}});" class="mt-2 mr-2 btn-secondary">close</button>
                                     <button class="mt-2" x-on:click="updateLock({{$comment->id}}); public = ! public" class="px-4 py-2 mt-3">
                                         <span class="flex items-center" x-show="public"><svg fill="#000000" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" width="24px" height="24px"><path d="M 18 1 C 14.67619 1 12 3.6761905 12 7 L 12 8 L 2.9296875 8 C 1.8656875 8 1 8.897 1 10 L 1 20 C 1 21.103 1.8656875 22 2.9296875 22 L 14.070312 22 C 15.134312 22 16 21.103 16 20 L 16 10 C 16 8.897 15.135266 8 14.072266 8 L 14 8 L 14 7 C 14 4.7238095 15.72381 3 18 3 C 20.27619 3 22 4.7238095 22 7 L 22 9 L 24 9 L 24 7 C 24 3.6761905 21.32381 1 18 1 z M 8.5078125 13 C 9.6078125 13 10.507812 13.9 10.507812 15 C 10.507812 16.1 9.6078125 17 8.5078125 17 C 7.4078125 17 6.5078125 16.1 6.5078125 15 C 6.5078125 13.9 7.4078125 13 8.5078125 13 z"/></svg>
                                             <span class="ml-2 text-sm">Public</span></span>
@@ -142,10 +142,6 @@
                 this.expanded ? this.operator = '-' : this.operator = '+'
 
                 this.$dispatch('expand', {'expanded': this.expanded})
-            },
-            reRender(){
-
-                Livewire.emit('reRender')
             },
 
             async selectArticle(id,title){

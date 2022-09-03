@@ -3,7 +3,9 @@
 <script>
 
     const CKeditors = {}
-    var mentionArray = [];
+    var mentionArray = []
+    var EditorContent = ''
+
     document.addEventListener("DOMContentLoaded", function() {
 
             fetchAgents()
@@ -32,7 +34,7 @@
                         extraPlugins: [ MyCustomUploadAdapterPlugin, MentionCustomization ]
                         }).then( newEditor => {
                             CKeditors[ 'comment' + id ] = newEditor
-
+                            EditorContent = CKeditors[ 'comment' + id ].getData()
 
                         })
                         .catch( error => {
@@ -156,6 +158,10 @@ function customItemRenderer( item ) {
         return [comment, lastMention]
     }
 
+    function closeEditor(id){
+        CKeditors['comment' + id].setData(EditorContent)
+    }
+
     function new_comment(){
 
         data = parseMentions(0)
@@ -168,7 +174,7 @@ function customItemRenderer( item ) {
         }
 
         @this.newComment(comment, lastMention)
-        clearData(0)
+        clearEditor(0)
         return
     }
 
@@ -180,7 +186,7 @@ function customItemRenderer( item ) {
 
         if(comment.length == 0){
                 alert("A comment cannot be blank!")
-                Livewire.emit('reRender')
+                CKeditors['comment' + id].setData(EditorContent)
                 return
             }
         console.log(comment)
@@ -188,6 +194,7 @@ function customItemRenderer( item ) {
 
         return
     }
+
 
     const fetchAgents = async () => {
         try {
@@ -218,9 +225,7 @@ function customItemRenderer( item ) {
     function clearEditor(id){
 
                 CKeditors['comment'+ id].setData('')
-
                 return
-
             }
 
     function insertKBlink(articleId, title, id){
@@ -238,7 +243,7 @@ function customItemRenderer( item ) {
 
     function destroyEditor(id){
 
-        editor = CKeditors['comment'+ id].destroy()
+        CKeditors['comment'+ id].destroy()
         return
     }
 

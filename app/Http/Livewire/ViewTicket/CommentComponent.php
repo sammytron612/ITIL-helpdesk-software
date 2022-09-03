@@ -17,9 +17,6 @@ class CommentComponent extends Component
     public $public = true;
 
 
-    protected $listeners = ['reRender' => '$refresh'];
-
-
     public function render()
     {
 
