@@ -9,12 +9,7 @@ use App\Models\group_membership;
 
 class UpdateTicket
 {
-    /**
-     * Get all of the tasks for a given user.
-     *
-     * @param  User  $user
-     * @return Collection
-     */
+
     public function assign_self($incident)
     {
 
@@ -161,12 +156,14 @@ class UpdateTicket
 
     public function newStatus($incident)
     {
-        if($incident->assignedToAgent())
+        if($incident->assigned_to)
         {
             $users = $this->getUsers($incident);
 
         }
-        else {
+        else
+        {
+
             $users = $this->getUsersFromGroup($incident);
         }
 
