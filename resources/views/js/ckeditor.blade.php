@@ -232,7 +232,7 @@ function customItemRenderer( item ) {
             }
 
     function insertKBlink(articleId, title, id){
-                    url = "{{url('/')}}" + "/article/show/"+articleId
+                    url = "{{url('/kb')}}" + "/"+articleId
                     editor = CKeditors['comment'+ id]
                     editor.model.change( writer => {
 
