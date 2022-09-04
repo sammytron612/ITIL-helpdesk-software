@@ -23,6 +23,12 @@
 
   }
 
+  .ck-content{
+    height: 330px;
+    @apply prose;
+    @apply max-w-none;
+}
+
   [x-cloak] { display: none !important; }
 }
 

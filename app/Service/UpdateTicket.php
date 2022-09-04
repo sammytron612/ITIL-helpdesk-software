@@ -142,7 +142,7 @@ class UpdateTicket
 
     private function newAssigned($incident)
     {
-        if($incident->assigned_to())
+        if($incident->assigned_to)
         {
             $users = $this->getUsers($incident);
             $name = $incident->assigned_agent->name;

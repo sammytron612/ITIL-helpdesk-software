@@ -16,36 +16,36 @@
         @endif
 
         <div class="py-5">
-            <h2 class="text-2xl font-bold">New Article</h2>
+            <h2 class="text-2xl font-bold">Edit Article</h2>
         </div>
-        <form id="update-form" method="post" action="{{route('kb.store')}}" enctype="multipart/form-data">
+        <form id="update-form" method="post" action="{{route('kb.update', $article['id'])}}" enctype="multipart/form-data">
             @csrf
-            <div class="grid grid-cols-1 gap-4 mt-3 md:gap-6 md:grid-cols-3">
+            @method('PUT')
+            <div class="grid grid-cols-1 gap-4 mt-3 md:grid-cols-3">
 
-                <div class="col-span-2">
-                    <div class="">
-                        <label for="title" class="mb-2 text-sm font-bold text-gray-900 dark:text-gray-400">
-                            Title<span class="ml-1 text-xs text-red-500 animtate-blink">*</span>
-                            @error('title')
-                                <span class="ml-1 text-xs text-red-600 animate-ping">{{ $message }}</span>
-                            @enderror
-                        </label>
-                        <input required type=" text" name="title" value="{{ $article['title'] }}"
-                            class="block w-full p-2 mt-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-                    </div>
+                <div class="col-span-1 md:col-span-2">
+                    <label for="title" class="mb-2 text-sm font-bold text-gray-900 dark:text-gray-400">
+                        Title<span class="ml-1 text-xs text-red-500 animtate-blink">*</span>
+                        @error('title')
+                            <span class="ml-1 text-xs text-red-600 animate-ping">{{ $message }}</span>
+                        @enderror
+                    </label>
+                    <input required type=" text" name="title" value="{{ $article['title'] }}"
+                        class="block w-full p-2 mt-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
                 </div>
 
-                <div class="col-span-1">
-                    <div class="">
-                        <label for="tags" class="mb-2 text-sm font-bold text-gray-900 dark:text-gray-400">
-                            Tags<span class="ml-1 text-xs text-red-500 animtate-blink">*</span>
-                            @error('tags')
-                                <span class="ml-1 text-xs text-red-600 animate-ping">{{ $message }}</span>
-                            @enderror
-                        </label>
-                        <input type="text" name="tags" value="{{ $article['tags'] }}"
-                            class="block w-full p-2 mt-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-                    </div>
+                <div class="relative col-span-1">
+                    <div class="absolute z-30 w-64 p-5 bg-gray-100 border border-gray-200 rounded shadow-md top-5 -left-56 md" x-show="popOver">Add keywords to improve searchability<br>(seperate tags with spaces)</div>
+                        <div class="-z-30">
+                            <label for="tags" class="mb-2 text-sm font-bold text-gray-900 dark:text-gray-400">
+                                Tags<span @mouseleave="popOver = false" @mouseover="popOver = true"  class="px-1 ml-1 text-xs bg-gray-300 border rounded-full hover:cursor-pointer ">?</span>
+                                @error('tags')
+                                    <span class="ml-1 text-xs text-red-600 animate-ping">{{ $message }}</span>
+                                @enderror
+                            </label>
+                            <input type="text" name="tags" value="{{ $article['tags'] }}"
+                                class="block w-full p-2 mt-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+                        </div>
                 </div>
 
                 <div class="col-span-1">
@@ -99,28 +99,28 @@
                 </div>
 
                 <div class="col-span-1 md:col-span-2">
-                    <div class="font-bold">Uploaded files</div>
+                    <div class="flex flex-wrap font-bold overflow-hide">Uploaded files</div>
                         @if(isset($uploads[0]))
-                            <div wire:loading>Removing..</div>
                             @foreach($uploads as $upload)
                                 <span x-data="{show: true}"x-show="show" class="mr-2">{{$upload['name']}}<span x-on:click="show = false; removeFileUpload({{$upload['id']}},'{{$upload['path']}}')" class="ml-1 text-red-500 hover:font-bold hover:text-red-600 hover:cursor-pointer">X</span></span>
                             @endforeach
+                            <span class="text-sm text-red-600" x-show="loading">Deleteing ..</span>
                         @endif
                 </div>
-
-                <div class="col-span-3">
-                    <label for="description" class="block mb-2 text-sm font-bold text-gray-900 dark:text-gray-400">Solution
-                        <span class="ml-1 text-sm text-red-500">*</span>
-                        @error('solution')
-                            <span class="ml-1 text-xs text-red-600 animate-ping">{{ $message }}</span>
-                        @enderror
-                    </label>
-                    <textarea required id="description" name="solution" class="w-full h-48" >
-                        {{ $article['body']}}
-                    </textarea>
-                </div>
-
             </div>
+            <div class="mt-7">
+                <label for="description" class="block mb-2 font-bold text-gray-900 text-md dark:text-gray-400">Solution
+                    <span class="ml-1 text-sm text-red-500">*</span>
+                    @error('solution')
+                        <span class="ml-1 text-xs text-red-600 animate-ping">{{ $message }}</span>
+                    @enderror
+                </label>
+                <textarea required id="description" name="solution">
+                    {{ $article['body']}}
+                </textarea>
+            </div>
+
+
             <div class="py-3">
                 <button type="sumbit" class="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-400">Update</button>
             </div>
@@ -131,13 +131,31 @@
 @include('js.base-editor')
 <script>
 
-    a = document.forms["update-form"]["upload[]"].files.length
-
-    console.log(a)
-
     function page() {
         return {
+            loading: false,
+            popOver: false,
             attachmentCount : {{count($uploads)}},
+
+            mouseOver(){
+                alert('gg')
+                popOver = ! popOver
+            },
+
+
+        async deleteAttachment(id,name) {
+            try {
+                this.loading = true
+                const response = await axios.post("/delete-attachment/" + id + '/' + name);
+                this.loading = false
+                console.log(response.data);
+            } catch (err) {
+                // Handle Error Here
+                this.loafding = false
+                console.error(err);
+            }
+
+        },
 
         uploadChange()
         {
@@ -156,22 +174,27 @@
             name = path.split('/').pop()
             console.log(name)
             this.attachmentCount --;
-            deleteAttachment(id,name)
+            this.deleteAttachment(id,name)
         },
 
     }
+
+    /*
+    const deleteAttachment = async (id,name) => {
+            try {
+                const response = await axios.post("/delete-attachment/" + id + '/' + name);
+                items = response.data
+                console.log(this.test)
+                console.log(items);
+            } catch (err) {
+                // Handle Error Here
+                console.error(err);
+            }
+        },
+    */
 }
 
-const deleteAttachment = async (id,name) => {
-                try {
-                    const response = await axios.post("/delete-attachment/" + id + '/' + name);
-                    items = response.data
-                    console.log(items);
-                } catch (err) {
-                    // Handle Error Here
-                    console.error(err);
-                }
-            };
+
 </script>
 
 </x-new-layout>

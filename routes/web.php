@@ -41,12 +41,14 @@ Route::post('/fetch', [App\Http\Controllers\AxiosController::class, 'fetchData']
 Route::post('/update-lock/{id}', [App\Http\Controllers\AxiosController::class, 'updateLock'])->middleware(['auth']);
 Route::post('/delete-attachment/{id}/{name}', [App\Http\Controllers\AxiosController::class, 'deleteKBAttachment'])->middleware(['auth']);
 
+Route::get('/file-download/{path}/{name}', [App\Http\Controllers\AxiosController::class, 'fileDownload'])->middleware(['auth'])->name('file-download');
+
 ////////////////KNOWLEDGE BASE ROUTES /////////////////////
 
 
 //Route::get('/article/show/{id}', [App\Http\Controllers\Knowledge\KBController::class, 'show'])->middleware(['auth'])->name('article.show');
 
-Route::resource('kb', KBController::class);
+Route::resource('kb', KBController::class)->middleware(['auth']);
 
 
 

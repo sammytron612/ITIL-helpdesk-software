@@ -33,6 +33,30 @@ class ApiService
                 ]);
 
       return $response;
+
+
+    }
+
+    public function updateArticle($id, $formFields, $uploads = null)
+    {
+        if($uploads)
+        {
+            $uploads = json_encode($uploads);
+        }
+
+
+        $response = Http::withToken('testtoken')->post("http://localhost:9000/api/update/",
+                        ['id' => $id,
+                        'title' => $formFields['title'],
+                        'solution' => $formFields['solution'],
+                        'tags' => $formFields['title'],
+                        'section' => $formFields['section'],
+                        'scope' => $formFields['scope'],
+                        'status' => $formFields['status'],
+                        'uploads' => $uploads
+                ]);
+
+      return $response;
     }
 
 }

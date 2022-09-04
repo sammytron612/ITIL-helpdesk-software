@@ -17,14 +17,12 @@
     <!-- Styles -->
     @vite('resources/js/app.js')
     <style>
-    .ck-content{
-        height: 330px;
-    }
 
-    [x-cloak] {
-    display: none;
-    }
-      .arrow-top {
+
+[x-cloak] { display: none !important; }
+
+
+    .arrow-top {
         position: relative;
     }
 

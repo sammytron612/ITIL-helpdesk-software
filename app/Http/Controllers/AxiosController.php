@@ -8,6 +8,7 @@ use App\Models\agent_group;
 use App\Models\updates;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
 
 class AxiosController extends Controller
 {
@@ -61,10 +62,22 @@ class AxiosController extends Controller
 
         storage::delete('public/images/' . $name);
 
+        $response = HTTP::withToken('testtoken')->delete("http://localhost:9000/api/delete-attachment/" . $id);
+        $response = [
+            'code' => $response->getStatusCode(),
+            'successful' => $response->successful(),
+        ];
 
-        //// need to upload via api
 
+        return response()->json($response);
+    }
 
-        return response()->json(['ee' => $name]);
+    public function fileDownload($path, $name)
+    {
+        //$path = url('storage/images/' . $path);
+
+        //return Response::download($path);
+
+        return storage::download('public/images/' . $path,$name);
     }
 }

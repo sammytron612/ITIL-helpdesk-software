@@ -1,5 +1,5 @@
 <x-new-layout>
-    <div class="px-16 py-5 mt-5">
+    <div class="px-16 py-5 h-100">
         <div class="grid items-center grid-cols-1 border-b border-gray-400 md:grid-cols-3">
             <div class="col-span-1 p-2 text-4xl font-semibold md:col-span-3">
                 {{$article['title']}}
@@ -21,10 +21,29 @@
             <div class="col-span-1 p-2 pt-4 pb-6 text-lg">
                 <span class="font-semibold">Created</span> - {{ \Carbon\Carbon::parse($article['created'])->diffForHumans()}}
             </div>
+            <div class="col-span-1 p-2 pt-4 pb-6 text-lg font-semibold md:col-span-1">
+                Uploaded files
+            </div>
+            <div class="col-span-1"></div><div class="col-span-1"></div>
+            <div class="col-span-1 pb-5">
+                @if(isset($uploads[0]))
+                    @foreach($uploads as $upload)
+                        @php
+                            $last = explode('/',$upload['path']);
+                            $last = end($last);
+                        @endphp
+                        <div><a href="{{url('file-download/' . $last .'/' . $upload['name'])}}" class="inline-block ml-2">{{$upload['name']}}<x-svg.download /></a></div>
+                    @endforeach
+                @endif
+            </div>
         </div>
 
-        <div class="p-6 mt-8 border border-gray-300 shadow-xl md:p-12 min-h-fit">
-            {!! $article['body'] !!}
+        <div class="w-full p-5 border border-gray-400 shadow-xl mt-7">
+            <div class="prose max-w-none">
+                <div>{!! $article['body'] !!}</div>
+            </div>
+
         </div>
     </div>
+
 </x-new-layout>

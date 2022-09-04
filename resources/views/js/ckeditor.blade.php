@@ -17,6 +17,9 @@
     function createNewEditor(id){
                     return ClassicEditor
                     .create( document.querySelector( '#comment' + id ),{
+                        alignment: {
+                                        options: [ 'left', 'center','right' ]
+                                    },
                         link: {
                         addTargetToExternalLinks: true
                     },

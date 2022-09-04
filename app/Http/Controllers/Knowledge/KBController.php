@@ -93,10 +93,12 @@ class KBController extends Controller
         if($article->successful())
         {
             $article = json_decode($article->body(),true);
+            //dd($article);
 
             $creator = User::find($article['author']);
+            $uploads = $article['uploads'];
 
-            return view('knowledge.view-article',compact('article','creator'));
+            return view('knowledge.view-article',compact('article','creator','uploads'));
         } else
         {
             return view('knowledge.view-article')->with('error', 'The error message here!');
@@ -134,7 +136,42 @@ class KBController extends Controller
 
     public function update(Request $request, $id)
     {
-        //
+
+
+        $validated = $request->validate([
+            'title' => 'required|max:255',
+            'tags' => 'max:255',
+            'section' => 'required',
+            'status' => 'required',
+            'scope' => 'required',
+            'solution' => 'required',
+            'upload.*' => 'mimes:csv,pdf,jpg,jpeg,png,txt,xlx,xls,xlsx,pdf,docx,doc,ppt|max:4096',
+            'upload' => 'max:3'
+
+        ]);
+
+
+        $uploadedFiles = null;
+
+        if($request->has('upload'))
+            {
+                $uploadedFiles = $this->upload($request);
+            }
+
+
+
+        $response = $this->apiService->updateArticle($id, $validated, $uploadedFiles);
+
+
+        if($response->successful())
+        {
+            return redirect()->to("/kb/{$id}/edit")->with('message','Success');
+
+        }
+        else
+        {
+            return redirect()->to("/kb/{$id}/edit")->with('message','There was a problem!');
+        }
     }
 
     /**

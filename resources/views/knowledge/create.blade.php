@@ -92,7 +92,6 @@
 
                 <div class="col-span-1">
                     <label for="attachments" class="block mb-2 text-sm font-bold text-gray-900 dark:text-gray-400">Attachments
-                        <span class="ml-1 text-sm text-red-500">*</span>
                         @error('upload.*')
                             <span class="ml-1 text-xs text-red-600">{{ $message }}</span>
                         @enderror
@@ -107,7 +106,7 @@
                             <span class="ml-1 text-xs text-red-600 animate-ping">{{ $message }}</span>
                         @enderror
                     </label>
-                    <textarea required id="description" name="solution" class="w-full h-48" >
+                    <textarea required id="description" name="solution" class="prose max-w-none" >
                         {{ old('solution')}}
                     </textarea>
                 </div>

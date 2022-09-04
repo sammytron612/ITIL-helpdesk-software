@@ -15,8 +15,14 @@ class TestController extends Controller
     public function index()
     {
 
-        dd(base64_decode('MTY2MjIwNjMyMTEwNDgyNTk2XzkwOTUxODA5OTEwODI2MV81MDk2NjIxMTUyMzA3MTY5NTE0X24uanBn'));
-        storage::delete('public/images/kev.jpg');
+        $response = HTTP::withToken('testtoken')->delete("http://localhost:9000/api/delete-attachment/" . $id);
+
+
+        $return = [
+            'code' => $response->getStatusCode(),
+            'successful' => $response->successful(),
+        ];
+
 
         //$response = Http::withToken(env('API_TOKEN'))->get('http://localhost:9000/api/search/test');
 
