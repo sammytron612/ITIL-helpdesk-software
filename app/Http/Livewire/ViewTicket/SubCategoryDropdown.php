@@ -30,6 +30,7 @@ class SubCategoryDropdown extends Component
         $sub_categories = [];
         $sub_categories = sub_category::where('parent',$this->incident->category)->get();
 
+
         return view('livewire.view-ticket.sub-category-dropdown', ['sub_categories' => $sub_categories]);
     }
 
@@ -38,7 +39,7 @@ class SubCategoryDropdown extends Component
         $this->incident->sub_category = $sub_category->id;
         $this->incident->save();
 
-        $this->showing = $sub_category->title;
+        $this->showing = $sub_category->name;
         $this->dispatchBrowserEvent('update-success');
     }
 

@@ -7,7 +7,7 @@
             <div class="order-first w-full col-span-2 -z-33 md:col-span-1 md:order-2">
                 <div class="flex items-center">
 
-                        <label><x-svg.magnify /></label>
+                        <label><i class="fa-solid fa-lg fa-magnifying-glass"></i></label>
                             <input wire:model.debounce.500ms="searchTerm"
                                 class="w-full p-2 border-0 border-b-2 border-gray-300 outline-none text-md focus:ring-0 focus:border-blue-400"
                                 placeholder="Search" type="search" />
@@ -17,17 +17,17 @@
             <div class="order-last w-full">
                 <div x-data="{openButton: $persist(false)}">
                     <div x-on:click.outside="openButton = false">
-                        <div class="py-2">
+                        <div class="">
                             <div class="relative text-sm font-medium">
-                                <div x-transition.500ms class="p-5 pl-0 text-lg">
+                                <div x-transition.500ms class="px-5 pl-0 text-lg">
 
                                     <div x-on:click="openButton = ! openButton"  class="flex items-center float-right cursor-pointer">
-                                        <x-svg.columns />
+                                        <i class="fa-solid fa-lg fa-table-columns"></i>
                                         <span class="ml-2">Columns</span>
                                         <x-svg.chevron  />
                                     </div>
                                 </div>
-                                <div x-on:click.outside="openButton = ! openButton; $wire.updateSelectedCheckBoxes()" class="absolute right-0 w-48 p-2 origin-top-right bg-white rounded-md shadow-lg top-14 ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                <div x-on:click.outside="openButton = ! openButton; $wire.updateSelectedCheckBoxes()" class="absolute right-0 w-48 p-2 origin-top-right bg-white rounded-md shadow-lg top-8 ring-1 ring-black ring-opacity-5 focus:outline-none"
                                     x-show="openButton" x-cloak>
                                     @foreach($allColumns as $key => $col)
                                         @if($loop->first) @continue @endif

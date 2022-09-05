@@ -17,6 +17,7 @@ class CommentComponent extends Component
     public $public = true;
 
 
+
     public function render()
     {
 
@@ -53,6 +54,8 @@ class CommentComponent extends Component
 
                 }
 
+                $this->render();
+
                 $this->emitTo('view-ticket.assign', 'updateAssigned', $name);
             }
 
@@ -65,9 +68,12 @@ class CommentComponent extends Component
 
         updates::create($update);
 
+
         $this->dispatchBrowserEvent('update-success');
 
         $this->sendNotification();
+
+        $this->render();
 
 
     }
@@ -166,4 +172,6 @@ class CommentComponent extends Component
         return $users;
     }
 
+
 }
+

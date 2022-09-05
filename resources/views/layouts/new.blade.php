@@ -21,6 +21,11 @@
 
 [x-cloak] { display: none !important; }
 
+.ck-content{
+    height: 330px;
+    @apply prose;
+    @apply max-w-none;
+}
 
     .arrow-top {
         position: relative;

@@ -62,8 +62,8 @@
 
                                 <div class="relative">
 
-                                    <div x-show="!newEditor && openComment">
-                                        <div x-transition.duration.500ms x-on:expand.window="openComment = $event.detail.expanded" class="p-6 border rounded-md shadow-md arrow-top border-slate-400 comments">
+                                    <div clas x-show="!newEditor && openComment">
+                                        <div x-transition.duration.500ms x-on:expand.window="openComment = $event.detail.expanded" class="p-6 prose border rounded-md shadow-md max-w-none arrow-top border-slate-400 comments">
                                             {!! $comment->comment !!}
                                         </div>
                                     </div>
@@ -71,7 +71,7 @@
                                 </div>
 
                                 <div class="flex items-center" x-data="{ public: {{$comment->public}} }" x-show="newEditor">
-                                    <button x-on:click="updateComment({{$comment->id}});updates = true; comment = false; newEditor = false; kbOpen=false; destroyEditor({{$comment->id}})" class="mt-2 mr-2 btn-primary">Update</button>
+                                    <button x-on:click="updateComment({{$comment->id}});updates = true; comment = false; newEditor = false; kbOpen=false; destroyEditor({{$comment->id}}); $emit('render')" class="mt-2 mr-2 btn-primary">Update</button>
                                     <button x-on:click="updates = true; comment = false; newEditor = false; kbOpen=false; closeEditor({{$comment->id}}); destroyEditor({{$comment->id}});" class="mt-2 mr-2 btn-secondary">close</button>
                                     <button class="mt-2" x-on:click="updateLock({{$comment->id}}); public = ! public" class="px-4 py-2 mt-3">
                                         <span class="flex items-center" x-show="public"><svg fill="#000000" xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 24 24" width="24px" height="24px"><path d="M 18 1 C 14.67619 1 12 3.6761905 12 7 L 12 8 L 2.9296875 8 C 1.8656875 8 1 8.897 1 10 L 1 20 C 1 21.103 1.8656875 22 2.9296875 22 L 14.070312 22 C 15.134312 22 16 21.103 16 20 L 16 10 C 16 8.897 15.135266 8 14.072266 8 L 14 8 L 14 7 C 14 4.7238095 15.72381 3 18 3 C 20.27619 3 22 4.7238095 22 7 L 22 9 L 24 9 L 24 7 C 24 3.6761905 21.32381 1 18 1 z M 8.5078125 13 C 9.6078125 13 10.507812 13.9 10.507812 15 C 10.507812 16.1 9.6078125 17 8.5078125 17 C 7.4078125 17 6.5078125 16.1 6.5078125 15 C 6.5078125 13.9 7.4078125 13 8.5078125 13 z"/></svg>
@@ -85,22 +85,21 @@
                             </div>
                         </div>
                     @endif
-
                 @endforeach
             </div>
-            <div x-cloak x-data="{ kbOpen: false}" x-on:click.outside="kbOpen = false" class="relative">
-                <x-kb-popup key="0"/>
+            <div x-cloak x-data="{ kbOpenNew: false}" x-on:click.outside="kbOpenNew = false" class="relative">
+                <x-kb-popup-new key="0"/>
                 <div x-show="comment" class="flex justify-start border rounded-t-lg border-slate-900 bg-slate-800">
                     <div class="p-2 text-white border-r hover:text-slate-800 hover:cursor-pointer hover:bg-slate-200 border-slate-500"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16"> <path d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z"/> </svg>
                     </div>
-                    <div x-on:click="kbOpen = ! kbOpen; document.getElementById('kb-0').scrollIntoView();" class="p-2 text-white border-r hover:text-slate-800 hover:cursor-pointer hover:bg-slate-200 border-slate-500"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-book" viewBox="0 0 16 16"> <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"/> </svg></div>
+                    <div x-on:click="kbOpenNew = ! true; document.getElementById('kb-0').scrollIntoView();" class="p-2 text-white border-r hover:text-slate-800 hover:cursor-pointer hover:bg-slate-200 border-slate-500"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-book" viewBox="0 0 16 16"> <path d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783z"/> </svg></div>
                 </div>
-            </div>
 
-            <div x-cloak x-data="{ public: true }" wire:ignore x-transition.duration.500ms x-show="comment">
-                <textarea id="comment0">
-                </textarea>
-                <x-new-comment-buttons />
+                <div x-cloak x-data="{ public: true }" wire:ignore x-transition.duration.500ms x-show="comment">
+                    <textarea id="comment0">
+                    </textarea>
+                    <x-new-comment-buttons />
+                </div>
             </div>
 
         </div>
