@@ -54,7 +54,6 @@ class CommentComponent extends Component
 
                 }
 
-                $this->render();
 
                 $this->emitTo('view-ticket.assign', 'updateAssigned', $name);
             }

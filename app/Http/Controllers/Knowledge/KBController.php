@@ -23,7 +23,7 @@ class KBController extends Controller
 
     public function index()
     {
-
+        return view('knowledge.index');
     }
 
     /**
