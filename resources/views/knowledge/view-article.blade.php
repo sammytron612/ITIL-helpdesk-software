@@ -1,19 +1,20 @@
 <x-new-layout>
-    <div class="px-16 py-5 h-100">
-        <div class="grid items-center grid-cols-1 border-b border-gray-400 md:grid-cols-3">
-            <div class="col-span-1 p-2 text-4xl font-semibold md:col-span-3">
+    <div class="px-16 pb-5 h-100">
+        <div class="float-right"><span class="hover:cursor-pointer"><x-svg.share /></span></div>
+        <div class="grid items-center grid-cols-1 border-b border-gray-300 lg:grid-cols-3">
+            <div class="col-span-1 py-5 text-4xl font-semibold border-b border-gray-300 md:col-span-3">
                 {{$article['title']}}
             </div>
             <div class="col-span-1 p-2 py-4 text-lg">
-                <span class="font-semibold">Section</span> - {{$article['section']}}
+                <span class="font-semibold">Section</span> - <span class="font-bold text-blue-600"><a href="">{{$article['section']}}</a><span>
             </div>
             <div class="flex items-center col-span-1 p-2 py-4 text-lg font-semibold">
                 <span class="mr-2">Author</span><x-avatar :colour="$creator->my_avatar->colour" :name="$creator->name">
                                 {{$creator->name}}
                             </x-avatar>
             </div>
-            <div class="col-span-1 p-2 py-4 text-lg">
-                <span class="font-semibold">Views</span> - {{$article['views']}}
+            <div class="flex items-center col-span-1 p-2 py-4 text-lg">
+                <span class="ml-1 font-semibold">Views - </span>{{$article['views']}}
             </div>
             <div class="col-span-1 p-2 py-4 text-lg font-semibold">
                 KB{{$article['kb']}}
