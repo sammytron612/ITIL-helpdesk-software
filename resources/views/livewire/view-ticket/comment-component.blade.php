@@ -95,12 +95,12 @@
             body: null,
 
             async search() {
-                if(this.query.length > 2)
+                if(this.query.length > 3)
                 {
                     try {
-                        const response = await axios.get("http://localhost:9000/api/search/" + this.query)
-                        console.log(response.data.data);
-                        this.articles = response.data.data
+                        const response = await axios.get("http://localhost:9000/api/search-comment/" + this.query)
+                        console.log(response.data);
+                        this.articles = response.data
                     }
                     catch (error) {
                         console.log(error);
