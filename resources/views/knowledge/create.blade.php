@@ -1,4 +1,4 @@
-<x-new-layout>
+<x-app-layout>
 
     <div class="px-10">
         @if(session()->has('message'))
@@ -122,4 +122,4 @@
 @include('js.base-editor')
 
 
-</x-new-layout>
+</x-app-layout>

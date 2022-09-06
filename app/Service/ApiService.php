@@ -29,6 +29,7 @@ class ApiService
                         'scope' => $formFields['scope'],
                         'status' => $formFields['status'],
                         'author' => Auth::id(),
+                        'author_name' => Auth::user()->name,
                         'uploads' => $uploads
                 ]);
 

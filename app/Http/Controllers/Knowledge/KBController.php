@@ -14,13 +14,6 @@ class KBController extends Controller
 {
     use FileUpload;
 
-    public $apiService;
-
-    public function __construct(ApiService $apiService)
-    {
-        $this->apiService = $apiService;
-    }
-
     public function index()
     {
         return view('knowledge.index');
@@ -42,7 +35,7 @@ class KBController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, ApiService $apiService)
     {
         $validated = $request->validate([
             'title' => 'required|max:255',
@@ -65,7 +58,7 @@ class KBController extends Controller
 
 
 
-        $response = $this->apiService->createArticle($validated, $uploadedFiles);
+        $response = $apiService->createArticle($validated, $uploadedFiles);
 
         if($response->successful())
         {
@@ -90,18 +83,17 @@ class KBController extends Controller
         $article = Http::withToken('testtoken')->get("http://localhost:9000/api/show/" . $id);
 
 
+
         if($article->successful())
         {
             $article = json_decode($article->body(),true);
-            //dd($article);
 
-            $creator = User::find($article['author']);
             $uploads = $article['uploads'];
 
-            return view('knowledge.view-article',compact('article','creator','uploads'));
+            return view('knowledge.view-article',compact('article','uploads'));
         } else
         {
-            return view('knowledge.view-article')->with('error', 'The error message here!');
+            abort($article->status());
         }
 
     }
@@ -116,7 +108,7 @@ class KBController extends Controller
     {
         $article = Http::withToken('testtoken')->get("http://localhost:9000/api/show/" . $id);
 
-
+dd($article);
 
         if($article->successful())
         {
@@ -129,12 +121,12 @@ class KBController extends Controller
             return view('knowledge.edit-article',compact('article','creator','uploads'));
         } else
         {
-            return view('knowledge.edit-article')->with('error', 'The error message here!');
+            abort($article->status());
         }
     }
 
 
-    public function update(Request $request, $id)
+    public function update(ApiService $apiService, Request $request, $id)
     {
 
 
@@ -160,7 +152,7 @@ class KBController extends Controller
 
 
 
-        $response = $this->apiService->updateArticle($id, $validated, $uploadedFiles);
+        $response = $apiService->updateArticle($id, $validated, $uploadedFiles);
 
 
         if($response->successful())
@@ -170,7 +162,7 @@ class KBController extends Controller
         }
         else
         {
-            return redirect()->to("/kb/{$id}/edit")->with('message','There was a problem!');
+            abort($article->status());
         }
     }
 

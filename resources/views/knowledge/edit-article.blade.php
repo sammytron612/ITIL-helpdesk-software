@@ -1,4 +1,4 @@
-<x-new-layout>
+<x-app-layout>
     <div x-data="page()" class="px-10">
         @if(session()->has('message'))
             <div x-data>
@@ -197,4 +197,4 @@
 
 </script>
 
-</x-new-layout>
+</x-app-layout>
