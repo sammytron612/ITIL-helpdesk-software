@@ -34,7 +34,7 @@
                         <div :class="openNav ? 'hidden md:block' : 'hidden'" class="ml-2">Search</div>
                     </li>
                 </a>
-                <a href="">
+                <a href="{{route('kb.create')}}">
                     <li :class="openNav ? 'justify-start ml-3' : 'justify-center'"
                         class="flex items-center p-2 ml-3 mr-2 text-white rounded-lg hover:bg-black ">
                         <i class="py-3 fa-solid fa-lg fa-newspaper"></i></i>

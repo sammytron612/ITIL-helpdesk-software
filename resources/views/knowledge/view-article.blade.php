@@ -34,7 +34,7 @@
                             $last = explode('/',$upload['path']);
                             $last = end($last);
                         @endphp
-                        <div><a href="{{url('file-download/' . $last .'/' . $upload['name'])}}" class="inline-block ml-2">{{$upload['name']}}<x-svg.download /></a></div>
+                        <div><a href="{{url('file-download/' . $last .'/' . $upload['name'])}}" class="inline-block mr-2">{{$upload['name']}}<x-svg.download /></a></div>
                     @endforeach
                 @endif
             </div>

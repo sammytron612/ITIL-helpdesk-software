@@ -4,15 +4,20 @@ namespace App\Http\Controllers\knowledge;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
 use Illuminate\Support\Facades\Http;
 use App\Traits\FileUpload;
 use App\Service\ApiService;
+Use Auth;
 
 
 class KBController extends Controller
 {
     use FileUpload;
+
+    public function __construct()
+    {
+        $this->middleware('agent')->except('show');
+    }
 
     public function index()
     {
@@ -88,6 +93,11 @@ class KBController extends Controller
         {
             $article = json_decode($article->body(),true);
 
+           if($article[0]['scope'] == 'Private' && Auth::user()->role == 'user')
+            {
+                abort(401);
+            }
+
             $uploads = $article['uploads'];
 
             return view('knowledge.view-article',compact('article','uploads'));
@@ -108,17 +118,15 @@ class KBController extends Controller
     {
         $article = Http::withToken('testtoken')->get("http://localhost:9000/api/show/" . $id);
 
-dd($article);
-
         if($article->successful())
         {
+
             $article = json_decode($article->body(),true);
+
             $uploads = $article['uploads'];
 
 
-            $creator = User::find($article['author']);
-
-            return view('knowledge.edit-article',compact('article','creator','uploads'));
+            return view('knowledge.edit-article',compact('article','uploads'));
         } else
         {
             abort($article->status());
@@ -162,7 +170,7 @@ dd($article);
         }
         else
         {
-            abort($article->status());
+            abort($response->status());
         }
     }
 

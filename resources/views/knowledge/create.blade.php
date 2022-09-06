@@ -37,9 +37,9 @@
                 </div>
 
                 <div class="col-span-1">
-                    <div class="">
+                    <div class="-z-30">
                         <label for="tags" class="mb-2 text-sm font-bold text-gray-900 dark:text-gray-400">
-                            Tags<span class="ml-1 text-xs text-red-500 animtate-blink">*</span>
+                            Tags<span @mouseleave="popOver = false" @mouseover="popOver = true"  class="px-1 ml-1 text-xs bg-gray-300 border rounded-full hover:cursor-pointer ">?</span>
                             @error('tags')
                                 <span class="ml-1 text-xs text-red-600 animate-ping">{{ $message }}</span>
                             @enderror

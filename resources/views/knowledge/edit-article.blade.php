@@ -18,7 +18,7 @@
         <div class="py-5">
             <h2 class="text-2xl font-bold">Edit Article</h2>
         </div>
-        <form id="update-form" method="post" action="{{route('kb.update', $article['id'])}}" enctype="multipart/form-data">
+        <form id="update-form" method="post" action="{{route('kb.update', $article[0]['id'])}}" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="grid grid-cols-1 gap-4 mt-3 md:grid-cols-3">
@@ -30,7 +30,7 @@
                             <span class="ml-1 text-xs text-red-600 animate-ping">{{ $message }}</span>
                         @enderror
                     </label>
-                    <input required type=" text" name="title" value="{{ $article['title'] }}"
+                    <input required type=" text" name="title" value="{{ $article[0]['article_title'] }}"
                         class="block w-full p-2 mt-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
                 </div>
 
@@ -43,7 +43,7 @@
                                     <span class="ml-1 text-xs text-red-600 animate-ping">{{ $message }}</span>
                                 @enderror
                             </label>
-                            <input type="text" name="tags" value="{{ $article['tags'] }}"
+                            <input type="text" name="tags" value="{{ $article[0]['tags'] }}"
                                 class="block w-full p-2 mt-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
                         </div>
                 </div>
@@ -55,9 +55,9 @@
                                 <span class="ml-1 text-xs text-red-600 animate-ping">{{ $message }}</span>
                         @enderror
                     </label>
-                    <select required value="{{$article['section']}}" class="block w-full p-2 mt-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="section" name="section">
+                    <select required value="{{$article[0]['section_title']}}" class="block w-full p-2 mt-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="section" name="section">
                         <option selected disabled>Choose</option>
-                        <option {{ $article['section'] == 'Office 365' ? "selected" : "" }}>1</option>
+                        <option {{ $article[0]['section_title'] == 'Office 365' ? "selected" : "" }}>1</option>
                     </select>
                 </div>
 
@@ -68,10 +68,10 @@
                             <span class="ml-1 text-xs text-red-600 animate-ping">{{ $message }}</span>
                         @enderror
                     </label>
-                    <select required value="{{ $article['scope'] }}" class="block w-full p-2 mt-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="scope" name="scope">
+                    <select required value="{{ $article[0]['scope'] }}" class="block w-full p-2 mt-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="scope" name="scope">
                         <option selected disabled>Choose</option>
-                        <option {{ $article['scope'] == "Public" ? "selected" : "" }}>Public</option>
-                        <option {{ $article['scope'] == "Private" ? "selected" : "" }}>Private</option>
+                        <option {{ $article[0]['scope'] == "Public" ? "selected" : "" }}>Public</option>
+                        <option {{ $article[0]['scope'] == "Private" ? "selected" : "" }}>Private</option>
                     </select>
                 </div>
 
@@ -82,10 +82,10 @@
                             <span class="ml-1 text-xs text-red-600 animate-ping">{{ $message }}</span>
                         @enderror
                     </label>
-                    <select required value="{{$article['status'] }}" id="status" class="block w-full p-2 mt-2 text-sm text-gray-900 border border-gray-300 rounded-lg form-control bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="scope" name="status">
+                    <select required value="{{$article[0]['status'] }}" id="status" class="block w-full p-2 mt-2 text-sm text-gray-900 border border-gray-300 rounded-lg form-control bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="scope" name="status">
                         <option selected disabled>Choose</option>
-                        <option {{$article['status'] == "Publish" ? "selected" : "" }}>Publish</option>
-                        <option {{ $article['status'] == "Draft" ? "selected" : "" }}>Draft</option>
+                        <option {{$article[0]['status'] == "Publish" ? "selected" : "" }}>Publish</option>
+                        <option {{ $article[0]['status'] == "Draft" ? "selected" : "" }}>Draft</option>
                     </select>
                 </div>
 
@@ -116,7 +116,7 @@
                     @enderror
                 </label>
                 <textarea required id="description" name="solution">
-                    {{ $article['body']}}
+                    {{ $article[0]['body']}}
                 </textarea>
             </div>
 

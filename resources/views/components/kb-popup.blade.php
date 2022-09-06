@@ -1,5 +1,5 @@
 @props(['key'])
-<div id="kb-{{$key}}" x-transition.duration.400ms x-trap="kbOpen" x-show="kbOpen" class="absolute w-full h-[440px] -top-[490px] ">
+<div id="kb-0" x-trap="kbOpen" x-transition.duration.400ms x-trap="kbOpen" x-show="kbOpen" class="absolute w-full h-[440px] -top-[490px] ">
     <div class="p-2 text-left text-white bg-gray-800 rounded-t-xl">KB Articles</div>
     <div class="h-full py-1 border rounded-b-xl border-slate-300 bg-gray-50">
 
@@ -17,10 +17,11 @@
                 <!--<input class="w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" wire:model='searchTerm' placeholder="Search KB Articles" /> -->
 
                 <div class="py-2 mt-2 border-t border-stone-200">
+                    <div x-show="loading" class="flex justify-center text-2xl">
+                        <div class="w-8 h-8 border-b-2 border-blue-900 rounded-full animate-spin"></div>
+                    </div>
                     <template x-for="article in articles" :key="article.id">
-
                         <div x-on:click="selectArticle(article.id,article.title);" class="hover:cursor-pointer" x-text="article.title"></div>
-
                     </template>
                 </div>
             </div>
