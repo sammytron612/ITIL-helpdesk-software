@@ -18,7 +18,7 @@
         <div class="h-full pt-5 rounded-bl-lg bg-slate-900">
             <ul class="flex flex-col py-20 space-y-8">
 
-                <a href="#">
+                <a href="{{route('dashboard')}}">
                     <li :class="openNav ? 'justify-start ml-3' : 'justify-center'"
                         class="flex items-center p-2 ml-3 mr-2 text-white rounded-lg hover:bg-black">
                         <i class="py-3 fa-solid fa-lg fa-chart-line"></i>

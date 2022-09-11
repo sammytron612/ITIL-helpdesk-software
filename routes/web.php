@@ -31,6 +31,10 @@ Route::get('/test', function () {
     return view('test');
 })->name('test');
 
+Route::get('/settings', function () {
+    return view('settings.index');
+})->middleware(['auth'])->name('settings');
+
 Route::resource('ticket', 'App\Http\Controllers\TicketController')->middleware(['auth']);
 
 

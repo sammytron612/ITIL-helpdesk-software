@@ -32,8 +32,7 @@ class KBController extends Controller
      */
     public function create()
     {
-        $sections = Http::withToken('testtoken')->get("http://localhost:9000/api/section");
-        $sections = json_decode($sections->body(), true);
+        $sections = $this->getSections();
 
         return view('knowledge.create',['sections' => $sections]);
     }
@@ -97,6 +96,7 @@ class KBController extends Controller
         {
             $article = json_decode($article->body(),true);
 
+
            if($article[0]['scope'] == 'Private' && Auth::user()->role == 'user')
             {
                 abort(401);
@@ -129,8 +129,10 @@ class KBController extends Controller
             //dd($article);
             $uploads = $article['uploads'];
 
+            $sections = $this->getSections();
 
-            return view('knowledge.edit-article',compact('article','uploads'));
+
+            return view('knowledge.edit-article',compact('article','uploads','sections'));
         } else
         {
             abort($article->status());
@@ -148,7 +150,7 @@ class KBController extends Controller
             'section' => 'required',
             'status' => 'required',
             'scope' => 'required',
-            'expiry' => 'after:yesterday',
+            'expiry' => 'nullable|after:today',
             'solution' => 'required',
             'upload.*' => 'mimes:csv,pdf,jpg,jpeg,png,txt,xlx,xls,xlsx,pdf,docx,doc,ppt|max:4096',
             'upload' => 'max:3'
@@ -188,5 +190,13 @@ class KBController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    private function getSections()
+    {
+        $sections = Http::withToken('testtoken')->get("http://localhost:9000/api/section");
+        $sections = json_decode($sections->body(), true);
+
+        return $sections;
     }
 }

@@ -30,7 +30,7 @@
             <div class="mt-5">
                 <template x-for="(article, index) in articles">
                     <div class="mb-5">
-                        <a class="hover:cursor-pointer" :href="article.href"><h2 class="mt-2 text-3xl text-blue-600 capitalize-first" x-html="article.title"></h2></a>
+                        <a class="hover:cursor-pointer" :href="article.href"><h2 class="mt-2 text-2xl text-blue-600 capitalize-first" x-html="article.title"></h2></a>
                         <div class="mt-1 text-sm font-light">
                             <span class="text-sm"><i class="mr-1 fa-solid fa-user"></i>Author</span>
                             <span class="text-1xl" x-text="article.author"></span><span> - </span>
@@ -80,6 +80,7 @@
                         this.loading = true
                         const response = await axios.get(url)
                         this.articles = []
+                        console.log(response)
                         response.data.data.forEach(result => {
                             var temp = {}
                             temp.id = result.id

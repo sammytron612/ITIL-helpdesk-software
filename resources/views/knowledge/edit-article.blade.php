@@ -55,9 +55,11 @@
                                 <span class="ml-1 text-xs text-red-600 animate-ping">{{ $message }}</span>
                         @enderror
                     </label>
-                    <select required value="{{$article[0]['section_title']}}" class="block w-full p-2 mt-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="section" name="section">
+                    <select required value="{{$article[0]['id']}}" class="block w-full p-2 mt-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="section" name="section">
                         <option selected disabled>Choose</option>
-                        <option {{ $article[0]['section_title'] == 'Office 365' ? "selected" : "" }}>1</option>
+                        @foreach($sections as $section)
+                            <option {{ $article[0]['section_id'] == $section['id'] ? "selected" : ""}} value="{{$section['id']}}">{{$section['title']}}</option>
+                        @endforeach
                     </select>
                 </div>
 

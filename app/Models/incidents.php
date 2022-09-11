@@ -59,11 +59,6 @@ class incidents extends Model
         return $this->hasOne(agent_group::class, 'id', 'agent_group');
     }
 
-    /*public function descriptions()
-    {
-        return $this->hasOne(Comments::class, 'incident_no');
-    }*/
-
     public function chosen_site()
     {
         return $this->hasOne(sites::class, 'id', 'site');

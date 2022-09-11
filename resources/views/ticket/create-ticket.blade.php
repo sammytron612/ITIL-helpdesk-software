@@ -72,7 +72,7 @@
                 </div>
 
                 <div>
-                    <label for="site" class="mb-2 text-sm font-bold text-gray-900 dark:text-gray-400">Select a site
+                    <label for="site" class="mb-2 text-sm font-bold text-gray-900 dark:text-gray-400">Select a location
                         <span class="ml-1 text-sm text-red-500">*</span>
                         @error('site')
                             <span class="ml-1 text-xs text-red-600 animate-ping">{{ $message }}</span>
