@@ -23,8 +23,7 @@ class TicketWorkflow
         $createdBy = $incident->created_by;
 
         $users = agent_group::where('id',$group)->pluck('id');
-        //$users[] = $createdBy;
-//dd($users);
+
 
         $message = "A new ticket hasd been created and is assigned to a group you are a member of No:{$incident->id} titled `{$incident->title}`";
         //dd($incident->id,$message,$users);

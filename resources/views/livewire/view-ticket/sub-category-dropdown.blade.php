@@ -11,9 +11,10 @@
                 x-show="open" x-transition.duration.400ms x-cloak>
                 <div class="absolute -top-3 right-0 h-0 w-0 border-x-8 border-x-transparent border-b-[16px] border-slate-300"></div>
                 <div class="py-1">
-                    @foreach($sub_categories as $category)
+
+                    @foreach($sub_categories as $subcategory)
                         <div class="hover:bg-slate-200">
-                            <button wire:click="updateSubCategory('{{$category->id}}')" class="block px-8 py-2 text-sm text-gray-700 hover:text-blue-900">{{$category->title}}
+                            <button wire:click="updateSubCategory('{{$subcategory->id}}')" class="block px-8 py-2 text-sm text-gray-700 hover:text-blue-900">{{$subcategory->name}}
                             </button>
                         </div>
                     @endforeach

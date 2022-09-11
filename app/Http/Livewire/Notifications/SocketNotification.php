@@ -94,7 +94,7 @@ class SocketNotification extends Component
         session()->push('notifications',$array);
 
         $this->user->notify(new ChangeOwnership($data));
-dd('stopkjlkl');
+
     }
 
 

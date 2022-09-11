@@ -19,7 +19,7 @@ class IncidentTable extends Component
     public $numberShown = 25;
 
     private $userId;
-    
+
 
     public function getListeners()
     {
@@ -33,11 +33,13 @@ class IncidentTable extends Component
     public function mount()
     {
         $this->incidents = incidents::paginate(25);
+
         $this->userId = Auth::user()->id;
     }
 
     public function render()
     {
+        dd($this->incidents);
         return view('livewire.incidents.incident-table', ['incidents' => $this->incidents]);
     }
 

@@ -12,7 +12,7 @@ class incidents extends Model
 
 
 
-    protected $fillable = ['status', 'status_history', 'title', 'priority', 'category', 'department','assigned_to', 'created_by', 'site' , 'department', 'assigned_group','reassignments'];
+    protected $fillable = ['status', 'status_history', 'title', 'priority', 'category', 'sub_category','department','assigned_to', 'created_by', 'site' , 'department', 'assigned_group','reassignments'];
 
     public function priorities()
     {

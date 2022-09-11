@@ -1,7 +1,7 @@
 <div  x-data="{open: false}" x-on:mouseleave="open = false">
     <div class="py-2">
         <div class="relative flex items-center space-x-1 text-sm font-medium">
-            <x-svg.filter />
+            <i class="fa-solid fa-lg fa-filter"></i>
             <div x-on:click="open = ! open" class="p-5 pl-0 ml-2 text-lg cursor-pointer ">{{$showing}}
                 <svg class="inline-block w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor"
                     viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

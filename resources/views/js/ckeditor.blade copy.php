@@ -3,9 +3,7 @@
 <script>
 
     const CKeditors = {}
-    var mentionArray = []
-    var EditorContent = ''
-
+    var mentionArray = [];
     document.addEventListener("DOMContentLoaded", function() {
 
             fetchAgents()
@@ -17,9 +15,6 @@
     function createNewEditor(id){
                     return ClassicEditor
                     .create( document.querySelector( '#comment' + id ),{
-                        alignment: {
-                                        options: [ 'left', 'center','right' ]
-                                    },
                         link: {
                         addTargetToExternalLinks: true
                     },
@@ -37,7 +32,7 @@
                         extraPlugins: [ MyCustomUploadAdapterPlugin, MentionCustomization ]
                         }).then( newEditor => {
                             CKeditors[ 'comment' + id ] = newEditor
-                            EditorContent = CKeditors[ 'comment' + id ].getData()
+
 
                         })
                         .catch( error => {
@@ -161,10 +156,6 @@ function customItemRenderer( item ) {
         return [comment, lastMention]
     }
 
-    function closeEditor(id){
-        CKeditors['comment' + id].setData(EditorContent)
-    }
-
     function new_comment(){
 
         data = parseMentions(0)
@@ -177,8 +168,7 @@ function customItemRenderer( item ) {
         }
 
         @this.newComment(comment, lastMention)
-        clearEditor(0)
-        return
+        clearData(0)
     }
 
     function updateComment(id){
@@ -189,15 +179,11 @@ function customItemRenderer( item ) {
 
         if(comment.length == 0){
                 alert("A comment cannot be blank!")
-                CKeditors['comment' + id].setData(EditorContent)
                 return
             }
         console.log(comment)
         @this.updateComment(id,comment, lastMention)
-
-        return
     }
-
 
     const fetchAgents = async () => {
         try {
@@ -225,29 +211,24 @@ function customItemRenderer( item ) {
 
     };
 
-    function clearEditor(id){
+    function clearData(id){
 
                 CKeditors['comment'+ id].setData('')
-                return
+
             }
 
-    function insertKBlink(articleId, title, id){
-                    url = "{{url('/kb')}}" + "/"+articleId
+    function insertKBlink(title, url, id){
                     editor = CKeditors['comment'+ id]
-                    editor.model.change( writer => {
 
+                    editor.model.change( writer => {
                         const insertPosition = editor.model.document.selection.getFirstPosition();
-                        console.log(insertPosition)
                         writer.insertText( title, { linkHref: url }, insertPosition );
                     } );
-                    return
                 }
 
 
     function destroyEditor(id){
-
-        CKeditors['comment'+ id].destroy()
-        return
+        editor = CKeditors['comment'+ id].destroy()
     }
 
     class MyUploadAdapter {

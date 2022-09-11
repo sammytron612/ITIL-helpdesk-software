@@ -7,12 +7,22 @@ use Illuminate\Support\Facades\Http;
 use App\Events\SendNotification;
 use App\Events\NewIncident;
 use Auth;
+use Storage;
 
 
 class TestController extends Controller
 {
     public function index()
     {
+
+        $response = HTTP::withToken('testtoken')->delete("http://localhost:9000/api/delete-attachment/" . $id);
+
+
+        $return = [
+            'code' => $response->getStatusCode(),
+            'successful' => $response->successful(),
+        ];
+
 
         //$response = Http::withToken(env('API_TOKEN'))->get('http://localhost:9000/api/search/test');
 
@@ -32,7 +42,7 @@ class TestController extends Controller
 
        /*Auth::user()->notify(new mailKev(Auth::user()));
         event(new updateIncident(1));*/
-
+die();
         return view('test.test');
     }
 

@@ -17,6 +17,7 @@ class CommentComponent extends Component
     public $public = true;
 
 
+
     public function render()
     {
 
@@ -53,6 +54,7 @@ class CommentComponent extends Component
 
                 }
 
+
                 $this->emitTo('view-ticket.assign', 'updateAssigned', $name);
             }
 
@@ -65,15 +67,21 @@ class CommentComponent extends Component
 
         updates::create($update);
 
+
         $this->dispatchBrowserEvent('update-success');
 
         $this->sendNotification();
+
+        $this->render();
 
 
     }
 
     public function updateComment(updates $update, $comment, $mention)
     {
+
+        $type = null;
+
 
         if($mention)
             {
@@ -93,21 +101,30 @@ class CommentComponent extends Component
 
             }
 
+
         $update->comment = $comment;
         $update->public = $this->public;
         $update->save();
 
-        if($type == 'agent')
+        if($type)
+        {
+
+            if($type === 'agent')
                 {
                     $updateTicket->assign_to($update->incident, $id);
                 }
-                else{
+                else
+                {
                     $updateTicket->assign_to_group($update->incident, $id);
 
                 }
 
-        $this->emitTo('view-ticket.assign', 'updateAssigned', $name);
+            $this->emitTo('view-ticket.assign', 'updateAssigned', $name);
+
+        }
+
         $this->dispatchBrowserEvent('update-success');
+
     }
 
 
@@ -154,4 +171,6 @@ class CommentComponent extends Component
         return $users;
     }
 
+
 }
+

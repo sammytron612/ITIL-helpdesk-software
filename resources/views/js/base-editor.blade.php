@@ -112,10 +112,10 @@ function MyCustomUploadAdapterPlugin( editor ) {
                 extraPlugins: [ MyCustomUploadAdapterPlugin ]
                 }).then( newEditor => {
                     CKeditors[ 'comment' + id ] = newEditor
-                    
-                    
+
+
                 })
                 .catch( error => {
                     console.error( );
                 })
-</script>            
+</script>

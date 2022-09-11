@@ -9,12 +9,7 @@ use App\Models\group_membership;
 
 class UpdateTicket
 {
-    /**
-     * Get all of the tasks for a given user.
-     *
-     * @param  User  $user
-     * @return Collection
-     */
+
     public function assign_self($incident)
     {
 
@@ -142,7 +137,7 @@ class UpdateTicket
 
     private function newAssigned($incident)
     {
-        if($incident->assigned_to())
+        if($incident->assigned_to)
         {
             $users = $this->getUsers($incident);
             $name = $incident->assigned_agent->name;
@@ -161,16 +156,18 @@ class UpdateTicket
 
     public function newStatus($incident)
     {
-        if($incident->assignedToAgent())
+        if($incident->assigned_to)
         {
             $users = $this->getUsers($incident);
 
         }
-        else {
+        else
+        {
+
             $users = $this->getUsersFromGroup($incident);
         }
 
-        $message = "The status on Incident No:{$incident->id} titled `{$incident->title}` has been set to {$incident->statuses->status}";
+        $message = "The status on Incident No:{$incident->id} titled `{$incident->title}` has been set to {$incident->statuses->name}";
 
         broadcast(new IncidentEvent($incident->id,$message,$users))->toOthers();
 
@@ -187,7 +184,7 @@ class UpdateTicket
     private function getUsersFromGroup($incident)
     {
         $users = group_membership::where('agent_group', $incident->assigned_group)->pluck('user_id')->toArray();
-        $users[] = $incident->requestor;
+        $users[] = $incident->created_by;
 
         return $users;
     }

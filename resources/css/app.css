@@ -1,3 +1,5 @@
+@import "@fortawesome/fontawesome-free/css/all.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -23,7 +25,20 @@
 
   }
 
+  .ck-content{
+    height: 330px;
+    @apply prose;
+    @apply max-w-none;
+}
+
   [x-cloak] { display: none !important; }
 }
+
+.capitalize-first {
+    text-transform: lowercase;
+  }
+  .capitalize-first::first-letter {
+    text-transform: uppercase;
+  }
 
 

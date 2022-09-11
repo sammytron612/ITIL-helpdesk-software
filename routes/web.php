@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\knowledge\KBController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\knowledge\KBSearchController;
+use App\Http\Controllers\Knowledge\SectionController;
 
 
 
@@ -15,9 +18,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -38,5 +38,22 @@ route::get('/test', [App\Http\Controllers\TestController::class, 'index'])->midd
 
 Route::post('/fetch', [App\Http\Controllers\AxiosController::class, 'fetchData'])->middleware(['auth'])->name('fetch.data');
 Route::post('/update-lock/{id}', [App\Http\Controllers\AxiosController::class, 'updateLock'])->middleware(['auth']);
+Route::post('/delete-attachment/{id}/{name}', [App\Http\Controllers\AxiosController::class, 'deleteKBAttachment'])->middleware(['auth']);
+
+Route::get('/file-download/{path}/{name}', [App\Http\Controllers\AxiosController::class, 'fileDownload'])->middleware(['auth'])->name('file-download');
+
+////////////////KNOWLEDGE BASE ROUTES /////////////////////
+
+
+//Route::get('/article/show/{id}', [App\Http\Controllers\Knowledge\KBController::class, 'show'])->middleware(['auth'])->name('article.show');
+
+Route::resource('kb', KBController::class)->middleware(['auth',]);
+Route::get('knowledge/search', [KBSearchController::class, 'index'])->middleware(['auth'])->name('knowledge.search');
+Route::get('/knowledge/section', [SectionController::class, 'index'])->middleware(['auth','agent']);
+Route::get('/knowledge/section/create', [SectionController::class, 'create'])->middleware(['auth','agent']);
+
+
+
+
 
 require __DIR__ . '/auth.php';

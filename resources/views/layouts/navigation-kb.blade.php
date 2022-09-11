@@ -6,19 +6,18 @@
             </button>
         </div>
         <div :class="openNav ? 'w-[calc(100vw_-_5rem)] md:w-[calc(100vw_-_15rem)]' : 'w-[calc(100vw_-_3rem)] md:w-[calc(100vw_-_5rem)]'" class="flex items-center justify-between px-4 py-2 text-white bg-slate-900">
-            <div class="ml-5">Service Desk</div>
+            <div class="ml-5">Knowledge base</div>
             <div>{{ Auth::user()->name}}</div>
             <div>@livewire('notifications.socket-notification')</div>
 
         </div>
     </div>
 
-
     <aside x-cloak :class="openNav ? 'w-16 md:w-56' : 'w-0 md:w-16'" class="fixed top-0 left-0 h-screen transition-all duration-300 ease-in-out">
         <div class="h-full pt-5 rounded-bl-lg bg-slate-900">
             <ul class="flex flex-col py-20 space-y-8">
 
-                <a href="#">
+                <a href="{{route('kb.index')}}">
                     <li :class="openNav ? 'justify-start ml-3' : 'justify-center'"
                         class="flex items-center p-2 ml-3 mr-2 text-white rounded-lg hover:bg-black">
                         <i class="py-3 fa-solid fa-lg fa-chart-line"></i>
@@ -27,39 +26,45 @@
                     </li>
                 </a>
 
-                <a href="{{route('dashboard')}}">
+                <a href="{{route('knowledge.search')}}">
                     <li :class="openNav ? 'items-center justify-start ml-3' : 'justify-center'"
                         class="flex items-center p-2 ml-3 mr-2 text-white rounded-lg hover:bg-black">
-                        <i class="py-3 fa fa-lg fa-ticket" aria-hidden="true"></i>
+                        <i class="py-3 fa-solid fa-lg fa-magnifying-glass" aria-hidden="true"></i>
 
-                        <div :class="openNav ? 'hidden md:block' : 'hidden'" class="ml-2">Tickets</div>
+                        <div :class="openNav ? 'hidden md:block' : 'hidden'" class="ml-2">Search</div>
                     </li>
                 </a>
-                <a href="{{ route('ticket.create')}}">
+                <a href="{{route('kb.create')}}">
                     <li :class="openNav ? 'justify-start ml-3' : 'justify-center'"
                         class="flex items-center p-2 ml-3 mr-2 text-white rounded-lg hover:bg-black ">
-                        <i class="py-3 fa-solid fa-lg fa-file-circle-plus"></i>
-                        <div :class="openNav ? 'hidden md:block' : 'hidden'" class="ml-4 md:mr-3">New ticket</div>
+                        <i class="py-3 fa-solid fa-lg fa-newspaper"></i></i>
+                        <div :class="openNav ? 'hidden md:block' : 'hidden'" class="ml-4 md:mr-3">New Article</div>
                     </li>
                 </a>
-                @if(Auth::user()->isAgent())
-                    <a href="#">
-                        <li :class="openNav ? 'justify-start ml-3' : 'justify-center'"
-                            class="flex items-center p-2 mr-2 text-white rounded-lg hover:bg-black md:ml-3">
-                            <i class="py-3 fa-solid fa-lg fa-gears"></i>
-                            <div :class="openNav ? 'hidden md:block' : 'hidden'" class="ml-4 md:mr-3">Admin</div>
-                        </li>
-                    </a>
-                @endif
-                @if(Auth::user()->isAgent())
-                    <a href="{{route('kb.index')}}">
-                        <li :class="openNav ? 'justify-start ml-3' : 'justify-center'"
-                            class="flex items-center p-2 mr-2 text-white rounded-lg hover:bg-black md:ml-3">
-                            <i class="py-3 fa-solid fa-lg fa-book-open-reader"></i>
-                            <div :class="openNav ? 'hidden md:block' : 'hidden'" class="ml-4 md:mr-3">Knowledge base</div>
-                        </li>
-                    </a>
-                @endif
+                <a href="{{url('/knowledge/section')}}">
+                    <li :class="openNav ? 'justify-start ml-3' : 'justify-center'"
+                        class="flex items-center p-2 mr-2 text-white rounded-lg hover:bg-black md:ml-3">
+                        <i class="py-3 fa-solid fa-lg fa-folder-plus"></i>
+                        <div :class="openNav ? 'hidden md:block' : 'hidden'" class="ml-4 md:mr-3">New Section</div>
+                    </li>
+                </a>
+
+                <a href="{{route('dashboard')}}">
+                    <li :class="openNav ? 'justify-start ml-3' : 'justify-center'"
+                        class="flex items-center p-2 mr-2 text-white rounded-lg hover:bg-black md:ml-3">
+                        <i class="py-3 fa-solid fa-lg fa-gears"></i>
+                        <div :class="openNav ? 'hidden md:block' : 'hidden'" class="ml-4 md:mr-3">Admin</div>
+                    </li>
+                </a>
+
+                <a href="{{route('dashboard')}}">
+                    <li :class="openNav ? 'justify-start ml-3' : 'justify-center'"
+                        class="flex items-center p-2 mr-2 text-white rounded-lg hover:bg-black md:ml-3">
+                        <i class="py-3 fa fa-lg fa-ticket" aria-hidden="true"></i>
+                        <div :class="openNav ? 'hidden md:block' : 'hidden'" class="ml-4 md:mr-3">Service desk</div>
+                    </li>
+                </a>
+
 
                 <a  href="{{ route('logout') }}" onclick="event.preventDefault();
                                                                     document.getElementById('logout-form').submit();">
@@ -78,8 +83,8 @@
         </div>
 
     </aside>
-
-    <main :class="openNav ? 'ml-16 md:ml-56' : 'ml-0 md:ml-16'" class="py-6 mt-28 -z-1">
+    <x-alert-component />
+    <main :class="openNav ? 'ml-16 md:ml-56' : 'ml-0 md:ml-16'" class="py-6 mt-20 -z-1">
             {{$slot}}
     </main>
 </div>

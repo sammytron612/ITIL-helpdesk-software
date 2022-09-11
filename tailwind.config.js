@@ -15,6 +15,7 @@ module.exports = {
         'bg-orange-700',
         'bg-yellow-700',
         'bg-amber-700',
+        'bg-gray-400',
       ],
 
     theme: {
@@ -34,5 +35,5 @@ module.exports = {
         },
     }),
 
-    plugins: [require('@tailwindcss/forms')]
+    plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')]
 };
