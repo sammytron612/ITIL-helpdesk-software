@@ -58,7 +58,10 @@
                     </label>
                     <select required value="{{ old('section') }}" class="block w-full p-2 mt-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="section" name="section">
                         <option selected disabled>Choose</option>
-                        <option {{ old('section') == 1 ? "selected" : "" }}>1</option>
+
+                        @foreach($sections as $section)
+                            <option {{ old('section') == $section['id'] ? "selected" : ""}} value="{{$section['id']}}">{{$section['title']}}</option>
+                        @endforeach
                     </select>
                 </div>
 
@@ -97,6 +100,15 @@
                         @enderror
                     </label>
                     <input class="block w-full" name="upload[]" type="file" multiple />
+                </div>
+
+                <div class="col-span-1">
+                    <label for="expiry" class="block mb-2 text-sm font-bold text-gray-900 dark:text-gray-400">Expiry date
+                        @error('expiry')
+                            <span class="ml-1 text-xs text-red-600">{{ $message }}</span>
+                        @enderror
+                    </label>
+                    <input id="expiry" class="block w-full p-2 mt-2 text-sm text-gray-900 border border-gray-300 rounded-lg form-control bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="expiry" type="date" />
                 </div>
 
                 <div class="col-span-3">

@@ -28,9 +28,9 @@
         <div x-show="hasResults" :class="loading ? 'opacity-40' : ''" class="w-full p-5 px-8 mx-auto mt-8 border-2 border-gray-100 rounded-md shadow-md md:w-5/6">
             <div class="text-3xl text-left"><i class="mr-2 fa-sharp fa-sm fa-solid fa-list"></i>Results</div>
             <div class="mt-5">
-                <template x-for="article in articles">
+                <template x-for="(article, index) in articles">
                     <div class="mb-5">
-                        <a  class="hover:cursor-pointer" :href="article.href"><h2 class="mt-2 text-3xl text-blue-600" x-html="article.title"></h2></a>
+                        <a class="hover:cursor-pointer" :href="article.href"><h2 class="mt-2 text-3xl text-blue-600 capitalize-first" x-html="article.title"></h2></a>
                         <div class="mt-1 text-sm font-light">
                             <span class="text-sm"><i class="mr-1 fa-solid fa-user"></i>Author</span>
                             <span class="text-1xl" x-text="article.author"></span><span> - </span>
@@ -46,26 +46,9 @@
             </div>
             <div x-show="links" class="mt-10 pagination">
                 <div class="flex items-center space-x-1">
-                    <template x-for="(link, index) in links">
-                            <button  :disabled="link.active === true || !link.url" :class="link.active === true ? 'font-black text-gray-200 bg-gray-800' : 'bg-yellow-400 border border-yellow-500 text-black'" x-on:click="search(link.url)" x-html="link.label" class="flex items-center px-4 py-1 text-gray-700 rounded-md"></button>
+                    <template x-for="(link, index) in links" :key="index">
+                           <button :disabled="link.active === true || !link.url" :class="link.active === true ? 'font-black text-black bg-yellow-400 border-yellow-500 border' :  'bg-slate-900 text-white'" x-on:click="search(link.url)" x-html="link.label" class="flex items-center px-4 py-1 text-gray-700 rounded-md"></button>
                     </template>
-<!--
-                    <a href="#" class="flex items-center px-4 py-2 text-gray-500 bg-gray-300 rounded-md">
-                        Previous
-                    </a>
-
-                    <a href="#" class="px-4 py-2 text-gray-700 bg-gray-200 rounded-md hover:bg-blue-400 hover:text-white">
-                        1
-                    </a>
-                    <a href="#" class="px-4 py-2 text-gray-700 bg-gray-200 rounded-md hover:bg-blue-400 hover:text-white">
-                        2
-                    </a>
-                    <a href="#" class="px-4 py-2 text-gray-700 bg-gray-200 rounded-md hover:bg-blue-400 hover:text-white">
-                        3
-                    </a>
-                    <a href="#" class="px-4 py-2 font-bold text-gray-500 bg-gray-300 rounded-md hover:bg-blue-400 hover:text-white">
-                        Next
-                    </a> -->
                 </div>
             </div>
         </div>

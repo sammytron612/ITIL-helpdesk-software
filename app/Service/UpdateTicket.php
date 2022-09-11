@@ -167,7 +167,7 @@ class UpdateTicket
             $users = $this->getUsersFromGroup($incident);
         }
 
-        $message = "The status on Incident No:{$incident->id} titled `{$incident->title}` has been set to {$incident->statuses->status}";
+        $message = "The status on Incident No:{$incident->id} titled `{$incident->title}` has been set to {$incident->statuses->name}";
 
         broadcast(new IncidentEvent($incident->id,$message,$users))->toOthers();
 
@@ -184,7 +184,7 @@ class UpdateTicket
     private function getUsersFromGroup($incident)
     {
         $users = group_membership::where('agent_group', $incident->assigned_group)->pluck('user_id')->toArray();
-        $users[] = $incident->requestor;
+        $users[] = $incident->created_by;
 
         return $users;
     }

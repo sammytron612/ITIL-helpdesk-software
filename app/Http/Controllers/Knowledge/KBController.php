@@ -24,6 +24,7 @@ class KBController extends Controller
         return view('knowledge.index');
     }
 
+
     /**
      * Show the form for creating a new resource.
      *
@@ -31,9 +32,11 @@ class KBController extends Controller
      */
     public function create()
     {
-        return view('knowledge.create');
-    }
+        $sections = Http::withToken('testtoken')->get("http://localhost:9000/api/section");
+        $sections = json_decode($sections->body(), true);
 
+        return view('knowledge.create',['sections' => $sections]);
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -48,6 +51,7 @@ class KBController extends Controller
             'section' => 'required',
             'status' => 'required',
             'scope' => 'required',
+            'expiry' => 'nullable|after:today',
             'solution' => 'required',
             'upload.*' => 'mimes:csv,pdf,jpg,jpeg,png,txt,xlx,xls,xlsx,pdf,docx,doc,ppt|max:4096',
             'upload' => 'max:3'
@@ -63,7 +67,7 @@ class KBController extends Controller
 
 
 
-        $response = $apiService->createArticle($validated, $uploadedFiles);
+        $response = $apiService->createArticle($request->all(), $uploadedFiles);
 
         if($response->successful())
         {
@@ -122,7 +126,7 @@ class KBController extends Controller
         {
 
             $article = json_decode($article->body(),true);
-
+            //dd($article);
             $uploads = $article['uploads'];
 
 
@@ -144,6 +148,7 @@ class KBController extends Controller
             'section' => 'required',
             'status' => 'required',
             'scope' => 'required',
+            'expiry' => 'after:yesterday',
             'solution' => 'required',
             'upload.*' => 'mimes:csv,pdf,jpg,jpeg,png,txt,xlx,xls,xlsx,pdf,docx,doc,ppt|max:4096',
             'upload' => 'max:3'
@@ -160,7 +165,7 @@ class KBController extends Controller
 
 
 
-        $response = $apiService->updateArticle($id, $validated, $uploadedFiles);
+        $response = $apiService->updateArticle($id, $request->all(), $uploadedFiles);
 
 
         if($response->successful())

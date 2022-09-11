@@ -23,6 +23,9 @@
             <div class="col-span-1 pt-4 pb-6 text-lg">
                 <span class="font-semibold"><i class="fa-solid fa-key-skeleton-left-right"></i>Scope</span> - {{$article[0]['scope']}}
             </div>
+            <div class="col-span-1 py-4 text-lg font-semibold">
+                <span><i class="mr-1 fa-solid fa-calendar"></i>Expires on {{Carbon\Carbon::parse($article[0]['expiry'])->format('d-m-Y')}}</span>
+            </div>
             <div class="col-span-1 pt-4 pb-6 text-lg font-semibold md:col-span-1">
                 Uploaded files
             </div>
@@ -34,10 +37,11 @@
                             $last = explode('/',$upload['path']);
                             $last = end($last);
                         @endphp
-                        <div><a href="{{url('file-download/' . $last .'/' . $upload['name'])}}" class="inline-block mr-2">{{$upload['name']}}<x-svg.download /></a></div>
+                        <div><a href="{{url('file-download/' . $last .'/' . $upload['name'])}}" class="inline-block mr-2 hover:text-blue-700">{{$upload['name']}}<x-svg.download /></a></div>
                     @endforeach
                 @endif
             </div>
+
         </div>
 
         <div class="w-full p-5 border border-gray-400 shadow-xl mt-7">

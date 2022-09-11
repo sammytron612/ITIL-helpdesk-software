@@ -4,7 +4,7 @@
         x-transition:enter-start="transform translate-x-full"
         x-transition:enter-end="transform translate-x-0"
         x-transition:leave="transition duration-500"
-        x-show="historyDrawer" class="fixed right-0 z-40 w-64 h-full py-2 pl-4 pr-3 overflow-y-auto border shadow-md top-36 bg-slate-50 border-stone-300">
+        x-show="historyDrawer" class="fixed right-0 z-40 w-64 h-full py-2 pl-4 pr-3 overflow-y-auto border shadow-inner top-36 bg-slate-50 border-stone-300">
         <div class="text-right text-black hover:cursor-pointer left-3" x:on-click="historyDrawer = false">X</div>
 
         <div class="mt-2">

@@ -13,9 +13,6 @@
         </div>
     </div>
 
-    @if(collect(request()->segments())->last() =='edit')
-
-    @endif
 
     <aside x-cloak :class="openNav ? 'w-16 md:w-56' : 'w-0 md:w-16'" class="fixed top-0 left-0 h-screen transition-all duration-300 ease-in-out">
         <div class="h-full pt-5 rounded-bl-lg bg-slate-900">
@@ -57,7 +54,7 @@
                         <li :class="openNav ? 'justify-start ml-3' : 'justify-center'"
                             class="flex items-center p-2 mr-2 text-white rounded-lg hover:bg-black md:ml-3">
                             <i class="py-3 fa-solid fa-lg fa-book-open-reader"></i>
-                            <div :class="openNav ? 'hidden md:block' : 'hidden'" class="ml-4 md:mr-3">KB</div>
+                            <div :class="openNav ? 'hidden md:block' : 'hidden'" class="ml-4 md:mr-3">Knowledge base</div>
                         </li>
                     </a>
                 @endif

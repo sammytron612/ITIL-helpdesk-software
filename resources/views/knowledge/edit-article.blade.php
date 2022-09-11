@@ -83,10 +83,23 @@
                         @enderror
                     </label>
                     <select required value="{{$article[0]['status'] }}" id="status" class="block w-full p-2 mt-2 text-sm text-gray-900 border border-gray-300 rounded-lg form-control bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="scope" name="status">
-                        <option selected disabled>Choose</option>
-                        <option {{$article[0]['status'] == "Publish" ? "selected" : "" }}>Publish</option>
-                        <option {{ $article[0]['status'] == "Draft" ? "selected" : "" }}>Draft</option>
+                        @if($article[0]['status'] == "Published")
+                            <option selected>Published</option>
+                        @else
+                            <option selected disabled>Choose</option>
+                            <option {{$article[0]['status'] == "Publish" ? "selected" : "" }}>Publish</option>
+                            <option {{ $article[0]['status'] == "Draft" ? "selected" : "" }}>Draft</option>
+                        @endif
                     </select>
+                </div>
+
+                <div class="col-span-1">
+                    <label for="expiry" class="block mb-2 text-sm font-bold text-gray-900 dark:text-gray-400">Expiry date
+                        @error('expiry')
+                            <span class="ml-1 text-xs text-red-600">{{ $message }}</span>
+                        @enderror
+                    </label>
+                    <input id="expire" value="{{$article[0]['expiry']}}" class="block w-full p-2 mt-2 text-sm text-gray-900 border border-gray-300 rounded-lg form-control bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="expiry" type="date" />
                 </div>
 
                 <div class="col-span-1">
@@ -98,7 +111,7 @@
                     <input id="file-upload" x-on:change="uploadChange" class="block w-full" name="upload[]" type="file" multiple />
                 </div>
 
-                <div class="col-span-1 md:col-span-2">
+                <div class="col-span-1 md:col-span-1">
                     <div class="flex flex-wrap font-bold overflow-hide">Uploaded files</div>
                         @if(isset($uploads[0]))
                             @foreach($uploads as $upload)

@@ -1,4 +1,4 @@
-<div x-cloak x-data="{open: false}" @update-success.window="open = true, setTimeout(() => open = false, 4000)">
+<div id="update-success" x-cloak x-data="{open: false}" @update-success.window="open = true, setTimeout(() => open = false, 4000)">
     <div x-transition:enter="transition ease-out duration-1000" x-transition:leave="transition ease-in duration-1000" x-transition:leave-start="opacity-100 transform scale-100" x-transition:leave-end="opacity-0 transform scale-90"
              x-show="open"
         class="fixed right-0 top-32">

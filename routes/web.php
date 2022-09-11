@@ -3,6 +3,7 @@
 use App\Http\Controllers\knowledge\KBController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\knowledge\KBSearchController;
+use App\Http\Controllers\Knowledge\SectionController;
 
 
 
@@ -46,8 +47,12 @@ Route::get('/file-download/{path}/{name}', [App\Http\Controllers\AxiosController
 
 //Route::get('/article/show/{id}', [App\Http\Controllers\Knowledge\KBController::class, 'show'])->middleware(['auth'])->name('article.show');
 
-Route::resource('kb', KBController::class)->middleware(['auth']);
+Route::resource('kb', KBController::class)->middleware(['auth',]);
 Route::get('knowledge/search', [KBSearchController::class, 'index'])->middleware(['auth'])->name('knowledge.search');
+Route::get('/knowledge/section', [SectionController::class, 'index'])->middleware(['auth','agent']);
+Route::get('/knowledge/section/create', [SectionController::class, 'create'])->middleware(['auth','agent']);
+
+
 
 
 
