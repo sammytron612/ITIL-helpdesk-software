@@ -43,7 +43,7 @@
                     </li>
                 </a>
                 @if(Auth::user()->isAgent())
-                    <a href="#">
+                    <a href="{{route('settings')}}">
                         <li :class="openNav ? 'justify-start ml-3' : 'justify-center'"
                             class="flex items-center p-2 mr-2 text-white rounded-lg hover:bg-black md:ml-3">
                             <i class="py-3 fa-solid fa-lg fa-gears"></i>

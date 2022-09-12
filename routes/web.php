@@ -4,6 +4,7 @@ use App\Http\Controllers\knowledge\KBController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\knowledge\KBSearchController;
 use App\Http\Controllers\Knowledge\SectionController;
+use App\Http\Controllers\SettingsController;
 
 
 
@@ -59,6 +60,10 @@ Route::resource('kb', KBController::class)->middleware(['auth',]);
 Route::get('knowledge/search', [KBSearchController::class, 'index'])->middleware(['auth'])->name('knowledge.search');
 Route::get('/knowledge/section', [SectionController::class, 'index'])->middleware(['auth','agent']);
 Route::get('/knowledge/section/create', [SectionController::class, 'create'])->middleware(['auth','agent']);
+
+/////////////////settings/////////////////
+
+route::get('settings/fields', [SettingsController::class, 'fields'])->middleware(['auth','agent'])->name('incidentFields');
 
 
 

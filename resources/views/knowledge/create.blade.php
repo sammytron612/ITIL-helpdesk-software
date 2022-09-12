@@ -74,8 +74,8 @@
                     </label>
                     <select required value="{{ old('scope') }}" class="block w-full p-2 mt-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="scope" name="scope">
                         <option selected disabled>Choose</option>
-                        <option {{ old('status') == "Public" ? "selected" : "" }}>Public</option>
-                        <option {{ old('status') == "Publish" ? "selected" : "" }}>Private</option>
+                        <option {{ old('scope') == "Private" ? "selected" : "" }}>Public</option>
+                        <option {{ old('scope') == "Ppublic" ? "selected" : "" }}>Private</option>
                     </select>
                 </div>
 
