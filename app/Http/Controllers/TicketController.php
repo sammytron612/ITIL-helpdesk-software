@@ -10,44 +10,27 @@ use App\Models\priority;
 use App\Models\sites;
 use App\Models\status_history;
 use Illuminate\Auth\Access\AuthorizationException;
-use App\Events\NewIncident;
+use App\Http\Interfaces\optionalFields;
+use App\Models\Settings;
 use App\Service\TicketWorkflow;
+use Session;
 
 
-class TicketController extends Controller
+
+class TicketController extends Controller implements optionalFields
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
 
 
-    public function index()
-    {
-        /*
-        sub_category::create(['title' => 'Email', 'parent' => 4]);
-        sub_category::create(['title' => 'Sharepoint', 'parent' => 4]);
-        sub_category::create(['title' => 'Excel', 'parent' => 4]);
-        sub_category::create(['title' => 'Outlook', 'parent' => 4]);
 
-        dd("kl");*/
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
 
-
-        $sites = sites::all();
+        if($this->hasLocation()) { $sites = Sites::all(); }
         $priorities = priority::all();
-        $departments = department::all();
+        if($this->hasDepartments()) { $departments = department::all(); }
+        $subCategory = $this->hasSubcategory();
 
-        return view('ticket.create-ticket', compact(['sites', 'priorities', 'departments']));
+        return view('ticket.create-ticket', compact(['sites', 'priorities', 'departments','subCategory']));
     }
 
     /**
@@ -58,13 +41,29 @@ class TicketController extends Controller
      */
     public function store(Request $request, TicketWorkflow $ticketWorkflow)
     {
-        $validated = $request->validate([
-            'title' => 'required|min:5|max:80',
+        $array = [
+            'title' => 'required|min:5|max:250',
             'category' => 'required',
             'priority' => 'required',
             'comment' => 'required',
-            'site' => 'required'
-        ]);
+
+        ];
+
+        if($this->hasDepartments())
+        {
+            $array['department'] =  'required';
+        }
+        if($this->hasLocation())
+        {
+            $array['site'] =  'required';
+        }
+        if($this->hasSubcategory())
+        {
+            $array['sub_category'] = 'required';
+        }
+
+
+        $validated = $request->validate($array);
 
 
         $array = [
@@ -97,9 +96,11 @@ class TicketController extends Controller
         status_history::create($history);
 
         $return = $ticketWorkflow->newTicket(incidents::find($return->id));
-        //broadcast(new NewIncident(incidents::find($return->id)))->toOthers();
-//dd('stop');
-        return redirect()->back()->with('message', 'Success!');
+
+        Session::flash('msg', 'Success' );
+
+
+        return redirect()->back();
     }
 
     /**
@@ -159,5 +160,62 @@ class TicketController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function hasDepartments()
+    {
+        $settings = Settings::first();
+
+        $optional = $settings->optional_fields;
+
+        $key = array_search("department", array_column($optional,'field'));
+
+        if($optional[$key]['active'])
+        {
+
+            return true;
+        }
+        else {
+            return [];
+        }
+    }
+
+    public function hasLocation()
+    {
+        $settings = Settings::first();
+
+        $optional = $settings->optional_fields;
+        $key = array_search("location", array_column($optional,'field'));
+
+        if($optional[$key]['active'])
+        {
+
+            return true;
+        }
+        else {
+            return [];
+        }
+    }
+
+    public function hasSubcategory()
+    {
+
+        $settings = Settings::first();
+
+        $optional = $settings->optional_fields;
+
+        $key = array_search("subcategory", array_column($optional,'field'));
+
+        if($optional[$key]['active'])
+        {
+
+            return true;
+        }
+        else {
+            return false;
+        }
+
+
     }
 }
