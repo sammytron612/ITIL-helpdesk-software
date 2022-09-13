@@ -146,6 +146,7 @@ class UpdateTicket
         }
         else {
             $users = $this->getUsersFromGroup($incident);
+            $users[] = $incident->created_by;
             $name = $incident->group->name;
         }
 
@@ -167,6 +168,7 @@ class UpdateTicket
         {
 
             $users = $this->getUsersFromGroup($incident);
+            $users[] = $incident->created_by;
         }
 
         $message = "The status on Incident No:{$incident->id} titled `{$incident->title}` has been set to {$incident->statuses->name}";

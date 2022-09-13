@@ -14,18 +14,14 @@ class TicketWorkflow
 
     public function newTicket($incident)
     {
-
         //assign to default group//
 
         $default = agent_group::where('global_default', 1)->first();
         $incident->agent_group = $default->id;
-
         $incident->save();
-
         $users = $this->getUsersFromGroup($incident);
 
         $message = "A new ticket hasd been created and is assigned to a group you are a member of No:{$incident->id} titled `{$incident->title}`";
-
         broadcast(new NewIncident($incident->id,$message,$users))->toOthers();
 
         return true;

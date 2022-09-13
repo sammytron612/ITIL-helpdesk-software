@@ -15,8 +15,8 @@ trait getUserMembers
 
     private function getUsersFromGroup($incident)
     {
-        $users = group_membership::where('agent_group', $incident->assigned_group)->pluck('user_id')->toArray();
-        $users[] = $incident->created_by;
+
+        $users = group_membership::where('agent_group', $incident->agent_group)->pluck('user_id')->toArray();
 
         return $users;
     }
