@@ -25,7 +25,7 @@ class TicketWorkflow
         $users = $this->getUsersFromGroup($incident);
 
         $message = "A new ticket hasd been created and is assigned to a group you are a member of No:{$incident->id} titled `{$incident->title}`";
-        //dd($incident->id,$message,$users);
+
         broadcast(new NewIncident($incident->id,$message,$users))->toOthers();
 
         return true;
