@@ -2,7 +2,7 @@
     <div wire:ignore  class="grid grid-cols-12 justify-center px-2 lg:px-20 gap-x-5">
 
         <div id="remove" class="col-span-5 text-1xl text-center drop-targets font-bold border border-gray-500 w-auto h-auto">
-            <div class="text-center py-5 text-2xl border-b border-gray-500 bg-green-700 text-white">Fields</div>
+            <div class="text-center py-2 text-2xl border-b border-gray-500 bg-gray-900 text-white">Fields</div>
             @foreach($fields as $field)
                 @if($field['active'] === false)
                     <div draggable="true" class="hover:cursor-grab border border-gray-500 p-3 draggable">{{ucwords($field['field'])}}<input wire:click="toggleCheck('{{$field['field']}}')" class="float-right" type="checkbox" {{ $field['mandatory'] ? 'checked' : '' }} /></div>
@@ -15,7 +15,7 @@
         </div>
 
         <div id="add" class="col-span-5 text-1xl text center drop-targets font-bold border border-gray-500 w-auto h-auto">
-            <div class="text-center py-5 text-2xl bg-blue-700 text-white">Current fields</div>
+            <div class="text-center py-2 text-2xl bg-gray-900 text-white">Current fields</div>
             <div class="border border-gray-500 p-3 opacity-70">Title<input class="float-right" type="checkbox" checked disabled /></div>
             <div class="border border-gray-500 p-3 opacity-70">Priority<input class="float-right" type="checkbox" checked disabled /></div>
             <div class="border border-gray-500 p-3 opacity-70">Category<input class="float-right" type="checkbox" checked disabled /></div>

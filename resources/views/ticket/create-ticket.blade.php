@@ -1,7 +1,6 @@
 <x-new-layout>
 
     @if(session()->has('msg'))
-
         <div id="alert" x-data class="relative px-4 py-3 bg-green-100 border rounded border-greenb-400 text-slate-gray-400" role="alert">
             <strong class="font-bold">Success</strong>
             <span x-on:click="document.getElementById('alert').remove();" class="absolute top-0 bottom-0 right-0 px-4 py-3">
@@ -20,9 +19,9 @@
                 <div class="md:col-span-3">
                     <div class="lg:w-2/3">
                         <label for="title" class="mb-2 text-sm font-bold text-gray-900 dark:text-gray-400">
-                            Brief description of problem<span class="ml-1 text-xs text-red-500 animtate-blink">*</span>
+                            Brief description of problem<span class="ml-1 text-xs text-red-500">*</span>
                             @error('title')
-                                <span class="ml-1 text-xs text-red-600 animate-ping">{{ $message }}</span>
+                                <span class="ml-1 text-xs text-red-600 animate">{{ $message }}</span>
                             @enderror
                         </label>
                         <input type=" text" name="title" value="{{ old('title') }}" required
@@ -34,7 +33,7 @@
                     <label for="priority" class="mb-2 text-sm font-bold text-gray-900 dark:text-gray-400">Select a priority
                         <span class="ml-1 text-sm text-red-500">*</span>
                         @error('priority')
-                            <span class="ml-1 text-xs text-red-600 animate-ping">{{ $message }}</span>
+                            <span class="ml-1 text-xs text-red-600">{{ $message }}</span>
                         @enderror
                     </label>
 
@@ -48,19 +47,18 @@
                 </div>
 
                 <div>
-                    @livewire('tickets.category-dropdown')
+                    @livewire('tickets.category-dropdown', ['old' => old('category')])
                 </div>
-
                 @if($subCategory)
                     <div>
-                        @livewire('tickets.subcategory-dropdown')
+                        @livewire('tickets.subcategory-dropdown', ['old_sub' => old('sub_category'), 'category' => old('category')])
                     </div>
                 @endif
 
                 @if($departments)
                     <div>
                         <label for="department" class="mb-2 text-sm font-bold text-gray-900 dark:text-gray-400">Select a department
-                            <span class="ml-1 text-sm text-red-500">*</span>
+                            @if($deptMandatory) <span class="ml-1 text-sm text-red-500">*</span> @endif
                             @error('department')
                                 <span class="ml-1 text-xs text-red-600">{{ $message }}</span>
                             @enderror
@@ -78,7 +76,7 @@
                 @if($sites)
                     <div>
                         <label for="site" class="mb-2 text-sm font-bold text-gray-900 dark:text-gray-400">Select a location
-                            <span class="ml-1 text-sm text-red-500">*</span>
+                            @if($locMandatory) <span class="ml-1 text-sm text-red-500">*</span> @endif
                             @error('site')
                                 <span class="ml-1 text-xs text-red-600">{{ $message }}</span>
                             @enderror

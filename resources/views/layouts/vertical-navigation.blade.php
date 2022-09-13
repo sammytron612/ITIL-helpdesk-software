@@ -42,7 +42,7 @@
                         <div :class="openNav ? 'hidden md:block' : 'hidden'" class="ml-4 md:mr-3">New ticket</div>
                     </li>
                 </a>
-                @if(Auth::user()->isAgent())
+                @can('admin')
                     <a href="{{route('settings')}}">
                         <li :class="openNav ? 'justify-start ml-3' : 'justify-center'"
                             class="flex items-center p-2 mr-2 text-white rounded-lg hover:bg-black md:ml-3">
@@ -50,7 +50,7 @@
                             <div :class="openNav ? 'hidden md:block' : 'hidden'" class="ml-4 md:mr-3">Admin</div>
                         </li>
                     </a>
-                @endif
+                @endcan
                 @if(Auth::user()->isAgent())
                     <a href="{{route('kb.index')}}">
                         <li :class="openNav ? 'justify-start ml-3' : 'justify-center'"

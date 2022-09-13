@@ -20,6 +20,7 @@ return new class extends Migration
             $table->boolean('auto_assign')->default(0);
             $table->string('assign_method')->default('round_robin');
             $table->integer('counter')->nullable();
+            $table->smallInteger('global_default')->nullable();
             $table->string('description');
         });
     }

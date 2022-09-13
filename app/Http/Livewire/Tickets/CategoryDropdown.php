@@ -10,6 +10,16 @@ class CategoryDropdown extends Component
 {
     public $category;
     private $categories;
+    public $old;
+
+    public function mount()
+    {
+        if($this->old)
+        {
+            $this->category= $this->old;
+            $this->emit('categoryChanged', $this->category);
+        }
+    }
 
     public function render()
     {

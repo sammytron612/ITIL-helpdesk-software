@@ -3,10 +3,8 @@ namespace App\Http\Interfaces;
 
 interface optionalFields
     {
-        public function hasDepartments();
+        public function isMandatory($field);
 
-        public function hasLocation();
-
-        public function hasSubcategory();
+        public function isToBeShown($field);
 
     }

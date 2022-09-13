@@ -3,27 +3,26 @@ namespace App\Service;
 
 use App\Models\agent_group;
 use App\Events\NewIncident;
+use App\Traits\getUserMembers;
 
 
 
 class TicketWorkflow
 {
-    /**
-     * Get all of the tasks for a given user.
-     *
-     * @param  User  $user
-     * @return Collection
-     */
+    use getUserMembers;
 
 
     public function newTicket($incident)
     {
-        $group = $incident->agent_group;
-        $agent = $incident->assigned_to;
-        $createdBy = $incident->created_by;
 
-        $users = agent_group::where('id',$group)->pluck('id');
+        //assign to default group//
 
+        $default = agent_group::where('global_default', 1)->first();
+        $incident->agent_group = $default->id;
+
+        $incident->save();
+
+        $users = $this->getUsersFromGroup($incident);
 
         $message = "A new ticket hasd been created and is assigned to a group you are a member of No:{$incident->id} titled `{$incident->title}`";
         //dd($incident->id,$message,$users);

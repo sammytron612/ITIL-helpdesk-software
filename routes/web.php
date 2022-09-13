@@ -24,9 +24,6 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::get('/', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
 
 Route::get('/test', function () {
     return view('test');
@@ -34,7 +31,7 @@ Route::get('/test', function () {
 
 Route::get('/settings', function () {
     return view('settings.index');
-})->middleware(['auth'])->name('settings');
+})->middleware(['auth','can:admin'])->name('settings');
 
 Route::resource('ticket', 'App\Http\Controllers\TicketController')->middleware(['auth']);
 
@@ -63,7 +60,8 @@ Route::get('/knowledge/section/create', [SectionController::class, 'create'])->m
 
 /////////////////settings/////////////////
 
-route::get('settings/fields', [SettingsController::class, 'fields'])->middleware(['auth','agent'])->name('incidentFields');
+route::get('settings/fields', [SettingsController::class, 'fields'])->middleware(['auth','can:admin'])->name('incidentFields');
+route::get('settings/workflow', [SettingsController::class, 'workflow'])->middleware(['auth','can:admin'])->name('ticketWorkflow');
 
 
 

@@ -10,4 +10,9 @@ class SettingsController extends Controller
     {
         return view('settings.fields');
     }
+
+    public function workflow()
+    {
+        return view('settings.workflow');
+    }
 }

@@ -20,17 +20,31 @@ use Session;
 class TicketController extends Controller implements optionalFields
 {
 
+    public $settings;
+
+    public function __construct()
+    {
+        $this->settings = Settings::first();
+    }
 
 
     public function create()
     {
+        $sites = null;
+        $departments = null;
 
-        if($this->hasLocation()) { $sites = Sites::all(); }
+
+        if($this->isToBeShown('location')) { $sites = Sites::all(); }
+        if($this->isToBeShown('departments')) { $departments = department::all(); }
+        $subCategory = $this->isToBeShown('subcategory');
+
+        $deptMandatory = $this->isMandatory('department');
+        $locMandatory = $this->isMandatory('location');
+        $subMandatory = $this->isToBeShown('subcategory');
+
         $priorities = priority::all();
-        if($this->hasDepartments()) { $departments = department::all(); }
-        $subCategory = $this->hasSubcategory();
 
-        return view('ticket.create-ticket', compact(['sites', 'priorities', 'departments','subCategory']));
+        return view('ticket.create-ticket', compact(['sites', 'priorities', 'departments','subCategory', 'deptMandatory','locMandatory','subMandatory']));
     }
 
     /**
@@ -41,6 +55,7 @@ class TicketController extends Controller implements optionalFields
      */
     public function store(Request $request, TicketWorkflow $ticketWorkflow)
     {
+
         $array = [
             'title' => 'required|min:5|max:250',
             'category' => 'required',
@@ -49,15 +64,16 @@ class TicketController extends Controller implements optionalFields
 
         ];
 
-        if($this->hasDepartments())
+
+        if($this->isMandatory('department'))
         {
             $array['department'] =  'required';
         }
-        if($this->hasLocation())
+        if($this->isMandatory('location'))
         {
             $array['site'] =  'required';
         }
-        if($this->hasSubcategory())
+        if($this->isMandatory('subcategory'))
         {
             $array['sub_category'] = 'required';
         }
@@ -163,49 +179,13 @@ class TicketController extends Controller implements optionalFields
     }
 
 
-    public function hasDepartments()
-    {
-        $settings = Settings::first();
-
-        $optional = $settings->optional_fields;
-
-        $key = array_search("department", array_column($optional,'field'));
-
-        if($optional[$key]['active'])
-        {
-
-            return true;
-        }
-        else {
-            return [];
-        }
-    }
-
-    public function hasLocation()
-    {
-        $settings = Settings::first();
-
-        $optional = $settings->optional_fields;
-        $key = array_search("location", array_column($optional,'field'));
-
-        if($optional[$key]['active'])
-        {
-
-            return true;
-        }
-        else {
-            return [];
-        }
-    }
-
-    public function hasSubcategory()
+    public function isToBeShown($field)
     {
 
-        $settings = Settings::first();
 
-        $optional = $settings->optional_fields;
+        $optional = $this->settings->optional_fields;
 
-        $key = array_search("subcategory", array_column($optional,'field'));
+        $key = array_search($field, array_column($optional,'field'));
 
         if($optional[$key]['active'])
         {
@@ -215,7 +195,23 @@ class TicketController extends Controller implements optionalFields
         else {
             return false;
         }
+    }
 
+    public function isMandatory($field)
+    {
+
+        $optional = $this->settings->optional_fields;
+
+        $key = array_search($field, array_column($optional,'field'));
+
+        if($optional[$key]['mandatory'])
+        {
+
+            return true;
+        }
+        else {
+            return false;
+        }
 
     }
 }

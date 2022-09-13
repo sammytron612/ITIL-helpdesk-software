@@ -5,10 +5,12 @@ namespace App\Service;
 use App\Models\status_history;
 use Auth;
 use App\Events\IncidentEvent;
-use App\Models\group_membership;
+
+use App\Traits\getUserMembers;
 
 class UpdateTicket
 {
+    use getUserMembers;
 
     public function assign_self($incident)
     {
@@ -172,21 +174,6 @@ class UpdateTicket
         broadcast(new IncidentEvent($incident->id,$message,$users))->toOthers();
 
         return;
-    }
-
-    private function getUsers($incident)
-    {
-        return [$incident->created_by, $incident->assigned_to];
-    }
-
-
-
-    private function getUsersFromGroup($incident)
-    {
-        $users = group_membership::where('agent_group', $incident->assigned_group)->pluck('user_id')->toArray();
-        $users[] = $incident->created_by;
-
-        return $users;
     }
 
 }
