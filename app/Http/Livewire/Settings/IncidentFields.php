@@ -10,8 +10,20 @@ class IncidentFields extends Component
 
     public function render()
     {
-        $settings = Settings::first();
-        $fields = $settings->optional_fields;
+
+        //$settings = Settings::where('type','fields')->first();
+      /* $fields = $settings->json;
+        $fields[] = ['field' => 'location', 'active' => true, 'mandatory' => true];
+        $fields[] = ['field' => 'department', 'active' => true, 'mandatory' => true];
+        $fields[] = ['field' => 'subcategory', 'active' => true, 'mandatory' => true];
+
+        $settings->json = $fields;
+        $settings->save(); */
+
+        $setting = Settings::where('type','fields')->first();
+        $fields = $setting->json;
+
+
 
         return view('livewire.settings.incident-fields', ['fields' => $fields]);
     }
@@ -33,8 +45,8 @@ class IncidentFields extends Component
     private function loopOver($text, $condition)
     {
 
-        $setting = Settings::first();
-        $array = $setting->optional_fields;
+        $setting = Settings::where('type','fields')->first();
+        $array = $setting->json;
 
         $count = count($array);
 
@@ -48,7 +60,7 @@ class IncidentFields extends Component
             }
         }
 
-        $setting->optional_fields = $array;
+        $setting->json = $array;
         $setting->save();
 
         return;
@@ -57,8 +69,8 @@ class IncidentFields extends Component
 
     public function toggleCheck($text)
     {
-        $setting = Settings::first();
-        $array = $setting->optional_fields;
+        $setting = Settings::where('type','fields')->first();
+        $array = $setting->json;
 
         $count = count($array);
 
@@ -72,7 +84,7 @@ class IncidentFields extends Component
             }
         }
 
-        $setting->optional_fields = $array;
+        $setting->json = $array;
         $setting->save();
 
         return;

@@ -24,7 +24,7 @@ class TicketController extends Controller implements optionalFields
 
     public function __construct()
     {
-        $this->settings = Settings::first();
+        $this->settings = Settings::where('type','fields')->first();
     }
 
 
@@ -35,7 +35,7 @@ class TicketController extends Controller implements optionalFields
 
 
         if($this->isToBeShown('location')) { $sites = Sites::all(); }
-        if($this->isToBeShown('departments')) { $departments = department::all(); }
+        if($this->isToBeShown('department')) { $departments = department::all(); }
         $subCategory = $this->isToBeShown('subcategory');
 
         $deptMandatory = $this->isMandatory('department');
@@ -155,54 +155,40 @@ class TicketController extends Controller implements optionalFields
         return view('ticket.edit-ticket', compact('ticket'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 
 
-    public function isToBeShown($field)
+    public function isToBeShown($choice)
     {
 
+        $optional = $this->settings->json;
 
-        $optional = $this->settings->optional_fields;
+       foreach($optional as $field)
+       {
+         if($field['field'] == $choice)
+         {
+            //dd($field);
+            return $field['active'];
 
-        $key = array_search($field, array_column($optional,'field'));
+         }
 
-        if($optional[$key]['active'])
-        {
+       }
 
-            return true;
-        }
-        else {
-            return false;
-        }
+
+        //$key = array_search($field, array_column($optional,$field));
+
+        //$key = array_search('location', array_column($optional,'field'));
+
+        //dd($key);
+
+
     }
 
     public function isMandatory($field)
     {
 
-        $optional = $this->settings->optional_fields;
+        $optional = $this->settings->json;
 
-        $key = array_search($field, array_column($optional,'field'));
+        $key = array_search($field, array_column($optional,$field));
 
         if($optional[$key]['mandatory'])
         {

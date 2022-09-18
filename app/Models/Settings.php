@@ -11,10 +11,10 @@ class Settings extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['optional_fields'];
+    protected $fillable = ['json'];
 
     protected $casts = [
-        'optional_fields' => 'array',
+        'json' => 'array',
     ];
 
 }

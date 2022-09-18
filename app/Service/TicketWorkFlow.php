@@ -14,7 +14,7 @@ class TicketWorkflow
 
     public function newTicket($incident)
     {
-        //assign to default group//
+        $this->decideGroup($incident);
 
         $default = agent_group::where('global_default', 1)->first();
         $incident->agent_group = $default->id;
@@ -25,5 +25,10 @@ class TicketWorkflow
         broadcast(new NewIncident($incident->id,$message,$users))->toOthers();
 
         return true;
+    }
+
+    private function decideGroup($incident)
+    {
+
     }
 }

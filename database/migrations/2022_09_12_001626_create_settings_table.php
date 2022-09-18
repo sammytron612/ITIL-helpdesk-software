@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
-            $table->json('optional_fields')->nullable();
+            $table->json('json')->nullable();
+            $table->string('type');
 
         });
     }

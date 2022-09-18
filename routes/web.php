@@ -5,9 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\knowledge\KBSearchController;
 use App\Http\Controllers\Knowledge\SectionController;
 use App\Http\Controllers\SettingsController;
-
-
-
+use App\Http\Livewire\Settings\LocationBased;
+use App\Http\Livewire\Settings\CategoryBased;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -63,6 +62,8 @@ Route::get('/knowledge/section/create', [SectionController::class, 'create'])->m
 route::get('settings/fields', [SettingsController::class, 'fields'])->middleware(['auth','can:admin'])->name('incidentFields');
 route::get('settings/workflow', [SettingsController::class, 'workflow'])->middleware(['auth','can:admin'])->name('ticketWorkflow');
 
+route::get('settings/workflow/location-based', [SettingsController::class, 'locationBased'])->middleware(['auth','can:admin'])->name('locationBased');
+route::get('settings/workflow/category-based', [SettingsController::class, 'categoryBased'])->middleware(['auth','can:admin'])->name('categoryBased');
 
 
 

@@ -1,5 +1,3 @@
 <x-new-layout>
-    <div>
-
-    </div>
+    @livewire('settings.workflow')
 </x-new-layout>
