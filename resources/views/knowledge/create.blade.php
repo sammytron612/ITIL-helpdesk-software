@@ -1,6 +1,6 @@
 <x-app-layout>
 
-    <div class="px-10">
+    <div x-data="{ roll: false }" class="px-10">
         @if(session()->has('message'))
             <div x-data>
                 @if(session()->get('message') == "Success")
@@ -36,17 +36,18 @@
                     </div>
                 </div>
 
-                <div class="col-span-1">
-                    <div class="-z-30">
-                        <label for="tags" class="mb-2 text-sm font-bold text-gray-900 dark:text-gray-400">
-                            Tags<span @mouseleave="popOver = false" @mouseover="popOver = true"  class="px-1 ml-1 text-xs bg-gray-300 border rounded-full hover:cursor-pointer ">?</span>
-                            @error('tags')
-                                <span class="ml-1 text-xs text-red-600">{{ $message }}</span>
-                            @enderror
-                        </label>
-                        <input type="text" name="tags" value="{{ old('tags') }}"
-                            class="block w-full p-2 mt-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+                <div class="relative col-span-1">
+                    <div x-cloak x-show="roll" class="absolute h-32 p-3 bg-gray-200 border border-gray-500 rounded-md shadow-md -left-24 top-5 hover:cursor-pointer z-33 w-36">
+                        Add keywoards seperated by a space to aid in searching
                     </div>
+                    <label class="mb-2 text-sm font-bold text-gray-900 dark:text-gray-400">
+                        Tags<button @mouseleave="roll = false" @mouseover="roll = true"  class="px-1 ml-1 text-xs bg-gray-300 border rounded-full hover:cursor-pointer">?</button>
+                        @error('tags')
+                            <span class="ml-1 text-xs text-red-600">{{ $message }}</span>
+                        @enderror
+                    </label>
+                    <input type="text" name="tags" value="{{ old('tags') }}"
+                        class="block w-full p-2 mt-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
                 </div>
 
                 <div class="col-span-1">
