@@ -1,25 +1,29 @@
 <div x-data="category">
-    <div class="overflow-auto">
+    <div class="w-full mx-auto overflow-y-auto h-96 lg:w-2/3">
         <table class="mx-auto">
             <thead>
-                <th class="text-left w-4 border-b border-gray-500"></th>
-                <th class="text-left w-96 text-lg border-b border-gray-500">Category</th>
-                <th class="text-left w-96 text-lg border-b border-gray-500">Group</th>
-                <th class="text-left w-4 border-b border-gray-500"></th>
+                <th class="w-4 text-left border-b border-gray-500"></th>
+                <th class="text-lg text-left border-b border-gray-500 w-96">Category</th>
+                <th class="text-lg text-left border-b border-gray-500 w-96">Group</th>
+                <th class="w-4 text-left border-b border-gray-500"></th>
             </thead>
             <tbody>
                 @foreach($categories as $category)
                     <tr class="pt-2" x-data="{openSelect: false}" x-on:click.outside="openSelect = false">
                         <td></td>
-                        <td class="pt-3"><button class="hover:text-blue-700 hover:font-bold font-semibold" x-on:click="openSelect = true; categoryChoice({{$category->id}})" class="text-lg font-bold">{{$category->name}}</button></td>
+                        <td class="pt-3"><button class="font-semibold hover:text-blue-700 hover:font-bold" x-on:click="openSelect = true; categoryChoice({{$category->id}})" class="text-lg font-bold">{{$category->name}}</button></td>
                         <td class="pt-3" x-data="{choice: null}">
-                            <select x-model="choice" x-show="openSelect" x-on:change="openSelect = false; groupChoice(choice)" class="py-1 px-5 rounded-md w-64">
+                            @foreach($rules as $rule)
+                                @if($rule->category == $category->id)
+                                    <div x-show="!openSelect">{{$rule->group}}</div>
+                                @endif
+                            @endforeach
+                            <select x-model="choice" x-show="openSelect" x-on:change="openSelect = false; groupChoice(choice)" class="w-64 px-5 py-1 rounded-md">
                                 <option value="" selected>choose</option>
                                 @foreach($groups as $group)
                                     <option value="{{$group->name}}">{{$group->name}}</option>
                                 @endforeach
                             </select>
-                            <div class="font-semibold" x-show="!openSelect" x-text="choice"></div>
                         </td>
                         <td></td>
                     </tr>
@@ -33,7 +37,7 @@
 
 
 
-    <div class="text-center mt-10">
+    <div class="mt-10 text-center">
         <div>Auto allocation yes or no</div>
         <input type="checkbox" />
         <div>Allocation Method</div>

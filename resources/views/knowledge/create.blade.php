@@ -26,9 +26,9 @@
                 <div class="col-span-2">
                     <div class="">
                         <label for="title" class="mb-2 text-sm font-bold text-gray-900 dark:text-gray-400">
-                            Title<span class="ml-1 text-xs text-red-500 animtate-blink">*</span>
+                            Title<span class="ml-1 text-xs text-red-500">*</span>
                             @error('title')
-                                <span class="ml-1 text-xs text-red-600 animate-ping">{{ $message }}</span>
+                                <span class="ml-1 text-xs text-red-600">{{ $message }}</span>
                             @enderror
                         </label>
                         <input required type=" text" name="title" value="{{ old('title') }}"
@@ -41,7 +41,7 @@
                         <label for="tags" class="mb-2 text-sm font-bold text-gray-900 dark:text-gray-400">
                             Tags<span @mouseleave="popOver = false" @mouseover="popOver = true"  class="px-1 ml-1 text-xs bg-gray-300 border rounded-full hover:cursor-pointer ">?</span>
                             @error('tags')
-                                <span class="ml-1 text-xs text-red-600 animate-ping">{{ $message }}</span>
+                                <span class="ml-1 text-xs text-red-600">{{ $message }}</span>
                             @enderror
                         </label>
                         <input type="text" name="tags" value="{{ old('tags') }}"
@@ -53,7 +53,7 @@
                     <label for="section" class="block mb-2 text-sm font-bold text-gray-900 dark:text-gray-400">Section
                         <span class="ml-1 text-sm text-red-500">*</span>
                         @error('section')
-                                <span class="ml-1 text-xs text-red-600 animate-ping">{{ $message }}</span>
+                                <span class="ml-1 text-xs text-red-600">{{ $message }}</span>
                         @enderror
                     </label>
                     <select required value="{{ old('section') }}" class="block w-full p-2 mt-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="section" name="section">
@@ -83,7 +83,7 @@
                     <label for="status" class="block mb-2 text-sm font-bold text-gray-900 dark:text-gray-400">Status
                         <span class="ml-1 text-sm text-red-500">*</span>
                         @error('status')
-                            <span class="ml-1 text-xs text-red-600 animate-ping">{{ $message }}</span>
+                            <span class="ml-1 text-xs text-red-600">{{ $message }}</span>
                         @enderror
                     </label>
                     <select required value="{{ old('status') }}" id="status" class="block w-full p-2 mt-2 text-sm text-gray-900 border border-gray-300 rounded-lg form-control bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="scope" name="status">
@@ -115,7 +115,7 @@
                     <label for="description" class="block mb-2 text-sm font-bold text-gray-900 dark:text-gray-400">Solution
                         <span class="ml-1 text-sm text-red-500">*</span>
                         @error('solution')
-                            <span class="ml-1 text-xs text-red-600 animate-ping">{{ $message }}</span>
+                            <span class="ml-1 text-xs text-red-600">{{ $message }}</span>
                         @enderror
                     </label>
                     <textarea required id="description" name="solution" class="prose max-w-none" >
