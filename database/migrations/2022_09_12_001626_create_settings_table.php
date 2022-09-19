@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->json('json')->nullable();
             $table->string('type');
+            $table->integer('allocation');
 
         });
     }

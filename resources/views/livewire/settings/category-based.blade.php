@@ -1,5 +1,6 @@
 <div x-data="category">
-    <div class="w-full mx-auto overflow-y-auto h-96 lg:w-2/3">
+    <article class="w-full mx-auto text-left lg:w-2/3">Map each category group to a ticket group. When tickets are created they will be automatically assigned to that group depending on how they were categorized</article>
+    <div class="w-full mx-auto mt-5 overflow-y-auto h-96 lg:w-2/3">
         <table class="mx-auto">
             <thead>
                 <th class="w-4 text-left border-b border-gray-500"></th>
@@ -37,12 +38,22 @@
 
 
 
-    <div class="mt-10 text-center">
-        <div>Auto allocation yes or no</div>
-        <input type="checkbox" />
-        <div>Allocation Method</div>
-        <div>Round Robin</div>
-        <div>Least tickets</div>
+    <div x-data="{showMethods: @entangle('autoAllocate')}" class="w-full mx-auto mt-10 lg:w-2/3">
+        <article class="w-full mx-auto mb-5 text-left">Auto allocation is optional. If chosen, then tickets will be automatically allocated to agents who are a member of the respective group in either round robin fashion or agents with the least open tickets.
+            If no method is chosen then the default method id round robin
+        </article>
+        <label for="check" class="text-lg font-bold">Auto allocation</label>
+        <input {{$autoAllocate ? 'checked' : ''}} wire:model.debounce500ms='autoAllocate'  id="check" type="checkbox" />
+        <div class="mt-3 font-bold text-1xl" x-show="showMethods">
+            <div>
+                <label for="check1">Round Robin</label>
+                <input {{$robin ? 'checked disabled' : ''}} wire:model.debounce500ms='robin' id="check1" type="checkbox" />
+            </div>
+            <div>
+                <label for="check2">Least tickets</label>
+                <input {{$least ? 'checked disabled' : ''}} wire:model.debounce500ms='least' id="check2" type="checkbox" />
+            </div>
+        </div>
     </div>
 
     <script>
@@ -50,6 +61,7 @@
             return {
                 category: null,
                 group: null,
+
 
                 categoryChoice(id){
                     this.group = null

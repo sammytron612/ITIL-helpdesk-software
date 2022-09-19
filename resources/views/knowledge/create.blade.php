@@ -1,6 +1,6 @@
 <x-app-layout>
 
-    <div x-data="{ roll: false }" class="px-10">
+    <div class="px-10">
         @if(session()->has('message'))
             <div x-data>
                 @if(session()->get('message') == "Success")
@@ -36,9 +36,9 @@
                     </div>
                 </div>
 
-                <div class="relative col-span-1">
+                <div x-data="{ roll: false }" class="relative col-span-1">
                     <div x-cloak x-show="roll" class="absolute h-32 p-3 bg-gray-200 border border-gray-500 rounded-md shadow-md -left-24 top-5 hover:cursor-pointer z-33 w-36">
-                        Add keywoards seperated by a space to aid in searching
+                        Add keywords seperated by a space to aid in searching.
                     </div>
                     <label class="mb-2 text-sm font-bold text-gray-900 dark:text-gray-400">
                         Tags<button @mouseleave="roll = false" @mouseover="roll = true"  class="px-1 ml-1 text-xs bg-gray-300 border rounded-full hover:cursor-pointer">?</button>
