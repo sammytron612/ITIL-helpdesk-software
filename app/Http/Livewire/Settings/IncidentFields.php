@@ -7,23 +7,20 @@ use App\Models\Settings;
 
 class IncidentFields extends Component
 {
+    public $locActive;
+
+    public function mount()
+    {
+        $this->locActive = settings::where('type','location')->pluck('active')->first();
+
+    }
 
     public function render()
     {
 
-        //$settings = Settings::where('type','fields')->first();
-      /* $fields = $settings->json;
-        $fields[] = ['field' => 'location', 'active' => true, 'mandatory' => true];
-        $fields[] = ['field' => 'department', 'active' => true, 'mandatory' => true];
-        $fields[] = ['field' => 'subcategory', 'active' => true, 'mandatory' => true];
-
-        $settings->json = $fields;
-        $settings->save(); */
-
         $setting = Settings::where('type','fields')->first();
+
         $fields = $setting->json;
-
-
 
         return view('livewire.settings.incident-fields', ['fields' => $fields]);
     }

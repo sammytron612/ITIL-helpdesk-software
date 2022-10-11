@@ -17,18 +17,23 @@ class CategoryBased extends Component
     public $autoAllocate;
     public $robin;
     public $least;
+    public $array;
+    public $categoryActive;
 
 
     public function mount()
     {
-        $array = Settings::where('type', 'category')->first();
-        if($array->allocation == 1)
+        $this->array = Settings::where('type', 'category')->first();
+        $this->categoryActive = $this->array->active;
+
+        if($this->array->allocation == 1)
         {
             $this->autoAllocate = true;
             $this->robin = true;
         }
-        elseif($array->allocation == 2)
+        elseif($this->array->allocation == 2)
         {
+
             $this->autoAllocate = true;
             $this->least = true;
         }
@@ -47,9 +52,9 @@ class CategoryBased extends Component
 
     public function addRule($category, $group)
     {
-        $array = Settings::where('type', 'category')->first();
+        //$array = Settings::where('type', 'category')->first();
 
-        $rules = json_decode($array->json);
+        $rules = json_decode($this->array->json);
 
         $match = false;
         if($rules)
@@ -73,8 +78,8 @@ class CategoryBased extends Component
 
 
         $json = json_encode($rules);
-        $array->json = $json;
-        $array->save();
+        $this->array->json = $json;
+        $this->array->save();
     }
 
     public function updatedautoAllocate()
@@ -91,6 +96,19 @@ class CategoryBased extends Component
 
     }
 
+    public function updatedcategoryActive()
+    {
+        if($this->categoryActive)
+        {
+            Settings::where('type', 'category')->update(['active' => 1]);
+            Settings::where('type', 'location')->update(['active' => 0]);
+        }
+        else
+        {
+            Settings::where('type', 'category')->update(['active' => 0]);
+        }
+    }
+
     public function updatedrobin()
     {
         if($this->robin) {$this->least = false;}
@@ -105,7 +123,7 @@ class CategoryBased extends Component
 
     protected function getRules()
     {
-        $array = Settings::where('type', 'category')->first();
+        $array = $this->array;
 
         return json_decode($array->json);
     }

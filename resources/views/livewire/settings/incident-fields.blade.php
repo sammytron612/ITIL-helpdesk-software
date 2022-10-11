@@ -1,29 +1,33 @@
 <div>
-    <div wire:ignore  class="grid grid-cols-12 justify-center px-2 lg:px-20 gap-x-5">
+    <div wire:ignore  class="grid justify-center grid-cols-12 px-2 lg:px-20 gap-x-5">
 
-        <div id="remove" class="col-span-5 text-1xl text-center drop-targets font-bold border border-gray-500 w-auto h-auto">
-            <div class="text-center py-2 text-1xl border-b border-gray-500 bg-gray-900 text-white">Available fields</div>
+        <div id="remove" class="w-auto h-auto col-span-5 font-bold text-center border border-gray-500 text-1xl drop-targets">
+            <div class="py-2 text-center text-white bg-gray-900 border-b border-gray-500 text-1xl">Available fields</div>
             @foreach($fields as $field)
 
                 @if($field['active'] == false)
 
-                    <div draggable="true" class="hover:cursor-grab border border-gray-500 p-3 draggable">{{ucwords($field['field'])}}<input wire:click="toggleCheck('{{$field['field']}}')" class="float-right" type="checkbox" {{ $field['mandatory'] ? 'checked' : '' }} /></div>
+                    <div draggable="true" class="p-3 border border-gray-500 hover:cursor-grab draggable">{{ucwords($field['field'])}}<input wire:click="toggleCheck('{{$field['field']}}')" class="float-right" type="checkbox" {{ $field['mandatory'] ? 'checked' : '' }} /></div>
                 @endif
             @endforeach
         </div>
 
-        <div class="col-span-1 h-auto flex justify-center items-center">
+        <div class="flex items-center justify-center h-auto col-span-1">
             < >
         </div>
 
-        <div id="add" class="col-span-5 text-1xl text center drop-targets font-bold border border-gray-500 w-auto h-auto">
-            <div class="text-center py-2 text-1xl bg-gray-900 text-white">Current fields</div>
-            <div class="border border-gray-500 p-3 opacity-70">Title<input class="float-right" type="checkbox" checked disabled /></div>
-            <div class="border border-gray-500 p-3 opacity-70">Priority<input class="float-right" type="checkbox" checked disabled /></div>
-            <div class="border border-gray-500 p-3 opacity-70">Category<input class="float-right" type="checkbox" checked disabled /></div>
+        <div id="add" class="w-auto h-auto col-span-5 font-bold border border-gray-500 text-1xl text center drop-targets">
+            <div class="py-2 text-center text-white bg-gray-900 text-1xl">Current fields</div>
+            <div class="p-3 border border-gray-500 opacity-70">Title<input class="float-right" type="checkbox" checked disabled /></div>
+            <div class="p-3 border border-gray-500 opacity-70">Priority<input class="float-right" type="checkbox" checked disabled /></div>
+            <div class="p-3 border border-gray-500 opacity-70">Category<input class="float-right" type="checkbox" checked disabled /></div>
             @foreach($fields as $field)
                 @if($field['active'] === true)
-                    <div draggable="true" class="hover:cursor-grab border border-gray-500 p-3 draggable">{{ucwords($field['field'])}}<input wire:click="toggleCheck('{{$field['field']}}')" class="float-right" type="checkbox" {{ $field['mandatory'] ? 'checked' : '' }} /></div>
+                    @if($field['field'] == 'location' && $locActive)
+                        <div class="p-3 border border-gray-500 opacity-70">{{ucwords($field['field'])}}<input disabled wire:click="toggleCheck('{{$field['field']}}')" class="float-right" type="checkbox" {{ $field['mandatory'] ? 'checked' : '' }} /></div>
+                    @else
+                        <div draggable="true" class="p-3 border border-gray-500 hover:cursor-grab draggable">{{ucwords($field['field'])}}<input wire:click="toggleCheck('{{$field['field']}}')" class="float-right" type="checkbox" {{ $field['mandatory'] ? 'checked' : '' }} /></div>
+                    @endif
                 @endif
             @endforeach
         </div>
