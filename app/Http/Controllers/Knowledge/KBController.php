@@ -91,7 +91,6 @@ class KBController extends Controller
         $article = Http::withToken('testtoken')->get("http://localhost:9000/api/show/" . $id);
 
 
-
         if($article->successful())
         {
             $article = json_decode($article->body(),true);
