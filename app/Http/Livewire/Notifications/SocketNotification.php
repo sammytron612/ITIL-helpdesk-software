@@ -54,7 +54,7 @@ class SocketNotification extends Component
 
         $this->user->notify(new NewIncident($array));
 
-//dd('stop');
+
     }
 
 
