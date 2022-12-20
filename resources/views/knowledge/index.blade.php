@@ -17,8 +17,8 @@
                             <a class="hover:cursor-pointer" :href="article.href"><span class="text-2xl text-blue-600 capitalize-first" x-html="article.title"></span></a>
                                 <a class="ml-2" :href="editUrl(article.id)"><x-svg.pen /></a>
                             </div>
-                            <div class="mt-1 text-sm font-light">
-                                <span class="text-sm"><i class="mr-1 text-gray-600 fa-solid fa-user"></i></span>
+                            <div class="mt-1 text-sm font-light text-gray-500">
+                                <span class="text-sm"><i class="mr-1 fa-solid fa-user"></i></span>
                                 <span class="text-1xl" x-text="article.author"></span><span> - </span>
                                 <span class="text-sm">Section&nbsp</span>
                                 <span class="text-blue-700 text-1xl" x-text="article.section"></span><span> - </span>

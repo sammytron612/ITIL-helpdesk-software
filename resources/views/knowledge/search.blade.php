@@ -31,7 +31,7 @@
                 <template x-for="(article, index) in articles">
                     <div class="mb-5">
                         <a class="hover:cursor-pointer" :href="article.href"><h2 class="mt-2 text-2xl text-blue-600 capitalize-first" x-html="article.title"></h2></a>
-                        <div class="mt-1 text-sm font-light">
+                        <div class="mt-1 text-sm font-light text-gray-500">
                             <span class="text-sm"><i class="mr-1 fa-solid fa-user"></i>Author</span>
                             <span class="text-1xl" x-text="article.author"></span><span> - </span>
                             <span><i class="ml-2 mr-1 fa-solid fa-eye"></i>Views</span>
