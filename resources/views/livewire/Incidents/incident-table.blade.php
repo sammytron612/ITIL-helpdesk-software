@@ -294,90 +294,91 @@
             </div>
         </div>
     </div>
-</div>
-<script>
+    <script>
 
 
 
-window.addEventListener('updateColumns', event => {
-    localStorage.setItem("{{Auth::user()->email}}", JSON.stringify(event.detail.cols));
-    console.log(event.detail.cols);
-})
+            window.addEventListener('updateColumns', event => {
+                localStorage.setItem("{{Auth::user()->email}}", JSON.stringify(event.detail.cols));
+                console.log(event.detail.cols);
+            })
 
-    function page() {
-        return {
+                function page() {
+                    return {
 
-            searchTerm: '',
+                        searchTerm: '',
 
-            initStorage()
-            {
+                        initStorage()
+                        {
 
-                var columns = JSON.parse(localStorage.getItem("{{Auth::user()->email}}"));
+                            var columns = JSON.parse(localStorage.getItem("{{Auth::user()->email}}"));
 
-                if(!columns)
-                {
-                    columns = @json($allColumns);
-                    @this.set('storedColumns', columns);
-                    localStorage.setItem("{{Auth::user()->email}}", JSON.stringify(columns));
+                            if(!columns)
+                            {
+                                columns = @json($allColumns);
+                                @this.set('storedColumns', columns);
+                                localStorage.setItem("{{Auth::user()->email}}", JSON.stringify(columns));
+                            }
+                            else
+                            {
+                                console.log(columns)
+                                @this.set('storedColumns', columns);
+                            }
+
+                        }
+                    }
+
                 }
-                else
-                {
-                    console.log(columns)
-                    @this.set('storedColumns', columns);
-                }
-
-            }
-        }
-
-    }
 
 
 
 
 
-        //initStorage()
-    /*
+                    //initStorage()
+                /*
 
-        function sla(){
+                    function sla(){
 
-            var elements = document.querySelectorAll('.hidden-input')
+                        var elements = document.querySelectorAll('.hidden-input')
 
-            elements.forEach(element => {
-                var totalSeconds = element.value;
-                function countTimer() {
-                    ++totalSeconds;
-                    var day = Math.floor(totalSeconds / 86400);
-                    var hour = Math.floor(totalSeconds / 3600) - (day * 24);
-                    var minute = Math.floor((totalSeconds - hour*3600) / 60) - (day * 1440);
-                    var second = totalSeconds - (hour*3600 + minute*60) - (day * 86400);
-                    prepend_seconds = String(second).padStart(2, '0')
-                    prepend_minutes = String(minute).padStart(2, '0')
-                    prepend_hours = String(hour).padStart(2, '0')
+                        elements.forEach(element => {
+                            var totalSeconds = element.value;
+                            function countTimer() {
+                                ++totalSeconds;
+                                var day = Math.floor(totalSeconds / 86400);
+                                var hour = Math.floor(totalSeconds / 3600) - (day * 24);
+                                var minute = Math.floor((totalSeconds - hour*3600) / 60) - (day * 1440);
+                                var second = totalSeconds - (hour*3600 + minute*60) - (day * 86400);
+                                prepend_seconds = String(second).padStart(2, '0')
+                                prepend_minutes = String(minute).padStart(2, '0')
+                                prepend_hours = String(hour).padStart(2, '0')
 
-                    if(day == 0)
-                    {
-                        $html = prepend_hours + ":" + prepend_minutes + ":" + prepend_seconds;
-                    }
-                    else
-                    {
-                        $html = day + " days " + prepend_hours + ":" + prepend_minutes + ":" + prepend_seconds;
-                    }
+                                if(day == 0)
+                                {
+                                    $html = prepend_hours + ":" + prepend_minutes + ":" + prepend_seconds;
+                                }
+                                else
+                                {
+                                    $html = day + " days " + prepend_hours + ":" + prepend_minutes + ":" + prepend_seconds;
+                                }
 
-                    document.getElementById("sla_timer-" + element.id).innerHTML = $html
-                    }
+                                document.getElementById("sla_timer-" + element.id).innerHTML = $html
+                                }
 
-                    var timerVar = setInterval(countTimer, 1000);
-                });}
+                                var timerVar = setInterval(countTimer, 1000);
+                            });}
 
 
-                window.addEventListener('name-updated', event => {
-                    alert('dd')
-                    console.log(window.location.search)
-                    sla();
-                })
-    */
+                            window.addEventListener('name-updated', event => {
+                                alert('dd')
+                                console.log(window.location.search)
+                                sla();
+                            })
+                */
 
     </script>
+</div>
+
 
 
 
