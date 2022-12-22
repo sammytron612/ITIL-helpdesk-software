@@ -1,18 +1,24 @@
 <x-new-layout>
 
-    @if(session()->has('msg'))
-        <div id="alert" x-data class="relative px-4 py-3 bg-green-100 border rounded border-greenb-400 text-slate-gray-400" role="alert">
-            <strong class="font-bold">Success</strong>
-            <span x-on:click="document.getElementById('alert').remove();" class="absolute top-0 bottom-0 right-0 px-4 py-3">
-                <svg class="w-6 h-6 fill-current text-slate-gray-800" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
-            </span>
+    @if(session('status'))
+        @php
+            session()->forget('status');
+        @endphp
+        <div class="px-5">
+            <div id="alert" x-data class="relative px-4 py-3 bg-green-100 border rounded border-greenb-400 text-slate-gray-400" role="alert">
+                <strong class="font-bold">SUCCESS - Incident Created</strong>
+                <span x-on:click="document.getElementById('alert').remove();" class="absolute top-0 bottom-0 right-0 px-4 py-3">
+                    <svg class="w-6 h-6 fill-current text-slate-gray-800" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
+                </span>
+            </div>
         </div>
     @endif
+
     <div class="px-10">
         <div class="py-5">
             <h2 class="text-2xl font-bold">New incident</h2>
         </div>
-        <form method="post" action="{{route('ticket.store')}}">
+        <form method="post" action="{{route('ticket.store')}}" enctype="multipart/form-data">
             @csrf
             <div class="grid grid-cols-1 gap-4 mt-3 md:gap-6 md:grid-cols-3">
 
@@ -49,9 +55,10 @@
                 <div>
                     @livewire('tickets.category-dropdown', ['old' => old('category')])
                 </div>
+
                 @if($subCategory)
                     <div>
-                        @livewire('tickets.subcategory-dropdown', ['old_sub' => old('sub_category'), 'category' => old('category')])
+                        @livewire('tickets.subcategory-dropdown', ['old_sub' => old('sub_category'), 'category' => old('category'), 'mandatory' => $subMandatory])
                     </div>
                 @endif
 
@@ -64,7 +71,7 @@
                             @enderror
                         </label>
 
-                        <select id="department" name="department" value="{{old('department')}}"
+                        <select id="department" name="department" value="{{old('department')}}" @if($deptMandatory) required @endif
                             class="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option selected value="">Choose </option>
                             @foreach($departments as $department)
@@ -91,6 +98,29 @@
                         </select>
                     </div>
                 @endif
+
+                <div>
+                    <label for="attachments" class="mb-2 text-sm font-bold text-gray-900 dark:text-gray-400">Attachments
+                        @error('attachments')
+                            <span class="ml-1 text-xs text-red-600">{{ $message }}</span>
+                        @enderror
+                    </label>
+                    <input id="attachments" type="file" class="form-control
+                    block
+                    w-full
+                    mt-2
+                    py-1.5
+                    text-base
+                    font-normal
+                    text-gray-700
+                    bg-white bg-clip-padding
+                    border border-solid border-gray-300
+                    rounded
+                    transition
+                    ease-in-out
+                    m-0
+                    focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" name="attachments[]" multiple>
+                </div>
 
                 <div class="md:col-span-3">
                     <label for="description" class="block mb-2 text-sm font-bold text-gray-900 dark:text-gray-400">Description

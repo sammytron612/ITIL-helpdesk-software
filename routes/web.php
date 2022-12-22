@@ -5,8 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\knowledge\KBSearchController;
 use App\Http\Controllers\Knowledge\SectionController;
 use App\Http\Controllers\SettingsController;
-use App\Http\Livewire\Settings\LocationBased;
-use App\Http\Livewire\Settings\CategoryBased;
+use Illuminate\Support\Facades\Storage;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -66,6 +66,13 @@ route::get('settings/workflow/location-based', [SettingsController::class, 'loca
 route::get('settings/workflow/category-based', [SettingsController::class, 'categoryBased'])->middleware(['auth','can:admin'])->name('categoryBased');
 
 
+//////////////// file downloads ////////////
 
+Route::get('download/{file}', function($file){
+
+    $fileName = explode('-',$file);
+    return Storage::download('public/uploads/'.$file, $fileName[1]);
+
+})->name('download');
 
 require __DIR__ . '/auth.php';

@@ -63,9 +63,15 @@ class incidents extends Model
     {
         return $this->hasOne(sites::class, 'id', 'site');
     }
+
     public function status_histories()
     {
         return $this->hasMany(status_history::class,'incident_id');
+    }
+
+    public function attachments()
+    {
+        return $this->hasMany(Attachments::class,'incident');
     }
 
     public function assignedToAgent()

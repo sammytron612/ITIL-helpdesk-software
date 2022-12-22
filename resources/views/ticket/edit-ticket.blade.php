@@ -104,7 +104,17 @@
             </div>
 
             <div class="order-4">
-                Something else to go here
+                @if(count($ticket->attachments) > 0)
+
+                    <h3 class="pb-1 mt-2 font-bold text-1xl">Attachments</h3>
+                    @foreach($ticket->attachments as $attachment)
+                        @php
+                            $fileName = explode('-',$attachment->file_name);
+                        @endphp
+                        <div><a class="text-blue-500 hover:text-blue-900" href="{{route('download' , $attachment->file_name)}}">{{$fileName[1]}}</a></div>
+                    @endforeach
+
+                @endif
             </div>
         </div>
 

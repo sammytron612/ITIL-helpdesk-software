@@ -14,9 +14,11 @@ class SubcategoryDropdown extends Component
     public $old_sub;
     public $sub_category;
     public $category;
+    public $mandatory;
 
     public function mount()
     {
+        //dd($this->mandatory);
         if($this->old_sub)
         {
             $this->sub_category= $this->old_sub;

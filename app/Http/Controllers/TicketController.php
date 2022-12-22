@@ -14,6 +14,7 @@ use App\Http\Interfaces\optionalFields;
 use App\Models\Settings;
 use App\Service\TicketWorkflow;
 use Session;
+use App\Models\Attachments;
 
 
 
@@ -24,7 +25,9 @@ class TicketController extends Controller implements optionalFields
 
     public function __construct()
     {
+
         $this->settings = Settings::where('type','fields')->first();
+
     }
 
 
@@ -40,7 +43,8 @@ class TicketController extends Controller implements optionalFields
 
         $deptMandatory = $this->isMandatory('department');
         $locMandatory = $this->isMandatory('location');
-        $subMandatory = $this->isToBeShown('subcategory');
+        $subMandatory = $this->isMandatory('subcategory');
+
 
         $priorities = priority::all();
 
@@ -78,7 +82,6 @@ class TicketController extends Controller implements optionalFields
             $array['sub_category'] = 'required';
         }
 
-
         $validated = $request->validate($array);
 
 
@@ -94,6 +97,20 @@ class TicketController extends Controller implements optionalFields
         ];
 
         $return = incidents::create($array);
+
+        $files = $request->file('attachments');
+
+        if($files)
+        {
+            foreach($files as $file)
+            {
+
+                $fileName = time() . '-' . $file->getClientOriginalName();
+                $path = $file->storeAs('public\uploads', $fileName);
+                Attachments::create(['incident' => $return->id, 'file_name' => $fileName]);
+            }
+        }
+
 
         $comment = [
             'comment' => $request->comment,
@@ -113,10 +130,11 @@ class TicketController extends Controller implements optionalFields
 
         $return = $ticketWorkflow->newTicket(incidents::find($return->id));
 
-        Session::flash('msg', 'Success' );
+        Session::put('status', 'Success');
 
 
         return redirect()->back();
+
     }
 
     /**
@@ -139,6 +157,9 @@ class TicketController extends Controller implements optionalFields
     public function edit(incidents $ticket)
     {
 
+        $attachments = $ticket->has('attachments')->get();
+        //dd(count($ticket->attachments));
+
         throw_if(
             !Auth::user()->isAdmin() && $ticket->created_by != Auth::id(),
             AuthorizationException::class,
@@ -147,6 +168,8 @@ class TicketController extends Controller implements optionalFields
 
 
         $ticket->load(['requested_by','assigned_agent']);
+
+
         /*
         $ticket->load(['ticket_updates' => function($query) {
             $query->orderBy('created_at');
@@ -186,16 +209,28 @@ class TicketController extends Controller implements optionalFields
     public function isMandatory($field)
     {
 
-        $optional = $this->settings->json;
+        $settings = $this->settings->json;
 
-        $key = array_search($field, array_column($optional,$field));
+        $key = 0;
+        foreach($settings as $setting)
+        {
 
-        if($optional[$key]['mandatory'])
+            if($setting['field'] == $field)
+            {
+                break;
+            }
+            $key++;
+
+        }
+
+//dd($settings[$key]['active'] == 'true' && $settings[$key]['mandatory'] == 'true');
+        if($settings[$key]['active'] == 'true' && $settings[$key]['mandatory'] == 'true')
         {
 
             return true;
         }
         else {
+
             return false;
         }
 
