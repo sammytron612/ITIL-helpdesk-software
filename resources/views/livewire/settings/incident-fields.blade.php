@@ -7,7 +7,7 @@
 
                 @if($field['active'] == false)
 
-                    <div draggable="true" class="p-3 border border-gray-500 hover:cursor-grab draggable">{{ucwords($field['field'])}}<input wire:click="toggleCheck('{{$field['field']}}')" class="float-right" type="checkbox" {{ $field['mandatory'] ? 'checked' : '' }} /></div>
+                    <div draggable="true" class="p-3 border border-gray-500 hover:cursor-grab draggable">{{ucwords($field['field'])}}<input wire:click="toggleCheck('{{$field['field']}}')" class="float-right" type="checkbox" {{ $field['mandatory'] ? 'checked' : '' }} @if($field['field'] == "subcategory") disabled @endif/></div>
                 @endif
             @endforeach
         </div>
@@ -26,7 +26,7 @@
                     @if($field['field'] == 'location' && $locActive)
                         <div class="p-3 border border-gray-500 opacity-70">{{ucwords($field['field'])}}<input disabled wire:click="toggleCheck('{{$field['field']}}')" class="float-right" type="checkbox" {{ $field['mandatory'] ? 'checked' : '' }} /></div>
                     @else
-                        <div draggable="true" class="p-3 border border-gray-500 hover:cursor-grab draggable">{{ucwords($field['field'])}}<input wire:click="toggleCheck('{{$field['field']}}')" class="float-right" type="checkbox" {{ $field['mandatory'] ? 'checked' : '' }} /></div>
+                        <div draggable="true" class="p-3 border border-gray-500 hover:cursor-grab draggable">{{ucwords($field['field'])}}<input wire:click="toggleCheck('{{$field['field']}}')" class="float-right" type="checkbox" {{ $field['mandatory'] ? 'checked' : '' }} @if($field['field'] == "subcategory") disabled @endif/></div>
                     @endif
                 @endif
             @endforeach

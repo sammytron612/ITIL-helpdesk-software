@@ -15,6 +15,7 @@ class SubcategoryDropdown extends Component
     public $sub_category;
     public $category;
     public $mandatory;
+    public $show = false;
 
     public function mount()
     {
@@ -28,6 +29,14 @@ class SubcategoryDropdown extends Component
     public function render()
     {
         $this->subCategories = sub_category::where('parent', $this->category)->get();
+
+        if(count($this->subCategories) > 0){
+            $this->show = true;
+        }
+        else{
+            $this->show = false;
+        }
+
         return view('livewire.tickets.subcategory-dropdown', ['subCategories' => $this->subCategories]);
     }
 
