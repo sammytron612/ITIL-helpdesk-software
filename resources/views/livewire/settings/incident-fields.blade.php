@@ -1,13 +1,13 @@
 <div>
     <div wire:ignore  class="grid justify-center grid-cols-12 px-2 lg:px-20 gap-x-5">
 
-        <div id="remove" class="w-auto h-auto col-span-5 font-bold text-center border border-gray-500 text-1xl drop-targets">
+        <div id="remove" class="w-auto h-auto col-span-5 p-2 font-bold text-center border border-gray-500 text-1xl drop-targets">
             <div class="py-2 text-center text-white bg-gray-900 border-b border-gray-500 text-1xl">Available fields</div>
             @foreach($fields as $field)
 
                 @if($field['active'] == false)
 
-                    <div draggable="true" class="p-3 bg-gray-200 border border-gray-500 hover:cursor-grab draggable">{{ucwords($field['field'])}}<input wire:click="toggleCheck('{{$field['field']}}')" class="float-right" type="checkbox" {{ $field['mandatory'] ? 'checked' : '' }} @if($field['field'] == "subcategory") disabled @endif/></div>
+                    <div draggable="true" class="p-3 my-1 bg-gray-200 border border-gray-500 shadow-lg hover:cursor-grab draggable">{{ucwords($field['field'])}}<input wire:click="toggleCheck('{{$field['field']}}')" class="float-right" type="checkbox" {{ $field['mandatory'] ? 'checked' : '' }} @if($field['field'] == "subcategory") disabled @endif/></div>
                 @endif
             @endforeach
         </div>
@@ -16,17 +16,17 @@
             < >
         </div>
 
-        <div id="add" class="w-auto h-auto col-span-5 font-bold border border-gray-500 text-1xl text center drop-targets">
+        <div id="add" class="w-auto h-auto col-span-5 p-2 font-bold border border-gray-500 text-1xl text center drop-targets">
             <div class="py-2 text-center text-white bg-gray-900 text-1xl">Current fields</div>
-            <div class="p-3 border border-gray-500 opacity-70">Title<input class="float-right" type="checkbox" checked disabled /></div>
-            <div class="p-3 border border-gray-500 opacity-70">Priority<input class="float-right" type="checkbox" checked disabled /></div>
-            <div class="p-3 border border-gray-500 opacity-70">Category<input class="float-right" type="checkbox" checked disabled /></div>
+            <div class="p-3 my-1 border border-gray-500 shadow-lg opacity-70">Title<input class="float-right" type="checkbox" checked disabled /></div>
+            <div class="p-3 my-1 border border-gray-500 shadow-lg opacity-70">Priority<input class="float-right" type="checkbox" checked disabled /></div>
+            <div class="p-3 my-1 border border-gray-500 shadow-lg opacity-70">Category<input class="float-right" type="checkbox" checked disabled /></div>
             @foreach($fields as $field)
                 @if($field['active'] === true)
                     @if($field['field'] == 'location' && $locActive)
-                        <div class="p-3 border border-gray-500 opacity-70">{{ucwords($field['field'])}}<input disabled wire:click="toggleCheck('{{$field['field']}}')" class="float-right" type="checkbox" {{ $field['mandatory'] ? 'checked' : '' }} /></div>
+                        <div class="p-3 my-1 bg-gray-200 border border-gray-500 shadow-lg opacity-70">{{ucwords($field['field'])}}<input disabled wire:click="toggleCheck('{{$field['field']}}')" class="float-right" type="checkbox" {{ $field['mandatory'] ? 'checked' : '' }} /></div>
                     @else
-                        <div draggable="true" class="p-3 border border-gray-500 hover:cursor-grab draggable">{{ucwords($field['field'])}}<input wire:click="toggleCheck('{{$field['field']}}')" class="float-right" type="checkbox" {{ $field['mandatory'] ? 'checked' : '' }} @if($field['field'] == "subcategory") disabled @endif/></div>
+                        <div draggable="true" class="p-3 my-1 bg-gray-200 border border-gray-500 shadow-lg hover:cursor-grab draggable">{{ucwords($field['field'])}}<input wire:click="toggleCheck('{{$field['field']}}')" class="float-right" type="checkbox" {{ $field['mandatory'] ? 'checked' : '' }} @if($field['field'] == "subcategory") disabled @endif/></div>
                     @endif
                 @endif
             @endforeach
