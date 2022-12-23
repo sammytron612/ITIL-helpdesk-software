@@ -7,7 +7,7 @@
 
                 @if($field['active'] == false)
 
-                    <div draggable="true" class="p-3 border border-gray-500 hover:cursor-grab draggable">{{ucwords($field['field'])}}<input wire:click="toggleCheck('{{$field['field']}}')" class="float-right" type="checkbox" {{ $field['mandatory'] ? 'checked' : '' }} @if($field['field'] == "subcategory") disabled @endif/></div>
+                    <div draggable="true" class="p-3 bg-gray-200 border border-gray-500 hover:cursor-grab draggable">{{ucwords($field['field'])}}<input wire:click="toggleCheck('{{$field['field']}}')" class="float-right" type="checkbox" {{ $field['mandatory'] ? 'checked' : '' }} @if($field['field'] == "subcategory") disabled @endif/></div>
                 @endif
             @endforeach
         </div>
@@ -49,6 +49,8 @@
         e.dataTransfer.setData('text/plain', e.target.id);
         e.target.style.cursor = "grabbing"
         e.target.classList.add('dragging');
+        e.target.classList.remove('bg-gray-200');
+        e.target.classList.add('bg-green-400');
 
         setTimeout(() => {
             //e.target.classList.add('hide');
@@ -88,6 +90,7 @@
 
     function dragLeave(e) {
         e.target.classList.remove('drag-over');
+        e.target.classList.remove('bg-green-400');
     }
 
     function drop(e) {
@@ -108,6 +111,8 @@
 
         dragged.classList.remove('dragging')
         dragged.classList.add('cursor-grab')
+        dragged.classList.remove('bg-green-400');
+        dragged.classList.add('bg-gray-200');
 
         if(el.id == 'remove') {
             @this.call('removeField',text)}
