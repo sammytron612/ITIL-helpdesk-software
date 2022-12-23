@@ -7,6 +7,7 @@ use Auth;
 use App\Events\IncidentEvent;
 
 use App\Traits\getUserMembers;
+use Exception;
 
 class UpdateTicket
 {
@@ -152,7 +153,13 @@ class UpdateTicket
 
         $message = "Your Incident No:{$incident->id} titled `{$incident->title}` has been assigned to {$name}";
 
-        broadcast(new IncidentEvent($incident->id,$message,$users))->toOthers();
+        try
+        {
+            broadcast(new IncidentEvent($incident->id,$message,$users))->toOthers();
+        } catch (Exception $e)
+        {
+
+        }
 
         return;
     }
@@ -173,7 +180,14 @@ class UpdateTicket
 
         $message = "The status on Incident No:{$incident->id} titled `{$incident->title}` has been set to {$incident->statuses->name}";
 
-        broadcast(new IncidentEvent($incident->id,$message,$users))->toOthers();
+        try
+        {
+            broadcast(new IncidentEvent($incident->id,$message,$users))->toOthers();
+        } catch (Exception $e)
+        {
+
+        }
+
 
         return;
     }
