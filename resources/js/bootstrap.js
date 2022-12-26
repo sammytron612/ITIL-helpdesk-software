@@ -46,6 +46,7 @@ window.Echo = new Echo({
     broadcaster: 'pusher',
     key: '131169',
     wsHost: '52.56.42.198',
+    cluster: 'mt1',
     wsPort: '6001',
     forceTLS: false,
 });

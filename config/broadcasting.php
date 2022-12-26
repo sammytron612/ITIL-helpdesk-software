@@ -38,6 +38,7 @@ return [
             'options' => [
                 'host' => '52.56.42.198',
                 'port' => 6001,
+                'cluster' => 'mt1',
                 'scheme' => 'http',
                 'encrypted' => false,
                 'useTLS' => false,

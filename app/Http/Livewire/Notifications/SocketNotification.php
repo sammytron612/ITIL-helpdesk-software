@@ -52,7 +52,7 @@ class SocketNotification extends Component
 
         session()->push('notifications',$array);
 
-        $this->user->notify(new NewIncident($array));
+        //$this->user->notify(new NewIncident($array));
 
 
     }
@@ -93,7 +93,7 @@ class SocketNotification extends Component
 
         session()->push('notifications',$array);
 
-        $this->user->notify(new ChangeOwnership($data));
+        //$this->user->notify(new ChangeOwnership($data));
 
     }
 
