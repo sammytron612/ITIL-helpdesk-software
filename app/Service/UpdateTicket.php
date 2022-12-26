@@ -5,8 +5,9 @@ namespace App\Service;
 use App\Models\status_history;
 use Auth;
 use App\Events\IncidentEvent;
-
+use App\Models\User;
 use App\Traits\getUserMembers;
+use App\Notifications\ChangeOwnership;
 use Exception;
 
 class UpdateTicket
@@ -151,7 +152,19 @@ class UpdateTicket
             $name = $incident->group->name;
         }
 
-        $message = "Your Incident No:{$incident->id} titled `{$incident->title}` has been assigned to {$name}";
+        $message = "Incident No:{$incident->id} titled `{$incident->title}` has been assigned to {$name}";
+
+        foreach($users as $user)
+        {
+
+            $array = ['incidentId' => $incident->id,
+                'message' => $message];
+
+            $user = User::find($user);
+
+            $user->notify(new ChangeOwnership($array));
+
+        }
 
         try
         {
@@ -161,7 +174,6 @@ class UpdateTicket
 
         }
 
-        return;
     }
 
     public function newStatus($incident)
@@ -180,6 +192,20 @@ class UpdateTicket
 
         $message = "The status on Incident No:{$incident->id} titled `{$incident->title}` has been set to {$incident->statuses->name}";
 
+
+        foreach($users as $user)
+        {
+
+            $array = ['incidentId' => $incident->id,
+                'message' => $message];
+
+            $user = User::find($user);
+
+            $user->notify(new ChangeOwnership($array));
+
+        }
+
+
         try
         {
             broadcast(new IncidentEvent($incident->id,$message,$users))->toOthers();
@@ -188,8 +214,6 @@ class UpdateTicket
 
         }
 
-
-        return;
     }
 
 }
