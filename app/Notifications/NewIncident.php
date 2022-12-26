@@ -18,6 +18,7 @@ class NewIncident extends Notification
      */
 
     public $data;
+
     public function __construct($data)
     {
         $this->data = $data;
